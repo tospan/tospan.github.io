@@ -1060,3 +1060,8 @@ namespace DubinsPathsTutorial
 
 
 ![The final scene in Unity with Dubins paths](../_images/unity/dubins-paths-final.png)
+
+## 参考
+
+* [How to make Dubins Paths in Unity with C# code](http://www.habrador.com/tutorials/unity-dubins-paths/)
+* [Reeds-Shepp曲线和Dubins曲线](http://blog.csdn.net/robinvista/article/details/54141762)
