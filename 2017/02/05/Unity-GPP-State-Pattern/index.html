@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Unity GPP State Pattern | 吐司片的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="What’s the state pattern?We begin with Wikipedia‘s defintion of the state pattern:
+
+The state pattern, which closely resembles Strategy Pattern, is a behavioral software design pattern, also known as">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Unity GPP State Pattern">
+<meta property="og:url" content="http://tospan.me/2017/02/05/Unity-GPP-State-Pattern/index.html">
+<meta property="og:site_name" content="吐司片的博客">
+<meta property="og:description" content="What’s the state pattern?We begin with Wikipedia‘s defintion of the state pattern:
+
+The state pattern, which closely resembles Strategy Pattern, is a behavioral software design pattern, also known as">
+<meta property="og:image" content="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/state-pattern-scene.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/state-pattern-in-action.png">
+<meta property="og:updated_time" content="2017-02-05T07:24:22.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Unity GPP State Pattern">
+<meta name="twitter:description" content="What’s the state pattern?We begin with Wikipedia‘s defintion of the state pattern:
+
+The state pattern, which closely resembles Strategy Pattern, is a behavioral software design pattern, also known as">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/state-pattern-scene.png">
+  
+    <link rel="alternate" href="/atom.xml" title="吐司片的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">吐司片的博客</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Work hard, play hard.</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://tospan.me"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Unity-GPP-State-Pattern" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/02/05/Unity-GPP-State-Pattern/" class="article-date">
+  <time datetime="2017-02-05T07:24:22.000Z" itemprop="datePublished">2017-02-05</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Unity/">Unity</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Unity GPP State Pattern
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="What’s-the-state-pattern"><a href="#What’s-the-state-pattern" class="headerlink" title="What’s the state pattern?"></a>What’s the state pattern?</h2><p>We begin with <a href="https://en.wikipedia.org/wiki/State_pattern" target="_blank" rel="external">Wikipedia</a>‘s defintion of the state pattern:</p>
+<blockquote>
+<p>The state pattern, which closely resembles Strategy Pattern, is a behavioral software design pattern, also known as the objects for states pattern. This pattern is used in computer programming to encapsulate varying behavior for the same object based on its internal state.</p>
+</blockquote>
+<a id="more"></a>
+<p>The basic idea behind the pattern is that what you are trying to control has different states. If you have a car, it can either drive forward, brake, reverse, or you could have parked it. To write this behavior of a car in code is not that simple as it first might seem. If we are moving forward and braking, then we don’t want to reverse even though the reverse button and the brake button is often the same key. And what if we are reversing and pressing the forward key, should we brake or accelerate? And what if we have more states than just four? Then you will need the state pattern to avoid nested if-else-statements with several booleans.</p>
+<p>So the first thing you have to ask yourself is: What are all the states or possible situations the object is going to find itself in? This idea to divide the behavior into a fixed set of states that the object can be in is called a <a href="https://en.wikipedia.org/wiki/Finite-state_machine" target="_blank" rel="external">Finite State Machine</a>, or FSM. The object can only be in one state at a time: you shouldn’t accelerate and press the brake pedal at the same time!</p>
+<p>It’s common to use enums when coding a state machine in C#, and it looks like this with our car example:</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">enum</span> CarFSM</div><div class="line">&#123;</div><div class="line">	Forward,</div><div class="line">	Brake,</div><div class="line">	Reverse,</div><div class="line">	Park</div><div class="line">&#125;</div><div class="line"><span class="comment">//Default state</span></div><div class="line">CarFSM carMode = CarFSM.Park; </div><div class="line"></div><div class="line"><span class="comment">//And then you change the state with something like</span></div><div class="line"><span class="keyword">if</span> (carMode == CarFSM.Park &amp;&amp; IsPressingGasPedal())</div><div class="line">&#123;</div><div class="line">	carMode = CarFSM.Forward;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">else</span> <span class="title">if</span> (<span class="params">carMode == CarFSM.Forward &amp;&amp; IsPressingBrakePedal(</span>))</span></div><div class="line">&#123;</div><div class="line">	carMode == CarFSM.Brake;</div><div class="line">&#125;</div><div class="line"><span class="comment">//...and so on</span></div></pre></td></tr></table></figure>
+<h2 id="The-state-pattern-in-Unity"><a href="#The-state-pattern-in-Unity" class="headerlink" title="The state pattern in Unity"></a>The state pattern in Unity</h2><p>To illustrate the state pattern we will here make a Mincecraft clone. In Minecraft you have nasty creatures called Skeletons and Creepers. A Skeleton will attack you from distance with a bow and arrow, and the Creeper will attack you by close combat. If the player is far away from the Skeleton and Creeper, they will simply walk around in random directions, waiting for you to come closer.</p>
+<p>So begin by creating:</p>
+<ul>
+<li>A plane which will act as our ground</li>
+<li>A sphere which will be the player being killed by enemies</li>
+<li>A green box which will symbolize a creeper</li>
+<li>A white box which will symbolize a skeleton</li>
+<li>An empty gameobject called _GameController</li>
+</ul>
+<p>Everything should now look like this:</p>
+<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/state-pattern-scene.png" alt="State pattern start scene"></p>
+<p>The GameController script looks like this:</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">using</span> UnityEngine;</div><div class="line"><span class="keyword">using</span> System.Collections;</div><div class="line"><span class="keyword">using</span> System.Collections.Generic;</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">namespace</span> <span class="title">StatePattern</span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">GameController</span> : <span class="title">MonoBehaviour</span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">public</span> GameObject playerObj;</div><div class="line">        <span class="keyword">public</span> GameObject creeperObj;</div><div class="line">        <span class="keyword">public</span> GameObject skeletonObj;</div><div class="line"></div><div class="line">        <span class="comment">//A list that will hold all enemies</span></div><div class="line">        List&lt;Enemy&gt; enemies = <span class="keyword">new</span> List&lt;Enemy&gt;();</div><div class="line"></div><div class="line">        </div><div class="line">        <span class="function"><span class="keyword">void</span> <span class="title">Start</span>(<span class="params"></span>)</span></div><div class="line">        &#123;</div><div class="line">            <span class="comment">//Add the enemies we have</span></div><div class="line">            enemies.Add(<span class="keyword">new</span> Creeper(creeperObj.transform));</div><div class="line">            enemies.Add(<span class="keyword">new</span> Skeleton(skeletonObj.transform));</div><div class="line">        &#125;</div><div class="line"></div><div class="line"></div><div class="line">        <span class="function"><span class="keyword">void</span> <span class="title">Update</span>(<span class="params"></span>)</span></div><div class="line">        &#123;</div><div class="line">            <span class="comment">//Update all enemies to see if they should change state and move/attack player</span></div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; enemies.Count; i++)</div><div class="line">            &#123;</div><div class="line">                enemies[i].UpdateEnemy(playerObj.transform);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="The-state-pattern-scripts"><a href="#The-state-pattern-scripts" class="headerlink" title="The state pattern scripts"></a>The state pattern scripts</h2><p>Our state pattern scripts consists of an Enemy parent class, and two child classes for each enemy. The basic idea is that we first update the state of the enemy, such as Attack, Flee, Stroll, or Move-towards-the-player-to-kill, by checking if we should change to another state from the current state the enemy is in. So if the enemy is strolling around and the player is within a certain distance, then the enemy should begin hunting the player.</p>
+<p>The main difference between the Creeper and the Skeleton is that the Skeleton can attack from distance, while the Creeper has to be very close to the player to attack. I’ve not implemented everything, such as the health system, so neither of the enemies will run away when they are damaged.</p>
+<p>The base enemy class looks like this:</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">using</span> UnityEngine;</div><div class="line"><span class="keyword">using</span> System.Collections;</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">namespace</span> <span class="title">StatePattern</span></div><div class="line">&#123;</div><div class="line">    <span class="comment">//The enemy base class</span></div><div class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Enemy</span> </div><div class="line">    &#123;</div><div class="line">        <span class="keyword">protected</span> Transform enemyObj;</div><div class="line"></div><div class="line">        <span class="comment">//The different states the enemy can be in</span></div><div class="line">        <span class="keyword">protected</span> <span class="keyword">enum</span> EnemyFSM</div><div class="line">        &#123;</div><div class="line">            Attack,</div><div class="line">            Flee,</div><div class="line">            Stroll,</div><div class="line">            MoveTowardsPlayer</div><div class="line">        &#125;</div><div class="line"></div><div class="line"></div><div class="line">        <span class="comment">//Update the enemy by giving it a new state</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">UpdateEnemy</span>(<span class="params">Transform playerObj</span>)</span></div><div class="line">        &#123;</div><div class="line"></div><div class="line">        &#125;</div><div class="line"></div><div class="line"></div><div class="line">        <span class="comment">//Do something based on a state</span></div><div class="line">        <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">DoAction</span>(<span class="params">Transform playerObj, EnemyFSM enemyMode</span>)</span></div><div class="line">        &#123;</div><div class="line">            <span class="keyword">float</span> fleeSpeed = <span class="number">10</span>f;</div><div class="line">            <span class="keyword">float</span> strollSpeed = <span class="number">1</span>f;</div><div class="line">            <span class="keyword">float</span> attackSpeed = <span class="number">5</span>f;</div><div class="line"></div><div class="line">            <span class="keyword">switch</span> (enemyMode)</div><div class="line">            &#123;</div><div class="line">                <span class="keyword">case</span> EnemyFSM.Attack:</div><div class="line">                    <span class="comment">//Attack player</span></div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">                <span class="keyword">case</span> EnemyFSM.Flee:</div><div class="line">                    <span class="comment">//Move away from player</span></div><div class="line">                    <span class="comment">//Look in the opposite direction</span></div><div class="line">                    enemyObj.rotation = Quaternion.LookRotation(enemyObj.position - playerObj.position);</div><div class="line">                    <span class="comment">//Move</span></div><div class="line">                    enemyObj.Translate(enemyObj.forward * fleeSpeed * Time.deltaTime);</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">                <span class="keyword">case</span> EnemyFSM.Stroll:</div><div class="line">                    <span class="comment">//Look at a random position</span></div><div class="line">                    Vector3 randomPos = <span class="keyword">new</span> Vector3(Random.Range(<span class="number">0</span>f, <span class="number">100</span>f), <span class="number">0</span>f, Random.Range(<span class="number">0</span>f, <span class="number">100</span>f));</div><div class="line">                    enemyObj.rotation = Quaternion.LookRotation(enemyObj.position - randomPos);</div><div class="line">                    <span class="comment">//Move</span></div><div class="line">                    enemyObj.Translate(enemyObj.forward * strollSpeed * Time.deltaTime);</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">                <span class="keyword">case</span> EnemyFSM.MoveTowardsPlayer:</div><div class="line">                    <span class="comment">//Look at the player</span></div><div class="line">                    enemyObj.rotation = Quaternion.LookRotation(playerObj.position - enemyObj.position);</div><div class="line">                    <span class="comment">//Move</span></div><div class="line">                    enemyObj.Translate(enemyObj.forward * attackSpeed * Time.deltaTime);</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>The Skeleton class looks like this:</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">using</span> UnityEngine;</div><div class="line"><span class="keyword">using</span> System.Collections;</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">namespace</span> <span class="title">StatePattern</span></div><div class="line">&#123;</div><div class="line">    <span class="comment">//The skeleton class</span></div><div class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Skeleton</span> : <span class="title">Enemy</span></div><div class="line">    &#123;</div><div class="line">        EnemyFSM skeletonMode = EnemyFSM.Stroll;</div><div class="line"></div><div class="line">        <span class="keyword">float</span> health = <span class="number">100</span>f;</div><div class="line"></div><div class="line"></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="title">Skeleton</span>(<span class="params">Transform skeletonObj</span>)</span></div><div class="line">        &#123;</div><div class="line">            <span class="keyword">base</span>.enemyObj = skeletonObj;</div><div class="line">        &#125;</div><div class="line"></div><div class="line"></div><div class="line">        <span class="comment">//Update the creeper's state</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">UpdateEnemy</span>(<span class="params">Transform playerObj</span>)</span></div><div class="line">        &#123;</div><div class="line">            <span class="comment">//The distance between the Creeper and the player</span></div><div class="line">            <span class="keyword">float</span> distance = (<span class="keyword">base</span>.enemyObj.position - playerObj.position).magnitude;</div><div class="line"></div><div class="line">            <span class="keyword">switch</span> (skeletonMode)</div><div class="line">            &#123;</div><div class="line">                <span class="keyword">case</span> EnemyFSM.Attack:</div><div class="line">                    <span class="keyword">if</span> (health &lt; <span class="number">20</span>f)</div><div class="line">                    &#123;</div><div class="line">                        skeletonMode = EnemyFSM.Flee;</div><div class="line">                    &#125;</div><div class="line">                    <span class="function"><span class="keyword">else</span> <span class="title">if</span> (<span class="params">distance &gt; <span class="number">6</span>f</span>)</span></div><div class="line">                    &#123;</div><div class="line">                        skeletonMode = EnemyFSM.MoveTowardsPlayer;</div><div class="line">                    &#125;</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">                <span class="keyword">case</span> EnemyFSM.Flee:</div><div class="line">                    <span class="keyword">if</span> (health &gt; <span class="number">60</span>f)</div><div class="line">                    &#123;</div><div class="line">                        skeletonMode = EnemyFSM.Stroll;</div><div class="line">                    &#125;</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">                <span class="keyword">case</span> EnemyFSM.Stroll:</div><div class="line">                    <span class="keyword">if</span> (distance &lt; <span class="number">10</span>f)</div><div class="line">                    &#123;</div><div class="line">                        skeletonMode = EnemyFSM.MoveTowardsPlayer;</div><div class="line">                    &#125;</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">                <span class="keyword">case</span> EnemyFSM.MoveTowardsPlayer:</div><div class="line">                    <span class="comment">//The skeleton has bow and arrow so can attack from distance</span></div><div class="line">                    <span class="keyword">if</span> (distance &lt; <span class="number">5</span>f)</div><div class="line">                    &#123;</div><div class="line">                        skeletonMode = EnemyFSM.Attack;</div><div class="line">                    &#125;</div><div class="line">                    <span class="function"><span class="keyword">else</span> <span class="title">if</span> (<span class="params">distance &gt; <span class="number">15</span>f</span>)</span></div><div class="line">                    &#123;</div><div class="line">                        skeletonMode = EnemyFSM.Stroll;</div><div class="line">                    &#125;</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            <span class="comment">//Move the enemy based on a state</span></div><div class="line">            DoAction(playerObj, skeletonMode);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>The Creeper class looks like this:</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">using</span> UnityEngine;</div><div class="line"><span class="keyword">using</span> System.Collections;</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">namespace</span> <span class="title">StatePattern</span></div><div class="line">&#123;</div><div class="line">    <span class="comment">//The creeper class</span></div><div class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Creeper</span> : <span class="title">Enemy</span></div><div class="line">    &#123;</div><div class="line">        EnemyFSM creeperMode = EnemyFSM.Stroll;</div><div class="line"></div><div class="line">        <span class="keyword">float</span> health = <span class="number">100</span>f;</div><div class="line"></div><div class="line"></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="title">Creeper</span>(<span class="params">Transform creeperObj</span>)</span></div><div class="line">        &#123;</div><div class="line">            <span class="keyword">base</span>.enemyObj = creeperObj;</div><div class="line">        &#125;</div><div class="line"></div><div class="line"></div><div class="line">        <span class="comment">//Update the creeper's state</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">UpdateEnemy</span>(<span class="params">Transform playerObj</span>)</span></div><div class="line">        &#123;</div><div class="line">            <span class="comment">//The distance between the Creeper and the player</span></div><div class="line">            <span class="keyword">float</span> distance = (<span class="keyword">base</span>.enemyObj.position - playerObj.position).magnitude;</div><div class="line"></div><div class="line">            <span class="keyword">switch</span> (creeperMode)</div><div class="line">            &#123;</div><div class="line">                <span class="keyword">case</span> EnemyFSM.Attack:</div><div class="line">                    <span class="keyword">if</span> (health &lt; <span class="number">20</span>f)</div><div class="line">                    &#123;</div><div class="line">                        creeperMode = EnemyFSM.Flee;</div><div class="line">                    &#125;</div><div class="line">                    <span class="function"><span class="keyword">else</span> <span class="title">if</span> (<span class="params">distance &gt; <span class="number">2</span>f</span>)</span></div><div class="line">                    &#123;</div><div class="line">                        creeperMode = EnemyFSM.MoveTowardsPlayer;</div><div class="line">                    &#125;</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">                <span class="keyword">case</span> EnemyFSM.Flee:</div><div class="line">                    <span class="keyword">if</span> (health &gt; <span class="number">60</span>f)</div><div class="line">                    &#123;</div><div class="line">                        creeperMode = EnemyFSM.Stroll;</div><div class="line">                    &#125;</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">                <span class="keyword">case</span> EnemyFSM.Stroll:</div><div class="line">                    <span class="keyword">if</span> (distance &lt; <span class="number">10</span>f)</div><div class="line">                    &#123;</div><div class="line">                        creeperMode = EnemyFSM.MoveTowardsPlayer;</div><div class="line">                    &#125;</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">                <span class="keyword">case</span> EnemyFSM.MoveTowardsPlayer:</div><div class="line">                    <span class="keyword">if</span> (distance &lt; <span class="number">1</span>f)</div><div class="line">                    &#123;</div><div class="line">                        creeperMode = EnemyFSM.Attack;</div><div class="line">                    &#125;</div><div class="line">                    <span class="function"><span class="keyword">else</span> <span class="title">if</span> (<span class="params">distance &gt; <span class="number">15</span>f</span>)</span></div><div class="line">                    &#123;</div><div class="line">                        creeperMode = EnemyFSM.Stroll;</div><div class="line">                    &#125;</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            <span class="comment">//Move the enemy based on a state</span></div><div class="line">            DoAction(playerObj, creeperMode);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>If you now press play, move the camera to a from-above-position, and move the player by changing its coordinates in Unity’s window, you should see something like this:</p>
+<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/state-pattern-in-action.png" alt="State pattern in action scene"></p>
+<p>Both boxes will move towards you if you are close enough, but only the green box will move towards your exact position, because the white box can attack you from a certain distance. But if the blue sphere is far away, both boxes will vibrate at their position. You should maybe implement a time parameter so they are actually strolling and not just changing direction each update, but changing random direction after a certain time!</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://tospan.me/2017/02/05/Unity-GPP-State-Pattern/" data-id="ciyu4ntfv001z2tvwtdue36nf" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Unity/">Unity</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/02/05/Unity-GPP-Subclass-Sandbox-pattern/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Unity GPP Subclass Sandbox pattern
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/02/05/Unity-GPP-Observer-pattern/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Unity GPP Observer pattern</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Math/">Math</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Unity/">Unity</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Basics/">Basics</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C#</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Games/">Games</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Geometry/">Geometry</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linear-Algebra/">Linear Algebra</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Math/">Math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Numerical-Analysis/">Numerical Analysis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Unity/">Unity</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/default/">default</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Basics/" style="font-size: 15px;">Basics</a> <a href="/tags/C/" style="font-size: 13.33px;">C#</a> <a href="/tags/Games/" style="font-size: 10px;">Games</a> <a href="/tags/Geometry/" style="font-size: 11.67px;">Geometry</a> <a href="/tags/Linear-Algebra/" style="font-size: 16.67px;">Linear Algebra</a> <a href="/tags/Math/" style="font-size: 18.33px;">Math</a> <a href="/tags/Numerical-Analysis/" style="font-size: 10px;">Numerical Analysis</a> <a href="/tags/Unity/" style="font-size: 20px;">Unity</a> <a href="/tags/default/" style="font-size: 10px;">default</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/12/">December 2012</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/02/06/Math-3D/">3D数学</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/06/Unity-Engine-Core-Concept/">Unity引擎重要概念</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/06/Unity-Scripting-2D-Code-Snippet/">Unity编程 2D脚本常用代码集合</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/06/Unity-Scripting-Core/">Unity编程要点</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/06/C-Sharp-Essential/">C#要点</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 To Span<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

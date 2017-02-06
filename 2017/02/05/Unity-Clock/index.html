@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Unity时钟 | 吐司片的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="概述时钟，一个简单的时间显示器。
+
+创建对象层级；
+创建、编写脚本添加到对象上；
+访问命名空间；
+使用方法来更新对象；
+根据时间旋转对象。
+
+本教程，我们将通过简单的C#脚本来控制时钟的时针、分针和秒针。
+开始本教程之前，假设你了解了Unity编辑器的基本操作，如果你简单试玩过了Unity，那么就可以大胆开始了。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Unity时钟">
+<meta property="og:url" content="http://tospan.me/2017/02/05/Unity-Clock/index.html">
+<meta property="og:site_name" content="吐司片的博客">
+<meta property="og:description" content="概述时钟，一个简单的时间显示器。
+
+创建对象层级；
+创建、编写脚本添加到对象上；
+访问命名空间；
+使用方法来更新对象；
+根据时间旋转对象。
+
+本教程，我们将通过简单的C#脚本来控制时钟的时针、分针和秒针。
+开始本教程之前，假设你了解了Unity编辑器的基本操作，如果你简单试玩过了Unity，那么就可以大胆开始了。">
+<meta property="og:image" content="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/tutorial-image.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/01-objects.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/02-clockanimator.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/02-clockanimator_empty.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/02-clockanimator_update.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/02-clockanimator_update.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/02-animating.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/03-clockanimator_analog.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/03-animating_analog.png">
+<meta property="og:updated_time" content="2017-02-05T11:58:33.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Unity时钟">
+<meta name="twitter:description" content="概述时钟，一个简单的时间显示器。
+
+创建对象层级；
+创建、编写脚本添加到对象上；
+访问命名空间；
+使用方法来更新对象；
+根据时间旋转对象。
+
+本教程，我们将通过简单的C#脚本来控制时钟的时针、分针和秒针。
+开始本教程之前，假设你了解了Unity编辑器的基本操作，如果你简单试玩过了Unity，那么就可以大胆开始了。">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/tutorial-image.jpg">
+  
+    <link rel="alternate" href="/atom.xml" title="吐司片的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">吐司片的博客</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Work hard, play hard.</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://tospan.me"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Unity-Clock" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/02/05/Unity-Clock/" class="article-date">
+  <time datetime="2017-02-05T11:58:33.000Z" itemprop="datePublished">2017-02-05</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Unity/">Unity</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Unity时钟
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>时钟，一个简单的时间显示器。</p>
+<ul>
+<li>创建对象层级；</li>
+<li>创建、编写脚本添加到对象上；</li>
+<li>访问命名空间；</li>
+<li>使用方法来更新对象；</li>
+<li>根据时间旋转对象。</li>
+</ul>
+<p>本教程，我们将通过简单的C#脚本来控制时钟的时针、分针和秒针。</p>
+<p>开始本教程之前，假设你了解了Unity编辑器的基本操作，如果你简单试玩过了Unity，那么就可以大胆开始了。</p>
+<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/tutorial-image.jpg" alt="You will create this in no time."><br><a id="more"></a></p>
+<h2 id="创建时钟"><a href="#创建时钟" class="headerlink" title="创建时钟"></a>创建时钟</h2><p>首先创建一个新的Unity项目，这个项目不需要任何额外的包(package)，默认场景中有一个位于 <code>(0, 1, -10)</code>的摄像机沿着<code>Z轴</code>向前看。要想获得和场景视图相同的视角的话，可以选择摄像机，然后通过菜单栏中<code>GameObject / Align View</code>来设置，Mac中可以通过 <code>Command + Shift + F</code>快捷键设置。</p>
+<p>我们需要一个对象结构来表示时钟。通过<code>GameObject / Create Empty</code>菜单或者Mac下通过<code>Command + Shift + N</code>创建一个新的空对象(GameObject)。将其我位置设置(position)为 <code>(0, 0, 0)</code>，命名为<code>Clock</code>，为该游戏对象创建三个子对象，分别命名为<code>Hours</code>，<code>Minutes</code>，<code>Seconds</code>并将它们的位置都设置为<code>(0, 0, 0)</code>。</p>
+<blockquote>
+<p>什么是GameObject，子对象，请查看<a href="Unity-Engine-Core-Concept.md">Unity引擎重要概念</a></p>
+</blockquote>
+<p>我们将使用简单的<code>box</code>来表示指针。通过<code>GameObject / 3D Object / Cube</code>为每个指针创建一个子长方体对象。分别设置：</p>
+<ul>
+<li>时针的位置值为<code>(0, 1.0, 0)</code>，缩放值为<code>(0.50, 2, 0.50)</code>，</li>
+<li>分针的位置值为<code>(0, 1.5, 0)</code>，缩放值为<code>(0.25, 3, 0.25)</code>，</li>
+<li>秒针的位置值为<code>(0, 2.0, 0)</code>，缩放值为<code>(0.10, 4, 0.10)</code>。</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/01-objects.png" alt="Clock construction and hierarchy"></p>
+<h2 id="让指针动起来"><a href="#让指针动起来" class="headerlink" title="让指针动起来"></a>让指针动起来</h2><p>我们需要用脚本让指针动起来。在项目面板中右击通过<code>Create / C# Script</code>选项创建一个新的脚本，命名为<code>ClockAnimator</code>，双击打开，删除脚本中所有内容，这样我们好从零开始。</p>
+<p>首先，需要明确的是，我们将要使用到<code>UnityEngine</code>命名空间中的一些东西，然后我们定义一个继承自<code>MonoBehaviour</code>且修饰符是<code>public</code>的类，类名为<code>ClockAnimator</code>。</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">using</span> UnityEngine;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">ClockAnimator</span> : <span class="title">MonoBehaviour</span> &#123;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>什么是<code>命名空间</code>，<code>类</code>请查看<a href="C-Sharp-Essential.md">C#要点</a><br>什么是<code>MonoBehaviour</code>，请查看<a href="Unity-Engine-Core-Concept.md">Unity引擎重要概念</a></p>
+</blockquote>
+<p>这是用于作为游戏对象组件的内容最简单的脚本了。保存，然后将其从项目面板(Project)拖到层级(Hierarchy)面板的<code>Clock</code>对象上，或者通过<code>Add Component</code>按钮来添加。</p>
+<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/02-clockanimator.png" alt="ClockAnimator attached to Clock"></p>
+<p>To animate the arms, we need access to their Transform components first. Add a public Transform variable for each arm to the script, then save it. These public variables will become component properties which you can assign object to in the editor. The editor will then grab the Transform components of these objects and assign them to our variables. Select the Clock object, then drag the corresponding objects to the new properties.</p>
+<p>要使指针动起来，首先我们需要能访问它们的<code>Transform</code>组件。在脚本中为每个指针创建一个<code>public</code>修饰的<code>Transform</code>变量并保存。我们将在Unity编辑器中看到这些公共变量，它们都成了组件的属性。编辑器将获取这些对象的<code>Transform</code>组件并赋值给我们定义的变量。选中<code>Clock</code>对象，拖动对应的对象到这些新的属性里去。</p>
+<blockquote>
+<p>什么是<code>变量</code>，类请查看<a href="C-Sharp-Essential.md">C#要点</a></p>
+</blockquote>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">using</span> UnityEngine;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">ClockAnimator</span> : <span class="title">MonoBehaviour</span> &#123;</div><div class="line"></div><div class="line">	<span class="keyword">public</span> Transform hours, minutes, seconds;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/02-clockanimator_empty.png" alt="empty">  </p>
+<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/02-clockanimator_update.png" alt="filled"></p>
+<p>ClockAnimator with empty and filled properties.</p>
+<p>接下来，我们向脚本中添加<code>Update</code>方法。这是Unity引擎中的一个特殊方法，它将会在每一帧调用一次，我们将用它来旋转时钟的指针。</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">using</span> UnityEngine;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">ClockAnimator</span> : <span class="title">MonoBehaviour</span> &#123;</div><div class="line"></div><div class="line">	<span class="keyword">public</span> Transform hours, minutes, seconds;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Update</span> (<span class="params"></span>) </span>&#123;</div><div class="line">		<span class="comment">// currently do nothing</span></div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>什么是<code>方法</code>，类请查看<a href="C-Sharp-Essential.md">C#要点</a><br><code>Update</code>方法的访问修饰符可不可以是<code>public</code> ？请查看<a href="Unity-Scripting-Core.md">Unity编程要点</a></p>
+</blockquote>
+<p>脚本保存之后，编辑器注意到我们的脚本有Update方法（当然除此之外，Start方法之类的都有这个特征），就会显示一个复选框，让我们可以禁用或启用该脚本。当然，我们这里会确保启用，也就是勾选该脚本。</p>
+<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/02-clockanimator_update.png" alt="Updating ClockAnimator adorned with a checkbox"></p>
+<p>每小时时针会旋转 <code>360/12</code>度，分针每分钟旋转<code>360/60</code>度，秒针每秒钟旋转<code>360/60</code>度。 为了方便，我们先把这些值定义为私有的浮点数常量。</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">using</span> UnityEngine;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">ClockAnimator</span> : <span class="title">MonoBehaviour</span> &#123;</div><div class="line"></div><div class="line">	<span class="keyword">private</span> <span class="keyword">const</span> <span class="keyword">float</span></div><div class="line">		hoursToDegrees = <span class="number">360</span>f / <span class="number">12</span>f,</div><div class="line">		minutesToDegrees = <span class="number">360</span>f / <span class="number">60</span>f,</div><div class="line">		secondsToDegrees = <span class="number">360</span>f / <span class="number">60</span>f;</div><div class="line"></div><div class="line">	<span class="keyword">public</span> Transform hours, minutes, seconds;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Update</span> (<span class="params"></span>) </span>&#123;</div><div class="line">		<span class="comment">// currently do nothing</span></div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>关于const，请查看<a href="C-Sharp-Essential.md">C#要点</a></p>
+</blockquote>
+<p>每次更新，我们都需要知道当前时间，<code>System</code>命名空间中包含了<a href="http://social.msdn.microsoft.com/search/en-us?query=DateTime" target="_blank" rel="external">DateTime</a> 结构(struct)，它完全可以胜任。它有一个静态属性<code>Now</code>一直可以提供当前时间，每次更新，我们需要获取它的值，然后存到临时变量中。</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">using</span> UnityEngine;</div><div class="line"><span class="keyword">using</span> System;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">ClockAnimator</span> : <span class="title">MonoBehaviour</span> &#123;</div><div class="line"></div><div class="line">	<span class="keyword">private</span> <span class="keyword">const</span> <span class="keyword">float</span></div><div class="line">		hoursToDegrees = <span class="number">360</span>f / <span class="number">12</span>f,</div><div class="line">		minutesToDegrees = <span class="number">360</span>f / <span class="number">60</span>f,</div><div class="line">		secondsToDegrees = <span class="number">360</span>f / <span class="number">60</span>f;</div><div class="line"></div><div class="line">	<span class="keyword">public</span> Transform hours, minutes, seconds;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Update</span> (<span class="params"></span>) </span>&#123;</div><div class="line">		DateTime time = DateTime.Now;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>什么是<code>结构</code>，类请查看<a href="C-Sharp-Essential.md">C#要点</a><br>什么是<code>属性(property)</code>，类请查看<a href="C-Sharp-Essential.md">C#要点</a></p>
+</blockquote>
+<p>To get the arms to rotate, we need to change their local rotation. We do this by directly setting the localRotation of the arms, using quaternions. Quaternion has a nice method we can use to define an arbitrary rotation.</p>
+<p>Because we’re looking down the Z axis and Unity uses a left-handed coordinate system, the rotation must be negative around the Z axis.</p>
+<p>要使得指针旋转，我们需要修改它们的<code>local rotation</code>值。我们通过使用<code>四元数(Quaternion)</code>直接设置指针的<code>localRotation</code>来实现。<code>Quaternion</code>有个很方便的方法可以用于任意设置游戏对象的角度。</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">using</span> UnityEngine;</div><div class="line"><span class="keyword">using</span> System;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">ClockAnimator</span> : <span class="title">MonoBehaviour</span> &#123;</div><div class="line"></div><div class="line">	<span class="keyword">private</span> <span class="keyword">const</span> <span class="keyword">float</span></div><div class="line">		hoursToDegrees = <span class="number">360</span>f / <span class="number">12</span>f,</div><div class="line">		minutesToDegrees = <span class="number">360</span>f / <span class="number">60</span>f,</div><div class="line">		secondsToDegrees = <span class="number">360</span>f / <span class="number">60</span>f;</div><div class="line"></div><div class="line">	<span class="keyword">public</span> Transform hours, minutes, seconds;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Update</span> (<span class="params"></span>) </span>&#123;</div><div class="line">		DateTime time = DateTime.Now;</div><div class="line">		hours.localRotation =</div><div class="line">			Quaternion.Euler(<span class="number">0</span>f, <span class="number">0</span>f, time.Hour * -hoursToDegrees);</div><div class="line">		minutes.localRotation =</div><div class="line">			Quaternion.Euler(<span class="number">0</span>f, <span class="number">0</span>f, time.Minute * -minutesToDegrees);</div><div class="line">		seconds.localRotation =</div><div class="line">			Quaternion.Euler(<span class="number">0</span>f, <span class="number">0</span>f, time.Second * -secondsToDegrees);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/02-animating.png" alt="Clock showing it&#39;s 12:44"></p>
+<blockquote>
+<p>什么是四元数？请查看<a href="Math-3D.md">3D 数学</a></p>
+<p><strong>Why not use rotation?</strong><br>localRotation refers to the actual rotation of a Transform, independent of the rotation of its parent. So if we were to rotate Clock, its arms would rotate along with it, as expected.</p>
+<p>rotation refers to the final rotation of a Transform as it is observed, taking the rotation of its parent into account. The arms would not adjust when we rotate Clock, as its rotation will be compensated for.</p>
+</blockquote>
+<h2 id="优化一下"><a href="#优化一下" class="headerlink" title="优化一下"></a>优化一下</h2><p>This works! When in play mode, our clock shows the current time. However, it behaves much like a digital clock as it only shows discrete steps. Let’s include an option to show analog time as well. Add a public boolean variable analog to the script and use it to determine what to do in the update method. We can toggle this value in the editor, even when in play mode.</p>
+<p>哈！有用了！</p>
+<p>进入Play模式下，时钟会显示当前的时间。</p>
+<p>然而，由于每一步都是离散的，它看上去很像电子钟。我们来添加一个选项，让它也可以像模拟时钟一样。</p>
+<p>在脚本中添加一个公共的bool类型的变量<code>analog</code>，用于决定<code>Update</code>方法中具体做什么。我们可以在编辑器切换该值，哪怕是在运行时都可以哦！</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">using</span> UnityEngine;</div><div class="line"><span class="keyword">using</span> System;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">ClockAnimator</span> : <span class="title">MonoBehaviour</span> &#123;</div><div class="line"></div><div class="line">	<span class="keyword">private</span> <span class="keyword">const</span> <span class="keyword">float</span></div><div class="line">		hoursToDegrees = <span class="number">360</span>f / <span class="number">12</span>f,</div><div class="line">		minutesToDegrees = <span class="number">360</span>f / <span class="number">60</span>f,</div><div class="line">		secondsToDegrees = <span class="number">360</span>f / <span class="number">60</span>f;</div><div class="line"></div><div class="line">	<span class="keyword">public</span> Transform hours, minutes, seconds;</div><div class="line"></div><div class="line">	<span class="keyword">public</span> <span class="keyword">bool</span> analog;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Update</span> (<span class="params"></span>) </span>&#123;</div><div class="line">		<span class="keyword">if</span> (analog) &#123;</div><div class="line">			<span class="comment">// currently do nothing</span></div><div class="line">		&#125;</div><div class="line">		<span class="keyword">else</span> &#123;</div><div class="line">			DateTime time = DateTime.Now;</div><div class="line">			hours.localRotation =</div><div class="line">				Quaternion.Euler(<span class="number">0</span>f, <span class="number">0</span>f, time.Hour * -hoursToDegrees);</div><div class="line">			minutes.localRotation =</div><div class="line">				Quaternion.Euler(<span class="number">0</span>f, <span class="number">0</span>f, time.Minute * -minutesToDegrees);</div><div class="line">			seconds.localRotation =</div><div class="line">				Quaternion.Euler(<span class="number">0</span>f, <span class="number">0</span>f, time.Second * -secondsToDegrees);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/03-clockanimator_analog.png" alt="ClockAnimator allowing analog mode"></p>
+<p>要实现模拟时钟特性，我们需要稍微不同的方式，不同于使用<code>DateTime.Now</code>，我们将使用<code>DateTime.Now.TimeOfDay</code>，它是<code>TimeSpan</code>类型。它可以让我们简单地获取到非常小的小时、分钟或秒钟的过渡。由于这些值是双精度的浮点数，我们需要进行强制转换。</p>
+<blockquote>
+<p>什么是<code>类型转换</code>，类请查看<a href="C-Sharp-Essential.md">C#要点</a></p>
+</blockquote>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">using</span> UnityEngine;</div><div class="line"><span class="keyword">using</span> System;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">ClockAnimator</span> : <span class="title">MonoBehaviour</span> &#123;</div><div class="line"></div><div class="line">	<span class="keyword">private</span> <span class="keyword">const</span> <span class="keyword">float</span></div><div class="line">		hoursToDegrees = <span class="number">360</span>f / <span class="number">12</span>f,</div><div class="line">		minutesToDegrees = <span class="number">360</span>f / <span class="number">60</span>f,</div><div class="line">		secondsToDegrees = <span class="number">360</span>f / <span class="number">60</span>f;</div><div class="line"></div><div class="line">	<span class="keyword">public</span> Transform hours, minutes, seconds;</div><div class="line">	<span class="keyword">public</span> <span class="keyword">bool</span> analog;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Update</span> (<span class="params"></span>) </span>&#123;</div><div class="line">		<span class="keyword">if</span> (analog) &#123;</div><div class="line">			TimeSpan timespan = DateTime.Now.TimeOfDay;</div><div class="line">			hours.localRotation = Quaternion.Euler(</div><div class="line">				<span class="number">0</span>f, <span class="number">0</span>f, (<span class="keyword">float</span>)timespan.TotalHours * -hoursToDegrees);</div><div class="line">			minutes.localRotation = Quaternion.Euler(</div><div class="line">				<span class="number">0</span>f, <span class="number">0</span>f, (<span class="keyword">float</span>)timespan.TotalMinutes * -minutesToDegrees);</div><div class="line">			seconds.localRotation = Quaternion.Euler(</div><div class="line">				<span class="number">0</span>f, <span class="number">0</span>f, (<span class="keyword">float</span>)timespan.TotalSeconds * -secondsToDegrees);</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">else</span> &#123;</div><div class="line">			DateTime time = DateTime.Now;</div><div class="line">			hours.localRotation =</div><div class="line">				Quaternion.Euler(<span class="number">0</span>f, <span class="number">0</span>f, time.Hour * -hoursToDegrees);</div><div class="line">			minutes.localRotation =</div><div class="line">				Quaternion.Euler(<span class="number">0</span>f, <span class="number">0</span>f, time.Minute * -minutesToDegrees);</div><div class="line">			seconds.localRotation =</div><div class="line">				Quaternion.Euler(<span class="number">0</span>f, <span class="number">0</span>f, time.Second * -secondsToDegrees);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/03-animating_analog.png" alt="Clock in analog mode showing it&#39;s 12:56"></p>
+<p>好了！现在我们的时钟也可以像模拟时钟一样工作了！</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://tospan.me/2017/02/05/Unity-Clock/" data-id="ciyu4ntes000t2tvwzs6lfdu1" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Basics/">Basics</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Unity/">Unity</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/02/05/Unity-Constructing-a-Fractal/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Unity创建分形(Fractal)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/02/05/Unity-Select-units-within-a-rectangle/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Unity Select units within a rectangle</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Math/">Math</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Unity/">Unity</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Basics/">Basics</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C#</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Games/">Games</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Geometry/">Geometry</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linear-Algebra/">Linear Algebra</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Math/">Math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Numerical-Analysis/">Numerical Analysis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Unity/">Unity</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/default/">default</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Basics/" style="font-size: 15px;">Basics</a> <a href="/tags/C/" style="font-size: 13.33px;">C#</a> <a href="/tags/Games/" style="font-size: 10px;">Games</a> <a href="/tags/Geometry/" style="font-size: 11.67px;">Geometry</a> <a href="/tags/Linear-Algebra/" style="font-size: 16.67px;">Linear Algebra</a> <a href="/tags/Math/" style="font-size: 18.33px;">Math</a> <a href="/tags/Numerical-Analysis/" style="font-size: 10px;">Numerical Analysis</a> <a href="/tags/Unity/" style="font-size: 20px;">Unity</a> <a href="/tags/default/" style="font-size: 10px;">default</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/12/">December 2012</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/02/06/Math-3D/">3D数学</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/06/Unity-Engine-Core-Concept/">Unity引擎重要概念</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/06/Unity-Scripting-2D-Code-Snippet/">Unity编程 2D脚本常用代码集合</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/06/Unity-Scripting-Core/">Unity编程要点</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/06/C-Sharp-Essential/">C#要点</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 To Span<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

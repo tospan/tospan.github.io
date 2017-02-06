@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>How to tell if you have passed a waypoint | 吐司片的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="It might first seem like it’s easy to determine if you have passed a waypoint you are heading towards. Can’t you just use the distance between you and the waypoint and if that distance is small, then">
+<meta property="og:type" content="article">
+<meta property="og:title" content="How to tell if you have passed a waypoint">
+<meta property="og:url" content="http://tospan.me/2017/02/05/How-to-tell-if-you-have-passed-a-waypoint/index.html">
+<meta property="og:site_name" content="吐司片的博客">
+<meta property="og:description" content="It might first seem like it’s easy to determine if you have passed a waypoint you are heading towards. Can’t you just use the distance between you and the waypoint and if that distance is small, then">
+<meta property="og:image" content="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/passed-waypoint.png">
+<meta property="og:updated_time" content="2017-02-06T13:18:11.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="How to tell if you have passed a waypoint">
+<meta name="twitter:description" content="It might first seem like it’s easy to determine if you have passed a waypoint you are heading towards. Can’t you just use the distance between you and the waypoint and if that distance is small, then">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/passed-waypoint.png">
+  
+    <link rel="alternate" href="/atom.xml" title="吐司片的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">吐司片的博客</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Work hard, play hard.</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://tospan.me"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-How-to-tell-if-you-have-passed-a-waypoint" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/02/05/How-to-tell-if-you-have-passed-a-waypoint/" class="article-date">
+  <time datetime="2017-02-05T01:59:08.000Z" itemprop="datePublished">2017-02-05</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Unity/">Unity</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      How to tell if you have passed a waypoint
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>It might first seem like it’s easy to determine if you have passed a waypoint you are heading towards. Can’t you just use the distance between you and the waypoint and if that distance is small, then change waypoint. This will work if your character has a small turning radius. But if that turning radius is large, I promise you that you will see the character turning around the waypoint and never reach it - it will just spin around in a circle. But there may be a better way. This is the basic scene</p>
+<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/passed-waypoint.png" alt="Passed waypoint basic scene"></p>
+<a id="more"></a>
+<p>To solve this problem you need at least 2 waypoints: the first is where you are going from and the second is the waypoint you are want to reach. The basic idea is that we are going to find the point on the line between the waypoints that’s the closest to the character with the help of Vector Projection. Then we can tell how far between the waypoints the character is, and if it’s above 1, then we know the character has passed the waypoint. If so, we change to the next waypoint and repeat the calculations. This solution will not always work, but it’s much better than determining the distance between the character and the waypoint. This is the code:</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">using</span> UnityEngine;</div><div class="line"><span class="keyword">using</span> System.Collections;</div><div class="line"></div><div class="line"><span class="keyword">namespace</span> <span class="title">LinearAlgebra</span></div><div class="line">&#123;</div><div class="line">    <span class="comment">//Figure out if you have passed a waypoint</span></div><div class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">PassedWaypoint</span> : <span class="title">MonoBehaviour</span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">public</span> Transform youTrans;</div><div class="line">        <span class="keyword">public</span> Transform waypointFromTrans;</div><div class="line">        <span class="keyword">public</span> Transform waypointToTrans;</div><div class="line">        <span class="keyword">public</span> Transform debugTrans;</div><div class="line"></div><div class="line">        <span class="function"><span class="keyword">void</span> <span class="title">Update</span>(<span class="params"></span>)</span></div><div class="line">        &#123;</div><div class="line">            <span class="comment">//The vector between the character and the waypoint we are going from</span></div><div class="line">            Vector3 a = youTrans.position - waypointFromTrans.position;</div><div class="line"></div><div class="line">            <span class="comment">//The vector between the waypoints</span></div><div class="line">            Vector3 b = waypointToTrans.position - waypointFromTrans.position;</div><div class="line"></div><div class="line">            <span class="comment">//Vector projection from https://en.wikipedia.org/wiki/Vector_projection</span></div><div class="line">            <span class="comment">//To know if we have passed the upcoming waypoint we need to find out how much of b is a1</span></div><div class="line">            <span class="comment">//a1 = (a.b / |b|^2) * b</span></div><div class="line">            <span class="comment">//a1 = progress * b -&gt; progress = a1 / b -&gt; progress = (a.b / |b|^2)</span></div><div class="line">            <span class="keyword">float</span> progress = (a.x * b.x + a.y * b.y + a.z * b.z) / (b.x * b.x + b.y * b.y + b.z * b.z);</div><div class="line"></div><div class="line">            <span class="comment">//If progress is above 1 we know we have passed the waypoint</span></div><div class="line">            <span class="keyword">if</span> (progress &gt; <span class="number">1.0</span>f)</div><div class="line">            &#123;</div><div class="line">                Debug.Log(<span class="string">"Change waypoint"</span>);</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span></div><div class="line">            &#123;</div><div class="line">                Debug.Log(<span class="string">"Move on"</span>);</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            <span class="comment">//Debug by adding a cube to where the closest point on the line between the waypoints from the character is</span></div><div class="line">            debugTrans.position = progress * b + waypointFromTrans.position;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a href="http://www.habrador.com/tutorials/linear-algebra/2-passed-waypoint/" target="_blank" rel="external">How to tell if you have passed a waypoint?</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://tospan.me/2017/02/05/How-to-tell-if-you-have-passed-a-waypoint/" data-id="ciyu4nte000092tvwc59yibxs" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linear-Algebra/">Linear Algebra</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Math/">Math</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Unity/">Unity</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/02/05/Turn-left-or-right-to-reach-a-waypoint/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Turn left or right to reach a waypoint
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/02/05/In-front-or-behind-you/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">敌人在你前面还是后面？</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Math/">Math</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Unity/">Unity</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Basics/">Basics</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C#</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Games/">Games</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Geometry/">Geometry</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linear-Algebra/">Linear Algebra</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Math/">Math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Numerical-Analysis/">Numerical Analysis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Unity/">Unity</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/default/">default</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Basics/" style="font-size: 15px;">Basics</a> <a href="/tags/C/" style="font-size: 13.33px;">C#</a> <a href="/tags/Games/" style="font-size: 10px;">Games</a> <a href="/tags/Geometry/" style="font-size: 11.67px;">Geometry</a> <a href="/tags/Linear-Algebra/" style="font-size: 16.67px;">Linear Algebra</a> <a href="/tags/Math/" style="font-size: 18.33px;">Math</a> <a href="/tags/Numerical-Analysis/" style="font-size: 10px;">Numerical Analysis</a> <a href="/tags/Unity/" style="font-size: 20px;">Unity</a> <a href="/tags/default/" style="font-size: 10px;">default</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/12/">December 2012</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/02/06/Math-3D/">3D数学</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/06/Unity-Engine-Core-Concept/">Unity引擎重要概念</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/06/Unity-Scripting-2D-Code-Snippet/">Unity编程 2D脚本常用代码集合</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/06/Unity-Scripting-Core/">Unity编程要点</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/06/C-Sharp-Essential/">C#要点</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 To Span<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

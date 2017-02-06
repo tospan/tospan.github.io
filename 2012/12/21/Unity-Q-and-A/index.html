@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Unity使用过程中的小问题与答案 | 吐司片的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="将Editor(包括系统自带如Light等)添加到EditorWindow中http://leahayes.wordpress.com/2012/07/16/possibility-of-reusing-custom-editors-in-custom-window/
+
+更新：This functionality has since been added to Unity 4, please re">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Unity使用过程中的小问题与答案">
+<meta property="og:url" content="http://tospan.me/2012/12/21/Unity-Q-and-A/index.html">
+<meta property="og:site_name" content="吐司片的博客">
+<meta property="og:description" content="将Editor(包括系统自带如Light等)添加到EditorWindow中http://leahayes.wordpress.com/2012/07/16/possibility-of-reusing-custom-editors-in-custom-window/
+
+更新：This functionality has since been added to Unity 4, please re">
+<meta property="og:updated_time" content="2017-02-05T04:24:10.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Unity使用过程中的小问题与答案">
+<meta name="twitter:description" content="将Editor(包括系统自带如Light等)添加到EditorWindow中http://leahayes.wordpress.com/2012/07/16/possibility-of-reusing-custom-editors-in-custom-window/
+
+更新：This functionality has since been added to Unity 4, please re">
+  
+    <link rel="alternate" href="/atom.xml" title="吐司片的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">吐司片的博客</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Work hard, play hard.</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://tospan.me"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Unity-Q-and-A" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2012/12/21/Unity-Q-and-A/" class="article-date">
+  <time datetime="2012-12-21T01:49:59.000Z" itemprop="datePublished">2012-12-21</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Unity/">Unity</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Unity使用过程中的小问题与答案
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="将Editor-包括系统自带如Light等-添加到EditorWindow中"><a href="#将Editor-包括系统自带如Light等-添加到EditorWindow中" class="headerlink" title="将Editor(包括系统自带如Light等)添加到EditorWindow中"></a>将Editor(包括系统自带如Light等)添加到EditorWindow中</h2><p><a href="http://leahayes.wordpress.com/2012/07/16/possibility-of-reusing-custom-editors-in-custom-window/" target="_blank" rel="external">http://leahayes.wordpress.com/2012/07/16/possibility-of-reusing-custom-editors-in-custom-window/</a></p>
+<hr>
+<p>更新：This functionality has since been added to Unity 4, please refer to the following for more information:</p>
+<ul>
+<li><a href="https://docs.unity3d.com/ScriptReference/Editor.CreateEditor.html" target="_blank" rel="external">Editor.CreateEditor</a></li>
+</ul>
+<h2 id="内置GUI实现禁用部分控件功能"><a href="#内置GUI实现禁用部分控件功能" class="headerlink" title="内置GUI实现禁用部分控件功能"></a>内置GUI实现禁用部分控件功能</h2><p>估计这个也算是一个优雅的解决方法，这个思路是借鉴的这里的：</p>
+<p><a href="http://forum.unity3d.com/threads/24641-Enable-Disable-GUI-Components" target="_blank" rel="external">http://forum.unity3d.com/threads/24641-Enable-Disable-GUI-Components</a></p>
+<p>说明：专门针对一个GUI区创建bool类型，用于指定是否禁用GUI比如说 <code>bool  isEnabled = true;</code></p>
+<a id="more"></a>
+<p>在非GUI方法中创建控件组：</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">TestCombine</span>(<span class="params"><span class="keyword">bool</span> isEnabled</span>)</span></div><div class="line">&#123;</div><div class="line">     GUI.enabled = isForbid;</div><div class="line">     GUI.BeginGroup(<span class="keyword">new</span> Rect((Screen.width - <span class="number">500</span>) * <span class="number">.5</span>f, (Screen.height - <span class="number">500</span>) * <span class="number">.5</span>f, <span class="number">500</span>, <span class="number">500</span>), <span class="string">"ViewPoints"</span>, GUI.skin.window);</div><div class="line"></div><div class="line">	<span class="keyword">if</span> (GUI.Button(<span class="keyword">new</span> Rect(<span class="number">10</span>, <span class="number">20</span>, <span class="number">100</span>, <span class="number">25</span>), <span class="string">"Add"</span>))</div><div class="line">	&#123;</div><div class="line">		<span class="comment">//  弹出保存存对话框</span></div><div class="line">		<span class="keyword">if</span> (isShowAdd)</div><div class="line">		&#123;</div><div class="line">			isShowAdd = <span class="literal">false</span>;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">else</span></div><div class="line">		&#123;</div><div class="line">			isShowAdd = <span class="literal">true</span>;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	GUI.Box(<span class="keyword">new</span> Rect(<span class="number">10</span>, <span class="number">50</span>, <span class="number">480</span>, <span class="number">440</span>), <span class="string">""</span>);</div><div class="line"></div><div class="line">	<span class="keyword">foreach</span> (VPs4 vp <span class="keyword">in</span> viewpoints)</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">if</span> (GUI.Button(ViewPointsButtonRect(vp.index), vp.name))</div><div class="line">		&#123;</div><div class="line">			print(<span class="string">"hello"</span>);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	GUI.EndGroup();</div><div class="line">	GUI.enabled = <span class="literal">true</span>; <span class="comment">//非常重要！否在这调用该方法之后的所有控件都会被禁用</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>看到这里你就能明白是怎么回事了，在OnGUI里调用该方法时通过传递isEnabled值来决定是否禁用该Group里控件</p>
+<p>还有一些其他的思路可以参考：<br><a href="http://answers.unity3d.com/questions/7531/if-i-have-a-button-over-my-3d-world-how-can-i-dete.html" target="_blank" rel="external">http://answers.unity3d.com/questions/7531/if-i-have-a-button-over-my-3d-world-how-can-i-dete.html</a> </p>
+<p>这是对于使用默认GUI元素来控制的，如果使用GUIText,GUITexture，可以参考以下的：<br><a href="http://answers.unity3d.com/questions/16587/gui-click-through.html" target="_blank" rel="external">http://answers.unity3d.com/questions/16587/gui-click-through.html</a></p>
+<h2 id="如何根据类型查找项目中所有的Asset"><a href="#如何根据类型查找项目中所有的Asset" class="headerlink" title="如何根据类型查找项目中所有的Asset"></a>如何根据类型查找项目中所有的Asset</h2><p>在Editor文件夹下创建C#脚本，我命名为TryFindEditor，你自便啦！复制下面的脚本，刷新下项目就可以在Window菜单下找到Find All Type选项，完成！</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">using</span> UnityEngine;</div><div class="line"><span class="keyword">using</span> System.Collections.Generic;</div><div class="line"><span class="keyword">using</span> UnityEditor;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">TryFindEditor</span> : <span class="title">EditorWindow</span></div><div class="line">&#123;</div><div class="line">    <span class="comment">// Add menu item named "My Window" to the Window menu</span></div><div class="line">    [MenuItem(<span class="string">"Window/Find All Type"</span>)]</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">ShowWindow</span>(<span class="params"></span>)</span></div><div class="line">    &#123;</div><div class="line">        <span class="comment">//Show existing window instance. If one doesn't exist, make one.</span></div><div class="line">        EditorWindow.GetWindow(<span class="keyword">typeof</span>(TryFindEditor));</div><div class="line">    &#125;</div><div class="line">    List&lt;Material&gt; allMaterials;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">OnGUI</span>(<span class="params"></span>)</span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">if</span> (GUILayout.Button(<span class="string">"Load"</span>))</div><div class="line">        &#123;</div><div class="line">            allMaterials = <span class="keyword">new</span> List&lt;Material&gt;();</div><div class="line">            <span class="keyword">string</span>[] paths = AssetDatabase.GetAllAssetPaths();</div><div class="line">            <span class="keyword">foreach</span> (<span class="keyword">string</span> path <span class="keyword">in</span> paths)</div><div class="line">            &#123;</div><div class="line">                Material mat = (Material)AssetDatabase.LoadAssetAtPath(path, <span class="keyword">typeof</span>(Material));</div><div class="line">                <span class="keyword">if</span> (mat != <span class="literal">null</span>)</div><div class="line">                &#123;</div><div class="line">                    Debug.Log(mat.name);</div><div class="line">                    allMaterials.Add(mat);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            Debug.Log(allMaterials.Count);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://tospan.me/2012/12/21/Unity-Q-and-A/" data-id="ciyu4ntg100262tvw7n4in6bn" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Unity/">Unity</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/01/01/Restart/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Restart
+        
+      </div>
+    </a>
+  
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Math/">Math</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Unity/">Unity</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Basics/">Basics</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C#</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Games/">Games</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Geometry/">Geometry</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linear-Algebra/">Linear Algebra</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Math/">Math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Numerical-Analysis/">Numerical Analysis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Unity/">Unity</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/default/">default</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Basics/" style="font-size: 15px;">Basics</a> <a href="/tags/C/" style="font-size: 13.33px;">C#</a> <a href="/tags/Games/" style="font-size: 10px;">Games</a> <a href="/tags/Geometry/" style="font-size: 11.67px;">Geometry</a> <a href="/tags/Linear-Algebra/" style="font-size: 16.67px;">Linear Algebra</a> <a href="/tags/Math/" style="font-size: 18.33px;">Math</a> <a href="/tags/Numerical-Analysis/" style="font-size: 10px;">Numerical Analysis</a> <a href="/tags/Unity/" style="font-size: 20px;">Unity</a> <a href="/tags/default/" style="font-size: 10px;">default</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/12/">December 2012</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/02/06/Math-3D/">3D数学</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/06/Unity-Engine-Core-Concept/">Unity引擎重要概念</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/06/Unity-Scripting-2D-Code-Snippet/">Unity编程 2D脚本常用代码集合</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/06/Unity-Scripting-Core/">Unity编程要点</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/06/C-Sharp-Essential/">C#要点</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 To Span<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
