@@ -8,8 +8,7 @@
   <meta name="description" content="我真正使用C#是在Unity中的。
 阐明Unity可以使用多种编程语言，例如C#，JavaScript。大部分情况下我们会选择C#，我们自然就会面对一个问题，Unity使用了那个C#版本？这涉及到我们是否可以使用C#的一些特性以及界定Unity编程环境中一些与众不同的地方。
 这其实需要了解一下C#的生态了。
-首先需要明确的是，Unity使用了Mono
-C#都有哪些版本What are the co">
+首先需要明确的是，Unity使用了Mono">
 <meta property="og:type" content="article">
 <meta property="og:title" content="C#要点">
 <meta property="og:url" content="http://tospan.me/2017/02/06/C-Sharp-Essential/index.html">
@@ -17,16 +16,16 @@ C#都有哪些版本What are the co">
 <meta property="og:description" content="我真正使用C#是在Unity中的。
 阐明Unity可以使用多种编程语言，例如C#，JavaScript。大部分情况下我们会选择C#，我们自然就会面对一个问题，Unity使用了那个C#版本？这涉及到我们是否可以使用C#的一些特性以及界定Unity编程环境中一些与众不同的地方。
 这其实需要了解一下C#的生态了。
-首先需要明确的是，Unity使用了Mono
-C#都有哪些版本What are the co">
+首先需要明确的是，Unity使用了Mono">
+<meta property="og:image" content="http://tospan.me/../_images/unity/520px-Overview_of_the_Common_Language_Infrastructure.svg">
 <meta property="og:updated_time" content="2017-02-06T06:03:36.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="C#要点">
 <meta name="twitter:description" content="我真正使用C#是在Unity中的。
 阐明Unity可以使用多种编程语言，例如C#，JavaScript。大部分情况下我们会选择C#，我们自然就会面对一个问题，Unity使用了那个C#版本？这涉及到我们是否可以使用C#的一些特性以及界定Unity编程环境中一些与众不同的地方。
 这其实需要了解一下C#的生态了。
-首先需要明确的是，Unity使用了Mono
-C#都有哪些版本What are the co">
+首先需要明确的是，Unity使用了Mono">
+<meta name="twitter:image" content="http://tospan.me/../_images/unity/520px-Overview_of_the_Common_Language_Infrastructure.svg">
   
     <link rel="alternate" href="/atom.xml" title="吐司片的博客" type="application/atom+xml">
   
@@ -86,7 +85,7 @@ C#都有哪些版本What are the co">
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/Unity/">Unity</a>
+    <a class="article-category-link" href="/categories/Game-Development/">Game Development</a>
   </div>
 
   </div>
@@ -109,6 +108,26 @@ C#都有哪些版本What are the co">
 <h1 id="阐明"><a href="#阐明" class="headerlink" title="阐明"></a>阐明</h1><p>Unity可以使用多种编程语言，例如C#，JavaScript。大部分情况下我们会选择C#，我们自然就会面对一个问题，Unity使用了那个C#版本？这涉及到我们是否可以使用C#的一些特性以及界定Unity编程环境中一些与众不同的地方。</p>
 <p>这其实需要了解一下C#的生态了。</p>
 <p>首先需要明确的是，Unity使用了Mono</p>
+<a id="more"></a>
+<h2 id="C-语言的生态环境"><a href="#C-语言的生态环境" class="headerlink" title="C#语言的生态环境"></a>C#语言的生态环境</h2><p>我反正一开始是对什么.NET，.NET Framework，.NET Core，ASP.NET，CLI，CIL，CLR这些词语混淆了，而且看来还不止我一个，StackOverflow上有个答案清晰的解释了它们都表示什么。</p>
+<p><a href="http://stackoverflow.com/questions/3103360/net-vs-asp-net-vs-clr-vs-asp" target="_blank" rel="external">.NET vs ASP.NET vs CLR vs ASP</a></p>
+<ul>
+<li><a href="http://en.wikipedia.org/wiki/Active_Server_Pages" target="_blank" rel="external">ASP</a>, Active Server Pages (now referred to as ASP Classic) is a server-side scripting environment that predates .Net and has nothing to do with it<br>ASP pages are usually written in VBScript, but can be written in any language supported by the Windows Scripting Host - JScript and VBScript are supported natively, with third-party libraries offering support for PerlScript and other dynamic languages.</li>
+<li><a href="http://en.wikipedia.org/wiki/.NET_Framework" target="_blank" rel="external">.Net</a> is a framework for managed code and assemblies<br>.Net code can be written in any language that has an CIL compiler.</li>
+<li><a href="http://en.wikipedia.org/wiki/Common_Language_Runtime" target="_blank" rel="external">CLR</a>, Common Language Runtime, is the core runtime used by the .Net framework<br>The CLR transforms CIL code (formerly MSIL) into machine code (this is done by the JITter or by ngen) and executes it.</li>
+<li><p><a href="http://en.wikipedia.org/wiki/ASP.NET" target="_blank" rel="external">ASP.Net</a> is a replacement for ASP built on .Net<br>ASP.Net pages can be written in any .Net language, but are usually written in C#.<br>Other terms that you didn’t ask about:</p>
+</li>
+<li><p><a href="http://en.wikipedia.org/wiki/Common_Intermediate_Language" target="_blank" rel="external">CIL</a>, Common Intermediate Language, is an intermediate language that all .Net code is compiled to.<br>The CLR executes CIL code.</p>
+</li>
+<li><a href="http://en.wikipedia.org/wiki/Common_Language_Infrastructure" target="_blank" rel="external">CLI</a>, Common Language Infrastructure, is the open specification for the runtime and behavior of the .Net Framework</li>
+<li><a href="http://en.wikipedia.org/wiki/Mono_%28software%29" target="_blank" rel="external">Mono</a> is an open-source implementation of the CLI that can run .Net programs</li>
+<li><a href="http://en.wikipedia.org/wiki/ASP.NET_MVC_Framework" target="_blank" rel="external">ASP.Net</a> MVC is an MVC framework built on ASP.Net</li>
+</ul>
+<p>关于从符合CLI语言标准到CIL，然后在CLR上运行过程，这里有张图片很好地说明了：</p>
+<p><img src="../_images/unity/520px-Overview_of_the_Common_Language_Infrastructure.svg" alt=""></p>
+<p>这就解释了为什么说Unity使用了Mono，但是有人说它用的是C#编程语言的问题，也解释了为什么一开始Unity支持<code>Boo(Python)</code></p>
+<p>首先<code>C#</code>和<code>Boo</code>都是符合CLI的标准的，而这些语言最终都由其编译器编译为CIL，而CIL可以运行在任何CLI的实现环境上，例如.NET中的CLR，Mono Runtime等。</p>
+<p>The Common Language Infrastructure (CLI) is an open specification (technical standard) developed by Microsoft and standardized by ISO[1] and ECMA[2] that describes executable code and a runtime environment that allows multiple high-level languages to be used on different computer platforms without being rewritten for specific architectures. This implies it is platform agnostic. The .NET Framework and the free and open source Mono and Portable.NET are implementations of the CLI.</p>
 <h2 id="C-都有哪些版本"><a href="#C-都有哪些版本" class="headerlink" title="C#都有哪些版本"></a>C#都有哪些版本</h2><p><strong><a href="http://stackoverflow.com/questions/247621/what-are-the-correct-version-numbers-for-c" target="_blank" rel="external">What are the correct version numbers for C#?</a></strong></p>
 <p>C# 只有<code>1.0</code>，<code>2.0</code>，<code>3.0</code>，<code>4.0</code>，<code>5.0</code>，<code>6.0</code></p>
 <h2 id="CLR"><a href="#CLR" class="headerlink" title="CLR"></a>CLR</h2><h2 id="Mono"><a href="#Mono" class="headerlink" title="Mono"></a>Mono</h2><h2 id="Net-Framework"><a href="#Net-Framework" class="headerlink" title=".Net Framework"></a>.Net Framework</h2><h2 id="Net-Core"><a href="#Net-Core" class="headerlink" title=".Net Core"></a>.Net Core</h2><p>关于Unity到底使用了什么版本的.Net 或者 Mono之谜，答案就如下的链接里……</p>
@@ -137,37 +156,31 @@ C#都有哪些版本What are the co">
 </ul>
 <h1 id="C-要点"><a href="#C-要点" class="headerlink" title="C#要点"></a>C#要点</h1><h2 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h2><h2 id="常量-const"><a href="#常量-const" class="headerlink" title="常量(const)"></a>常量(const)</h2><p>The const keyword indicates that a value will never change and needn’t be variable. Its value will be computed during compilation and is directly inserted wherever it’s referenced.</p>
 <p>By the way, the compiler will pre-compute any constant expression, so writing (1 + 1) and simply writing 2 will both result in the same program.</p>
-<h2 id="变量-variable"><a href="#变量-variable" class="headerlink" title="变量(variable)"></a>变量(variable)</h2><blockquote>
-<p>A variable is value that can be changed. This can be either a reference to an object or something simple like an integer. A variable must be of a specific type, which is written before its name when defined.</p>
+<h2 id="变量-variable"><a href="#变量-variable" class="headerlink" title="变量(variable)"></a>变量(variable)</h2><p>A variable is value that can be changed. This can be either a reference to an object or something simple like an integer. A variable must be of a specific type, which is written before its name when defined.</p>
 <p>Variables exist only inside the scope that their are defined in. By default, if a variable is defined inside a class, every object instance of that class has its own version of that variable. However, it can be marked as static, in which case it exists once for that class, independent of any objects. If a variable is defined inside a method, you can think of it only existing while that method is being invoked.</p>
-</blockquote>
 <h3 id="类型转换-cast"><a href="#类型转换-cast" class="headerlink" title="类型转换(cast)"></a>类型转换(cast)</h3><p>Casting changes the type of a value. You indicate this by writing the type within parentheses before the value. Casting simple values results in a conversion, like converting a floating-point value to an integer by discarding the fractional part.</p>
 <p>Casting an object reference to another type doesn’t convert the object, it only changes how that reference is treated. You’d only do this when you’re sure about the object’s type.</p>
-<h2 id="函数-方法-method"><a href="#函数-方法-method" class="headerlink" title="函数/方法(method)"></a>函数/方法(method)</h2><blockquote>
-<p>A method is a chunk of behavior, which is defined in a class. It can accept input and produce an output. Input is defined and provided after the method name, in parentheses, even if there is none. The method’s type is that of its output. If there’s no output this is indicated with void.</p>
+<h2 id="函数-方法-method"><a href="#函数-方法-method" class="headerlink" title="函数/方法(method)"></a>函数/方法(method)</h2><p>A method is a chunk of behavior, which is defined in a class. It can accept input and produce an output. Input is defined and provided after the method name, in parentheses, even if there is none. The method’s type is that of its output. If there’s no output this is indicated with void.</p>
 <p>By default, methods define behavior of objects, but it’s possible to define behavior that doesn’t need an object to function. Such methods are marked as static.</p>
-</blockquote>
-<h2 id="什么是属性-property"><a href="#什么是属性-property" class="headerlink" title="什么是属性(property)"></a>什么是属性(property)</h2><blockquote>
-<p>A property is a method that pretends to be a variable. It might be read-only or write-only.</p>
+<h2 id="什么是属性-property"><a href="#什么是属性-property" class="headerlink" title="什么是属性(property)"></a>什么是属性(property)</h2><p>A property is a method that pretends to be a variable. It might be read-only or write-only.</p>
 <p>Note that variables exposed by the Unity editor are also commonly called properties, but it’s not the same thing.</p>
-</blockquote>
 <h2 id="if条件语句"><a href="#if条件语句" class="headerlink" title="if条件语句"></a>if条件语句</h2><h2 id="循环语句"><a href="#循环语句" class="headerlink" title="循环语句"></a>循环语句</h2><h2 id="switch语句"><a href="#switch语句" class="headerlink" title="switch语句"></a>switch语句</h2><h2 id="Scope-and-Access-Modifiers"><a href="#Scope-and-Access-Modifiers" class="headerlink" title="Scope and Access Modifiers"></a>Scope and Access Modifiers</h2><h2 id="Conventions-and-Syntax"><a href="#Conventions-and-Syntax" class="headerlink" title="Conventions and Syntax"></a>Conventions and Syntax</h2><h2 id="枚举"><a href="#枚举" class="headerlink" title="枚举"></a>枚举</h2><h2 id="集合"><a href="#集合" class="headerlink" title="集合"></a>集合</h2><p><a href="http://www.cnblogs.com/kissdodog/archive/2013/01/29/2882195.html" target="_blank" rel="external">http://www.cnblogs.com/kissdodog/archive/2013/01/29/2882195.html</a><br><a href="https://msdn.microsoft.com/zh-cn/library/9ct4ey7x(v=vs.90).aspx" target="_blank" rel="external">https://msdn.microsoft.com/zh-cn/library/9ct4ey7x(v=vs.90).aspx</a></p>
 <h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><h3 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h3><h3 id="字典"><a href="#字典" class="headerlink" title="字典"></a>字典</h3><h2 id="什么是结构-struct"><a href="#什么是结构-struct" class="headerlink" title="什么是结构(struct)"></a>什么是结构(struct)</h2><p>A struct is a blueprint, just like a class. The difference is that whatever it creates is treated as a simple value, like an integer, instead of an object. It doesn’t have the same sense of identity as an object.</p>
 <h2 id="类-class"><a href="#类-class" class="headerlink" title="类(class)"></a>类(class)</h2><p>A class is a blueprint that can be used to create objects that reside in your computer’s memory. The blueprint defines what data these objects contain and how they behave.</p>
-<h2 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h2><h2 id="多态"><a href="#多态" class="headerlink" title="多态"></a>多态</h2><h2 id="命名空间-namespace"><a href="#命名空间-namespace" class="headerlink" title="命名空间(namespace)"></a>命名空间(namespace)</h2><p>&gt;</p>
-<blockquote>
-<p>It’s like a website domain, but for code stuff. For example, MonoBehaviour is defined inside the UnityEngine namespace, so it can be addressed with UnityEngine.MonoBehaviour.</p>
+<h2 id="new"><a href="#new" class="headerlink" title="new"></a>new</h2><p>The new keyword is used to construct a new instance of an object or a struct. It’s followed by calling a special constructor method, which has the same name as the class or struct it belongs to.</p>
+<h2 id="this"><a href="#this" class="headerlink" title="this"></a>this</h2><p>The this keyword refers to the current object or struct whose method is being called. It’s being used implicitly all the time when referring to stuff from the same class. For example, whenever we’ve access depth we could have also done it via this.depth.</p>
+<p>You typically only use this when you need to pass along a reference to the object itself, like we do for Initialize. Why? Because we’re calling the Initialize method of the new child object, not of the parent object.</p>
+<h2 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h2><h2 id="多态"><a href="#多态" class="headerlink" title="多态"></a>多态</h2><h2 id="命名空间-namespace"><a href="#命名空间-namespace" class="headerlink" title="命名空间(namespace)"></a>命名空间(namespace)</h2><p>It’s like a website domain, but for code stuff. For example, MonoBehaviour is defined inside the UnityEngine namespace, so it can be addressed with UnityEngine.MonoBehaviour.</p>
 <p>Just like domains, namespaces can be nested. The big difference is that it’s written the other way around. So instead of forum.unity3d.com it would be com.unity3d.forum. For example, the ArrayList type exists inside the Collections namespace, which in turn exists inside the System namespace. So you need to write System.Collections.ArrayList to get hold of it.</p>
 <p>By declaring that we’re using a namespace, we don’t need to write it again each time we want to use something from it. So, when using UnityEngine, instead of having to write UnityEngine.MonoBehaviour we can suffice with MonoBehaviour.</p>
-</blockquote>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://tospan.me/2017/02/06/C-Sharp-Essential/" data-id="ciyu4ntdr00052tvw0fu3vd57" class="article-share-link">Share</a>
+      <a data-url="http://tospan.me/2017/02/06/C-Sharp-Essential/" data-id="cizcq854q000ptdvw6vz208v4" class="article-share-link">Share</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Unity/">Unity</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Scripting/">Scripting</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Unity/">Unity</a></li></ul>
 
     </footer>
   </div>
@@ -175,11 +188,11 @@ C#都有哪些版本What are the co">
     
 <nav id="article-nav">
   
-    <a href="/2017/02/06/Unity-Scripting-Core/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2017/02/06/GDS-2D-Code-Snippet/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
-          Unity编程要点
+          Unity编程 2D脚本常用代码集合
         
       </div>
     </a>
@@ -203,7 +216,7 @@ C#都有哪些版本What are the co">
   <div class="widget-wrap">
     <h3 class="widget-title">Categories</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Math/">Math</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Unity/">Unity</a></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Algorithms/">Algorithms</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Game-Development/">Game Development</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Math/">Math</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Unity/">Unity</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/default/">default</a></li></ul>
     </div>
   </div>
 
@@ -213,7 +226,7 @@ C#都有哪些版本What are the co">
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Basics/">Basics</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C#</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Games/">Games</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Geometry/">Geometry</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linear-Algebra/">Linear Algebra</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Math/">Math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Numerical-Analysis/">Numerical Analysis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Unity/">Unity</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/default/">default</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Algorithms/">Algorithms</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Basics/">Basics</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C#</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Games/">Games</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Geometry/">Geometry</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linear-Algebra/">Linear Algebra</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Math/">Math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mathematics/">Mathematics</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Numerical-Analysis/">Numerical Analysis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Patterns/">Patterns</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scripting/">Scripting</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Unity/">Unity</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/default/">default</a></li></ul>
     </div>
   </div>
 
@@ -223,7 +236,7 @@ C#都有哪些版本What are the co">
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Basics/" style="font-size: 15px;">Basics</a> <a href="/tags/C/" style="font-size: 13.33px;">C#</a> <a href="/tags/Games/" style="font-size: 10px;">Games</a> <a href="/tags/Geometry/" style="font-size: 11.67px;">Geometry</a> <a href="/tags/Linear-Algebra/" style="font-size: 16.67px;">Linear Algebra</a> <a href="/tags/Math/" style="font-size: 18.33px;">Math</a> <a href="/tags/Numerical-Analysis/" style="font-size: 10px;">Numerical Analysis</a> <a href="/tags/Unity/" style="font-size: 20px;">Unity</a> <a href="/tags/default/" style="font-size: 10px;">default</a>
+      <a href="/tags/Algorithms/" style="font-size: 10px;">Algorithms</a> <a href="/tags/Basics/" style="font-size: 15px;">Basics</a> <a href="/tags/C/" style="font-size: 13.33px;">C#</a> <a href="/tags/Games/" style="font-size: 10px;">Games</a> <a href="/tags/Geometry/" style="font-size: 11.67px;">Geometry</a> <a href="/tags/Linear-Algebra/" style="font-size: 16.67px;">Linear Algebra</a> <a href="/tags/Math/" style="font-size: 15px;">Math</a> <a href="/tags/Mathematics/" style="font-size: 15px;">Mathematics</a> <a href="/tags/Numerical-Analysis/" style="font-size: 10px;">Numerical Analysis</a> <a href="/tags/Patterns/" style="font-size: 10px;">Patterns</a> <a href="/tags/Scripting/" style="font-size: 13.33px;">Scripting</a> <a href="/tags/Unity/" style="font-size: 20px;">Unity</a> <a href="/tags/default/" style="font-size: 18.33px;">default</a>
     </div>
   </div>
 
@@ -245,23 +258,23 @@ C#都有哪些版本What are the co">
       <ul>
         
           <li>
-            <a href="/2017/02/06/Math-3D/">3D数学</a>
+            <a href="/2017/02/16/Algorithms-Data-Structure/">算法:数据结构</a>
           </li>
         
           <li>
-            <a href="/2017/02/06/Unity-Engine-Core-Concept/">Unity引擎重要概念</a>
+            <a href="/2017/02/16/Algorithms-Sorting/">算法：排序</a>
           </li>
         
           <li>
-            <a href="/2017/02/06/Unity-Scripting-2D-Code-Snippet/">Unity编程 2D脚本常用代码集合</a>
+            <a href="/2017/02/16/Algorithms-Test-Bed/">搭建算法测试环境</a>
           </li>
         
           <li>
-            <a href="/2017/02/06/Unity-Scripting-Core/">Unity编程要点</a>
+            <a href="/2017/02/16/Algorithms-Basics/">Algorithms Basics</a>
           </li>
         
           <li>
-            <a href="/2017/02/06/C-Sharp-Essential/">C#要点</a>
+            <a href="/2017/02/16/Algorithms/">Algorithms</a>
           </li>
         
       </ul>

@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Unity编程之GetComponent | 吐司片的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="该教程中将讨论：
+
+Accessing another script from inside the object
+How does GetComponent work? GetComponent的工作原理
+Getting many components 获取多个组件
+Interaction between objects. 对象之间的交互；
+Interaction between objects">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Unity编程之GetComponent">
+<meta property="og:url" content="http://tospan.me/2017/02/07/GDS-GetComponent/index.html">
+<meta property="og:site_name" content="吐司片的博客">
+<meta property="og:description" content="该教程中将讨论：
+
+Accessing another script from inside the object
+How does GetComponent work? GetComponent的工作原理
+Getting many components 获取多个组件
+Interaction between objects. 对象之间的交互；
+Interaction between objects">
+<meta property="og:image" content="http://tospan.me/../_images/unity/prc3a9sentation12.png">
+<meta property="og:updated_time" content="2017-02-07T07:55:39.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Unity编程之GetComponent">
+<meta name="twitter:description" content="该教程中将讨论：
+
+Accessing another script from inside the object
+How does GetComponent work? GetComponent的工作原理
+Getting many components 获取多个组件
+Interaction between objects. 对象之间的交互；
+Interaction between objects">
+<meta name="twitter:image" content="http://tospan.me/../_images/unity/prc3a9sentation12.png">
+  
+    <link rel="alternate" href="/atom.xml" title="吐司片的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">吐司片的博客</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Work hard, play hard.</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://tospan.me"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-GDS-GetComponent" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/02/07/GDS-GetComponent/" class="article-date">
+  <time datetime="2017-02-07T07:55:39.000Z" itemprop="datePublished">2017-02-07</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Unity/">Unity</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Unity编程之GetComponent
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>该教程中将讨论：</p>
+<ul>
+<li>Accessing another script from inside the object</li>
+<li>How does GetComponent work? GetComponent的工作原理</li>
+<li>Getting many components 获取多个组件</li>
+<li>Interaction between objects. 对象之间的交互；</li>
+<li>Interaction between objects within the hierarchy 层级面板中对象交互</li>
+<li><code>SendMessage</code> 和 <code>BroadcastMessage</code> </li>
+<li>Interactive functions 交互函数</li>
+</ul>
+<a id="more"></a>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>One recurrent issue when starting with Unity is how to access the members in one script from another script. Many would think that dereferencing from the script name would be enough, they quickly realise it is not.</p>
+<p>When developing a program, variables are stored in the memory at different locations. If an object could see any other object members, there would be a risk to modify them even though it was not intended. If for instances two objects hold the same script with the same variable names, the compiler would not be able to figure out which one we are referring to.</p>
+<p>To prevent this issue, each object in memory cannot see other objects. It is then necessary to tell one object where the variable it needs is in memory. The whole pointer principle has been dropped long ago and now we are using reference instead (which actually uses pointer internally).</p>
+<p>There are various way to access variables, some are better than others and some are simply to be used in particular situations.</p>
+<p>有好几种方式来访问变量，有些方式更好，有些适用于特定的情况。</p>
+<ul>
+<li><code>GetComponent</code>, 最常用，也最容易让人困惑the most common, also the one that confuses most at first</li>
+<li><code>SendMessage</code>, 看起来简单易用，但效率较低it might look easier to grasp but it is also less efficient.</li>
+<li><code>静态变量</code>, 最简单易用但不太容易理解the easiest but also the most complicated to fully understand at first.</li>
+</ul>
+<h2 id="搭建场景"><a href="#搭建场景" class="headerlink" title="搭建场景"></a>搭建场景</h2><p>Create a new scene, add an empty game objects and name it “StormTrooper”. Create two scripts named “Health” and “Force”. Add both scripts to StormTrooper.</p>
+<p>创建一个新项目和新场景，添加一个新的空游戏对象，命名为<code>StormTrooper</code>，然后给该对象添加两个脚本组件<code>Health</code>和<code>Force</code>，也就是C#脚本，脚本内容如下：</p>
+<p>Health.cs</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">using</span> UnityEngine;</div><div class="line"><span class="keyword">using</span> System.Collections;</div><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Health</span> : <span class="title">MonoBehaviour</span></div><div class="line">&#123;</div><div class="line">    [SerializeField] </div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> health = <span class="number">5</span>;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">bool</span> hasForce = <span class="literal">false</span>;</div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Update</span>(<span class="params"></span>)</span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">if</span> (Input.GetKeyDown(KeyCode.Space))</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">this</span>.hasForce = Force.ReportForce();</div><div class="line">            <span class="keyword">if</span>(hasForce == <span class="literal">true</span>)</div><div class="line">            &#123;</div><div class="line">                <span class="keyword">this</span>.health = <span class="number">10</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Force.cs</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">using</span> UnityEngine;</div><div class="line"><span class="keyword">using</span> System.Collections;</div><div class="line"> </div><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Force</span> : <span class="title">MonoBehaviour</span></div><div class="line">&#123;</div><div class="line">     <span class="keyword">private</span> <span class="keyword">bool</span> force = <span class="literal">false</span>;</div><div class="line">     <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Start</span>(<span class="params"></span>)</span></div><div class="line">     &#123;</div><div class="line">          <span class="keyword">this</span>.force = <span class="literal">true</span>;  </div><div class="line">     &#125;</div><div class="line"> </div><div class="line">     <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Update</span>(<span class="params"></span>)</span></div><div class="line">     &#123;</div><div class="line">         <span class="keyword">if</span> (Input.GetKeyDown(KeyCode.P))</div><div class="line">         &#123;</div><div class="line">              <span class="keyword">string</span> str = (<span class="keyword">this</span>.force == <span class="literal">true</span>) ? <span class="string">" the"</span>: <span class="string">" no"</span>);</div><div class="line">              Debug.Log(<span class="string">"I have"</span> + str + <span class="string">" force"</span>);</div><div class="line">         &#125;</div><div class="line">     &#125;</div><div class="line"> </div><div class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">bool</span> <span class="title">ReportForce</span>(<span class="params"></span>)</span></div><div class="line">     &#123;</div><div class="line">         <span class="keyword">return</span> force;</div><div class="line">     &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>保存之后，会报错，”An object reference is required to access non-static members”。我们需要告诉<code>Health</code>组件，<code>Force</code>组件在哪儿以便访问其成员变量。由于两个脚本都附加在同一个游戏对象上，我们可以直接声明脚本类型的变量，然后使用<code>GetComponent</code>方法获取脚本组件赋给变量。</p>
+<h2 id="在游戏对象中访问另外一个脚本Accessing-another-script-inside-the-object"><a href="#在游戏对象中访问另外一个脚本Accessing-another-script-inside-the-object" class="headerlink" title="在游戏对象中访问另外一个脚本Accessing another script inside the object"></a>在游戏对象中访问另外一个脚本Accessing another script inside the object</h2><p>修改<code>Health.cs</code>脚本</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">using</span> UnityEngine;</div><div class="line"><span class="keyword">using</span> System.Collections;</div><div class="line"> </div><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Health</span> : <span class="title">MonoBehaviour</span></div><div class="line">&#123;</div><div class="line">    [SerializeField] </div><div class="line">    <span class="keyword">private</span> Force forceScript= <span class="literal">null</span>;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">int</span> health = <span class="number">5</span>; </div><div class="line">    <span class="keyword">private</span> <span class="keyword">bool</span> hasForce = <span class="literal">false</span>;</div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Start</span>(<span class="params"></span>)</span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">this</span>.forceScript= GetComponent&lt;Force&gt;();</div><div class="line">    &#125; </div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Update</span>(<span class="params"></span>) </span></div><div class="line">    &#123; </div><div class="line">        <span class="keyword">if</span> (Input.GetKeyDown(KeyCode.Space)) </div><div class="line">        &#123; </div><div class="line">             <span class="keyword">this</span>.hasForce = <span class="keyword">this</span>.forceScript.ReportForce(); </div><div class="line">             <span class="keyword">if</span>(<span class="keyword">this</span>.hasForce == <span class="literal">true</span>)</div><div class="line">             &#123;</div><div class="line">                 <span class="keyword">this</span>.health = <span class="number">10</span>; </div><div class="line">             &#125;</div><div class="line">        &#125; </div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>With the modifications, run the game, press Space and then press P, your StormTrooper now has 10 of health (Note that a StormTrooper does not have the force, this is only for the example). You access variables the same way you accessed methods. Just make sure the members you are trying to reach are declared public or you will get an error.</p>
+<p>If the members were private, it would not be possible to access them. Anything that should not be reached from outside the class/script should be private to cope with the encapsulation principle.</p>
+<h2 id="GetComponent的工作原理"><a href="#GetComponent的工作原理" class="headerlink" title="GetComponent的工作原理"></a>GetComponent的工作原理</h2><p>First we declare an object of the type of the script we want to reach.</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> Force forceScript = <span class="literal">null</span>;</div></pre></td></tr></table></figure>
+<p>Force is our type and forceScript is just a name we provide for using the reference in the script. We could give it any name.</p>
+<p>The GetComponent function will look inside the object (the StormTrooper game object) to find a component corresponding to the type we passed. If none is found a null reference is returned and our forceScript variable will not do anything. If a component of type Force is found then the address of that component is passed to the variable forceScript, the variable now points to the Force component stored somewhere in memory. In order to access the public members of Force, we just need to dereference the script variable using the dot operator. It is said that the forceScript variable is a handle to the object. It gives access to all public members (and internal ones).</p>
+<p><code>GetComponent</code>函数会从游戏对象上（也就是<code>StormTrooper</code>）查找，看是否能找到我们所提供的类型的组件。如果找不到则返回空引用。如果找到<code>Force</code>类型的组件，则<code>Force</code>组件的地址就会传递给<code>forceScript</code>变量</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">script.PublicMembers;</div></pre></td></tr></table></figure>
+<p>以<code>private</code>和<code>protected</code>访问修饰符修饰的成员变量不可访问。</p>
+<p>Using the SerializeField attribute allows to see the variables in inspector despute being private. Your forceScript variable starts with value of None(Force) and turns into a Force reference. If you click on it, it will highlight the target object.</p>
+<p>使用<code>SerializeField</code>属性标记的变量，哪怕是私有变量都可以让我们在<code>Inspector</code>面板上看到它。</p>
+<p><img src="../_images/unity/prc3a9sentation12.png" alt="reference_component"></p>
+<h2 id="那么我们可以通过GetComponent来保存组件吗？"><a href="#那么我们可以通过GetComponent来保存组件吗？" class="headerlink" title="那么我们可以通过GetComponent来保存组件吗？"></a>那么我们可以通过<code>GetComponent</code>来保存组件吗？</h2><p>当然，对于频繁使用的组件推荐这样做！</p>
+<p>当获取内置组件时，例如<code>Rigidbody</code>，<code>Transform</code>，<code>Render</code>……等等，以前Unity可以支持直接访问：</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Update</span>(<span class="params"></span>)</span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">this</span>.transform.position += <span class="keyword">this</span>.transform.forward;</div><div class="line">    <span class="keyword">this</span>.rigidbody.AddForce(force);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>后来除了<code>transform</code>外，其他的组件都移除了，因为对于一个游戏对象而言，无论什么情况下都有<code>Transform</code>组件，而其他的组件不一定有。</p>
+<p>应该完全避免在<code>Update</code>方法中使用<code>GetComponent</code>，如果需要在<code>Update</code>方法中使用组件，推荐先在<code>Start</code>或<code>Awake</code>方法中保存好引用：</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> Transform myTransform = <span class="literal">null</span>;</div><div class="line"><span class="keyword">private</span> Rigidbody rigidbody = <span class="literal">null</span>;</div><div class="line"> </div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Start</span>(<span class="params"></span>)</span></div><div class="line">&#123;</div><div class="line">     <span class="keyword">this</span>.myTransform = <span class="keyword">this</span>.gameObject.GetComponent&lt;Transform&gt;();</div><div class="line">     <span class="keyword">this</span>.rigidbody = <span class="keyword">this</span>.gameObject.GetComponent&lt;Rigidbody&gt;();</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Update</span>(<span class="params"></span>)</span></div><div class="line">&#123;</div><div class="line">     <span class="keyword">this</span>.myTransform.position += <span class="keyword">this</span>.myTransform.forward;</div><div class="line">     <span class="keyword">this</span>.rigidbody.AddForce(force);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这样可以节省一些运算资源。</p>
+<h2 id="获取多个组件"><a href="#获取多个组件" class="headerlink" title="获取多个组件"></a>获取多个组件</h2><p>如果<code>StormTrooper</code>有多个<code>Force</code>组件（很大程度上是不可能的)。为了举例，这里我们多添加两个。</p>
+<p><code>Health.cs</code>脚本就成了:</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">using</span> UnityEngine;</div><div class="line"><span class="keyword">using</span> System.Collections;</div><div class="line"> </div><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Health</span> : <span class="title">MonoBehaviour</span></div><div class="line">&#123;</div><div class="line">     <span class="keyword">private</span> Force [] scripts = <span class="literal">null</span>;</div><div class="line">     </div><div class="line">     [SerializeField] </div><div class="line">     <span class="keyword">private</span> <span class="keyword">int</span> health = <span class="number">5</span>;</div><div class="line"> </div><div class="line">     <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Start</span>(<span class="params"></span>)</span></div><div class="line">     &#123;</div><div class="line">         <span class="keyword">this</span>.scripts = <span class="keyword">this</span>.gameObject.GetComponents&lt;Force&gt;();</div><div class="line">     &#125;</div><div class="line"> </div><div class="line">     <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Update</span>(<span class="params"></span>)</span></div><div class="line">     &#123;</div><div class="line">         <span class="keyword">if</span> (Input.GetKeyDown(KeyCode.Space))</div><div class="line">         &#123;</div><div class="line">             <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="keyword">this</span>.scripts.Length; i++)</div><div class="line">             &#123;</div><div class="line">                 <span class="keyword">if</span>(<span class="keyword">this</span>.scripts[i].ReportForce())</div><div class="line">                 &#123;</div><div class="line">                     <span class="keyword">this</span>.health += <span class="number">5</span>;</div><div class="line">                 &#125;</div><div class="line">             &#125;                              </div><div class="line">         &#125;</div><div class="line">     &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Run the game, press Space, our StormTrooper is becoming a Jedi. GetComponents looks for all components of the type and returns an array of them. This is fine if you do not target a specific component of the type but more likely all of them.</p>
+<p>运行游戏，按空格键，我们的暴风兵就成了绝地武士了。<code>GetComponents</code>会获取当前组件所在对象上的所有指定类型的组件并返回数组。</p>
+<p>See the following would turn on and off the lights:</p>
+<p>如下脚本将会打开和关闭灯光：</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">LightFlicker</span>:<span class="title">MonoBehaviour</span>&#123;</div><div class="line">    <span class="keyword">private</span> Light lights = <span class="literal">null</span>;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">float</span> timer = <span class="number">0.0</span>f</div><div class="line">    <span class="keyword">private</span> <span class="keyword">float</span> clockTimer = <span class="number">0.0</span>f;</div><div class="line">     </div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Start</span>(<span class="params"></span>)</span>&#123;</div><div class="line">        <span class="keyword">this</span>.lights = <span class="keyword">this</span>.gameObject.GetComponents&lt;Light&gt;();</div><div class="line">        <span class="keyword">this</span>.clockTimer =  Random.Range(<span class="number">0.5</span>f, <span class="number">2.0</span>f);</div><div class="line">    &#125;</div><div class="line"> </div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Update</span>(<span class="params"></span>)</span>&#123;</div><div class="line">         <span class="keyword">this</span>.timer += Time.deltaTime;</div><div class="line"></div><div class="line">         <span class="keyword">if</span>(<span class="keyword">this</span>.timer &gt; <span class="keyword">this</span>.clockTimer)&#123;</div><div class="line">              <span class="keyword">this</span>.timer = <span class="number">0.0</span>f;</div><div class="line">              <span class="keyword">this</span>.clocktimer = Random.Range(<span class="number">0.5</span>f, <span class="number">2.0</span>f);</div><div class="line">              <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="keyword">this</span>.lights.Length; i++)&#123;</div><div class="line">                  lights[i].enabled = !lights[i].enabled;</div><div class="line">              &#125;</div><div class="line">         &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="对象交互Interaction-between-objects"><a href="#对象交互Interaction-between-objects" class="headerlink" title="对象交互Interaction between objects."></a>对象交互Interaction between objects.</h2><p>我们可以让两个不同的对象用类似的方式交互。创建一个新对象，命名为<code>Sith</code>，移除<code>StormTrooper</code>脚本上重复的<code>Force</code>组件，留下一个就可以了。</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">using</span> UnityEngine;</div><div class="line"><span class="keyword">using</span> System.Collections;</div><div class="line"> </div><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">DarkSide</span> : <span class="title">MonoBehaviour</span> </div><div class="line">&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">const</span> <span class="keyword">bool</span> force = <span class="literal">true</span>;</div><div class="line">    <span class="keyword">private</span> Force script = <span class="literal">null</span>;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Start</span> (<span class="params"></span>) </span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">this</span>.script = GameObject.Find (<span class="string">"StormTrooper"</span>).GetComponent&lt;Force&gt;();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Update</span> (<span class="params"></span>) </span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">if</span>(Input.GetKeyDown (KeyCode.Space))</div><div class="line">        &#123;</div><div class="line">             UseForceToControl ();</div><div class="line">        &#125;     </div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">UseForceToControl</span>(<span class="params"></span>)</span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">if</span>(<span class="keyword">this</span>.script.ReportForce() == <span class="literal">false</span>)</div><div class="line">        &#123;</div><div class="line">            Debug.Log (<span class="string">"Do as I say."</span>);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>修改<code>StormTrooper</code>对象上的<code>Force</code>脚本，确保他没有原力(将force设为false，要不然Sith可能会起疑心……)，给你个提示，在<code>Start</code>方法里。</p>
+<p>如下的代码是找到<code>StormTrooper</code>对象并获取其<code>Force</code>组件。</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Start</span> (<span class="params"></span>) </span></div><div class="line">&#123;</div><div class="line">     <span class="keyword">this</span>.script = GameObject.Find (<span class="string">"StormTrooper"</span>).GetComponent&lt;Force&gt;();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>GameObject.Find() first finds the object passed as parameter and then looks for the required component inside of it. It is recommended to perform those actions in the Start or at a time of the game where lags will not affect the gameplay. GameObject.Find and GetComponent are expensive functions since they need to iterate through the whole Hierarchy. If your scene only includes 10 objects, it will be fine but if it holds thousands of them (an army of clone) you will surely see a bad effect. Consider calling these in the Start function. Note that if your scene contains many StormTroopers, Uity cannot know which you meant to use and will return the first one it finds. Most likely, you hold a reference to the object you want to interact with, for example a collision callback.</p>
+<p><code>GameObject.Find()</code>。</p>
+<p>建议</p>
+<p>由于<code>GameObject.Find</code>和<code>GetComponent</code>需要遍历整个游戏场景层级，所以这两个方法都比较重。如果你的场景中只有10个对象，这没有什么问题，但如果有上千的游戏对象(军队)那性能就会受到很大的影响。考虑一下将这些调用放到<code>Start</code>方法中去。注意，如果你的场景中有多个<code>StormTrooper</code>对象，Unity并不知道你要找哪个，它只会返回给你它找到的第一个。</p>
+<h2 id="层级中游戏对象交互Interaction-between-objects-within-the-hierarchy"><a href="#层级中游戏对象交互Interaction-between-objects-within-the-hierarchy" class="headerlink" title="层级中游戏对象交互Interaction between objects within the hierarchy"></a>层级中游戏对象交互Interaction between objects within the hierarchy</h2><p>Consider a vehicle,, when driving it, the character is attached to it as a child object. The vehicle would have special feature if the driver has the force (better handling, faster and so on). As the driver is attached, he is below in the hierarchy.<br>The vehicle can find the Force component of the driver with the same principle we used previously (GameObject.Find) but we can make it happen faster by indicating to the vehicle that the driver is in its own hierarchy.</p>
+<p>考虑这样的情况，当玩家驾驶一辆战车，玩家角色作为子对象附加到战车上。如果玩家有原力，那么该战车就有有特殊属性（例如操控性更好，更快等等）。当玩家附加到战车上时，玩家处于战车的子层级。</p>
+<p>我们可以使用之前的方式(GameObject.Find)找到玩家的<code>Force</code>组件，但我们可以为战车指定玩家在它的子层级中，从而更快地获取。</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> Force script = <span class="literal">null</span>;</div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Start</span> (<span class="params"></span>) </span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">this</span>.script = <span class="keyword">this</span>.transform.Find (<span class="string">"Sith"</span>).GetComponent&lt;DarkSideForce&gt;();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>GameObject is swapped for transform. Indeed, a child object belongs to the transform of the parent so we need to look into the transform to find our object. In the example, the object is right under the calling object, if your Sith is inside the cockpit object under the car object, you need to provide the path:</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Start</span> (<span class="params"></span>) </span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">this</span>.script = <span class="keyword">this</span>.transform.Find (<span class="string">"Cockpit/Sith"</span>).GetComponent&lt;DarkSideForce&gt;();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>The calling object is the Car and is refered as the this in the call. Then Cockpit is searched and Sith is searched. If the path is wrong, Find returns null and you get a Null Reference Exception. You can avoid that like this:</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Start</span> (<span class="params"></span>) </span></div><div class="line">&#123;</div><div class="line">    Transform tr = <span class="keyword">this</span>.transform.Find (<span class="string">"Cockpit/Sith"</span>);</div><div class="line">    <span class="keyword">if</span>(tr != <span class="literal">null</span>)&#123;</div><div class="line">        <span class="keyword">this</span>.script = tr.GetComponent&lt;DarkSideForce&gt;();</div><div class="line">    &#125;<span class="keyword">else</span>&#123;Debug.LogWarning(<span class="string">"No component found"</span>);&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>transform.Find returns a Transform while GameObject.Find returns a GameObject.</p>
+<p>还有更好的方法，我们可以使用<code>GetComponentInChildren</code>:</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Start</span> (<span class="params"></span>) </span></div><div class="line">&#123;</div><div class="line">     <span class="keyword">this</span>.script = GetComponentInChildren&lt;DarkSideForce&gt;();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Now our vehicle can know that our Sith has the force and apply special feature.<br>One issue to know about, if the parent object contains a script of the type you are looking for, it will return it. So thinking you are dealing with the child component, you are actually dealing with the parent one.</p>
+<p>In this example, we need to check for each kind of driver if it is a StormTrooper or a Sith. A better approach would have been to use inheritance so that the top base class would hold the force variable and one single function would be used for all type of driver. But inheritance and efficiency were not our main issue here.</p>
+<h2 id="SendMessage-与-BroadcastMessage"><a href="#SendMessage-与-BroadcastMessage" class="headerlink" title="SendMessage 与 BroadcastMessage"></a><code>SendMessage</code> 与 <code>BroadcastMessage</code></h2><p>SendMessage and BroadcastMeassage are two other possibilties that may be simpler but also more expensive. The principle remains the same, we have a reference to an object and we want to modify a script it contains.</p>
+<p>With SendMessage, you can call a function on an object without having to find a reference to the script. Now you tell me: “What is all this confusion ride if you can make it simple?”</p>
+<blockquote>
+<p>SendMessage uses reflection and is extremely slow compared to GetComponent and should only be considered in cases where it will not affect the game or if you have no other solution.</p>
+</blockquote>
+<p>And that should sound logical, with GetComponent we indicate exactly where the script is located in memory. With SendMessage, the compiler knows the object, but it will go through all the scripts and functions until it finds the lucky winner. This may affect your game if you use it often on multiple objects and if the object has a lot of components and scripts (which are components by the way).</p>
+<p>SendMessage seeks only the object to which the call is made, BroadcastMessage launches a search on the target object but also on all of its children. Research will be even longer if the object contains a large hierarchy. A newcomer appeared with Unity4 SendMessageUpwards which you should have guessed does the same as BroadcastMessage but upwards so all of the parents of the object until root.</p>
+<p>Ok let’s consider our StormTrooper has a function for receiving order</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//Order.cs</span></div><div class="line"> </div><div class="line"><span class="keyword">using</span> UnityEngine;</div><div class="line"><span class="keyword">using</span> System.Collections;</div><div class="line"> </div><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Order</span> : <span class="title">MonoBehaviour</span></div><div class="line">&#123; </div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">ReceiveOrder</span>(<span class="params"><span class="keyword">string</span> order</span>)</span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">switch</span>(order)</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">case</span> <span class="string">"Fetch"</span>:</div><div class="line">                 <span class="comment">//Action</span></div><div class="line">                 Debug.Log(<span class="string">"Can you repeat Sir?"</span>);</div><div class="line">                 <span class="keyword">break</span>;</div><div class="line">            <span class="comment">// other cases            </span></div><div class="line">        &#125;    </div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Now let’s consider our StormTrooper meets a commander from the Empire:</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Commander.cs</span></div><div class="line"> </div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Update</span>(<span class="params"></span>)</span>&#123;</div><div class="line">   <span class="keyword">if</span>(Input.GetKeyDown(KeyCode.Space))</div><div class="line">   &#123;</div><div class="line">       GameObject.Find(<span class="string">"StormTrooper"</span>).SendMessage(<span class="string">"ReceiveOrder"</span>,<span class="string">"Fetch"</span>);</div><div class="line">   &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>As you can see, the principle remains the same, I need a reference to the target object and then I send a message to it. Just like GetComponent it is better if you have cached the object reference.</p>
+<p>It is also possible to add a parameter to make sure the message finds a receiver or not.</p>
+<p>Note that it is not possible to use a function returning a value. You would then have to go back up and use GetComponent.</p>
+<h2 id="交互函数"><a href="#交互函数" class="headerlink" title="交互函数"></a>交互函数</h2><p>Unity uses many features that make two or more objects interact. The advantage of these functions is that they store a lot of information about the other object.</p>
+<ol>
+<li>Collision functions OnTriggerXXXX/OnCollisionXXXX</li>
+<li>Physics functions XXXXcast</li>
+</ol>
+<p>There we go with collision declaration:</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">OnCollisionEnter</span>(<span class="params">Collision colReference</span>)</span>&#123;&#125;</div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">OnTriggerEnter</span>(<span class="params">Collider colReference</span>)</span>&#123;&#125;</div></pre></td></tr></table></figure>
+<p>The call of the function creates a variable of type Collision or Collider. The function will fill this instance with information on the collision and will hold a reference to the other object we are interacting with.</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function">prviate <span class="keyword">void</span> <span class="title">OnCollisionEnter</span>(<span class="params">Collision colReference</span>)</span></div><div class="line">&#123;</div><div class="line">   GameObject goRef = colReference.gameObject;</div><div class="line">   <span class="keyword">if</span>(goRef.CompareTag(<span class="string">"StormTrooper"</span>))</div><div class="line">   &#123;</div><div class="line">       Health script = goRef.GetComponent&lt;Health&gt;();</div><div class="line">       script.health -= <span class="number">5</span>;</div><div class="line">   &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Notice that I do not need to look for the other object as colReference is of type Collision and contains a reference to that object as member. Now I can perform my GetComponent as usual and access my public health variable.</p>
+<p>Functions from the Physics class have a similar principle. The data are not stored in a Collision/Collider instance but in a RaycastHit instance:</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">using</span> UnityEngine;</div><div class="line"><span class="keyword">using</span> System.Collections;</div><div class="line"> </div><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">CheckFlat</span> : <span class="title">MonoBehaviour</span> </div><div class="line">&#123;</div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Update</span>(<span class="params"></span>) </span></div><div class="line">    &#123;</div><div class="line">        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);</div><div class="line">        RaycastHit hit;</div><div class="line">        <span class="keyword">if</span> (Physics.Raycast(ray, <span class="keyword">out</span> hit))</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">float</span> result = Vector3.Dot(hit.normal,Vector3.up);</div><div class="line">            <span class="keyword">if</span>(Mathf.Abs(result) &gt; <span class="number">0.9</span>)</div><div class="line">            &#123;</div><div class="line">               Debug.Log(<span class="string">"Ground is flat enough"</span>);</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span></div><div class="line">            &#123;</div><div class="line">               Debug.Log(<span class="string">"Not Flat Enough"</span>);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>I declare a variable of type RaycastHit, I pass it to the function. RaycastHit is a structure and then a value type, I need the out keyword to create a reference to that structure so that the function can modify the structure within. If you are wondering about that process, check out the Memory Management article and the section on value/reference type.<br>What I am doing here is check how flat is the surface I am placing the cursor on top of. This is useful for strategic games where you want to place a building but not on a cliff.<br>I use the dot product of the terrain normal with the Vector3.Up and if the result is close enough to 1 meaning they are aligned, the ground is flat enough for construction.<br>Obviously, some more calculations are needed as this is only for one point and you would need to check the normal around but you get the idea. I created interaction between my mouse position and the terrain using a raycast.</p>
+<p>A raycast contains a starting point and a direction. In our case, the starting point is the conversion of the mouse position to world position and then a direction based on the camera rotation and projection matrix. This line goes infinitely in the defined direction (you can also set a max distance) and if it hits a collider, the information of that collider and collision are stored in the RaycastHit structure. The structure contains then a reference to the hit object.</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Collider objectCollider = hit.collider;</div><div class="line">GameObject objectReference = hit.collider.gameObject; <span class="comment">// or objectCollider.gameObject;</span></div></pre></td></tr></table></figure>
+<h2 id="原文链接"><a href="#原文链接" class="headerlink" title="原文链接"></a>原文链接</h2><p><a href="https://unitygem.wordpress.com/getcomponent-in-c/" target="_blank" rel="external">GetComponent in C#</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://tospan.me/2017/02/07/GDS-GetComponent/" data-id="cizcq856g001ytdvwqgr0w0fx" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Scripting/">Scripting</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Unity/">Unity</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/02/07/C-Sharp-Memory-Management/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Unity内存管理
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/02/06/Math-1D-3D-Coordinate/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">3D数学：一维、二维、三维，坐标系</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Algorithms/">Algorithms</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Game-Development/">Game Development</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Math/">Math</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Unity/">Unity</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/default/">default</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Algorithms/">Algorithms</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Basics/">Basics</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C#</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Games/">Games</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Geometry/">Geometry</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linear-Algebra/">Linear Algebra</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Math/">Math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mathematics/">Mathematics</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Numerical-Analysis/">Numerical Analysis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Patterns/">Patterns</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scripting/">Scripting</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Unity/">Unity</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/default/">default</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Algorithms/" style="font-size: 10px;">Algorithms</a> <a href="/tags/Basics/" style="font-size: 15px;">Basics</a> <a href="/tags/C/" style="font-size: 13.33px;">C#</a> <a href="/tags/Games/" style="font-size: 10px;">Games</a> <a href="/tags/Geometry/" style="font-size: 11.67px;">Geometry</a> <a href="/tags/Linear-Algebra/" style="font-size: 16.67px;">Linear Algebra</a> <a href="/tags/Math/" style="font-size: 15px;">Math</a> <a href="/tags/Mathematics/" style="font-size: 15px;">Mathematics</a> <a href="/tags/Numerical-Analysis/" style="font-size: 10px;">Numerical Analysis</a> <a href="/tags/Patterns/" style="font-size: 10px;">Patterns</a> <a href="/tags/Scripting/" style="font-size: 13.33px;">Scripting</a> <a href="/tags/Unity/" style="font-size: 20px;">Unity</a> <a href="/tags/default/" style="font-size: 18.33px;">default</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/12/">December 2012</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/02/16/Algorithms-Data-Structure/">算法:数据结构</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/16/Algorithms-Sorting/">算法：排序</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/16/Algorithms-Test-Bed/">搭建算法测试环境</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/16/Algorithms-Basics/">Algorithms Basics</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/16/Algorithms/">Algorithms</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 To Span<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

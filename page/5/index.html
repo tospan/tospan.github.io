@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>吐司片的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="吐司片的博客">
+<meta property="og:url" content="http://tospan.me/page/5/index.html">
+<meta property="og:site_name" content="吐司片的博客">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="吐司片的博客">
+  
+    <link rel="alternate" href="/atom.xml" title="吐司片的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">吐司片的博客</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Work hard, play hard.</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://tospan.me"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-Interpolation-in-Unity" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/02/05/Interpolation-in-Unity/" class="article-date">
+  <time datetime="2017-02-05T05:23:08.000Z" itemprop="datePublished">2017-02-05</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Unity/">Unity</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/02/05/Interpolation-in-Unity/">Everything about interpolation in Unity with C#</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>According to <a href="https://en.wikipedia.org/wiki/Interpolation">Wikipedia</a>, interpolation is a method of constructing new data points within the range of a discrete set of known data points. The easiest form of interpolation is linear interpolation, where you follow a straight line from A to B (the known data points).</p>
+        
+          <p class="article-more-link">
+            <a href="/2017/02/05/Interpolation-in-Unity/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://tospan.me/2017/02/05/Interpolation-in-Unity/" data-id="cizcq857f002ttdvwbr6ujkju" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Math/">Math</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Numerical-Analysis/">Numerical Analysis</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Unity/">Unity</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-How-to-make-Dubins-Paths-in-Unity" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/02/05/How-to-make-Dubins-Paths-in-Unity/" class="article-date">
+  <time datetime="2017-02-05T03:18:41.000Z" itemprop="datePublished">2017-02-05</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Game-Development/">Game Development</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/02/05/How-to-make-Dubins-Paths-in-Unity/">在Unity中制作Dubins曲线(C#)</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>In this tutorial you will learn how to make Dubins paths in Unity with C# code. This is how <a href="https://en.wikipedia.org/wiki/Dubins_path">Wikipedia</a> defines Dubins paths:</p>
+<blockquote>
+<p>In geometry, the term Dubins path typically refers to the shortest curve that connects two points in the two-dimensional Euclidean plane (i.e. x-y plane) with a constraint on the curvature of the path and with prescribed initial and terminal tangents to the path, and an assumption that the vehicle traveling the path can only travel forward. If the vehicle can also travel in reverse, then the path follows the Reeds-Shepp curve.</p>
+</blockquote>
+        
+          <p class="article-more-link">
+            <a href="/2017/02/05/How-to-make-Dubins-Paths-in-Unity/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://tospan.me/2017/02/05/How-to-make-Dubins-Paths-in-Unity/" data-id="cizcq857i002xtdvwgdu8hqad" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Geometry/">Geometry</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Mathematics/">Mathematics</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Unity/">Unity</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Are-two-rectangles-with-orientation-in-2D-space-intersecting" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/02/05/Are-two-rectangles-with-orientation-in-2D-space-intersecting/" class="article-date">
+  <time datetime="2017-02-05T02:57:56.000Z" itemprop="datePublished">2017-02-05</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Game-Development/">Game Development</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/02/05/Are-two-rectangles-with-orientation-in-2D-space-intersecting/">Are two rectangles with orientation in 2D space intersecting</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>I’ve recently had the need to detect if two rectangles with orientation are intersecting:</p>
+<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/rectangle-rectangle-intersection-intro.png" alt="Rectangle rectangle intersection intro"></p>
+        
+          <p class="article-more-link">
+            <a href="/2017/02/05/Are-two-rectangles-with-orientation-in-2D-space-intersecting/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://tospan.me/2017/02/05/Are-two-rectangles-with-orientation-in-2D-space-intersecting/" data-id="cizcq8548000dtdvwng5tvfxe" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linear-Algebra/">Linear Algebra</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Math/">Math</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Unity/">Unity</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Are-two-triangles-in-2D-space-intersecting" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/02/05/Are-two-triangles-in-2D-space-intersecting/" class="article-date">
+  <time datetime="2017-02-05T02:16:37.000Z" itemprop="datePublished">2017-02-05</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Game-Development/">Game Development</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/02/05/Are-two-triangles-in-2D-space-intersecting/">Are two triangles in 2D space intersecting</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>You have two triangles in 2D space and want to know if they are intersecting. If you do some reasearch on the Internet you will find that the fastest way to check if two triangles are intersecting is to combine the following intersection methods:</p>
+<ul>
+<li><strong>Step 1.</strong> Approximate the triangles with rectangles and test if they intersect.</li>
+<li><strong>Step 2.</strong> Check if any of the sides of one triangle is intersecting with any of the sides of the other triangle.</li>
+<li><strong>Step 3.</strong> Check if any of the corners of one triangle is inside the other triangle, and vice versa.</li>
+</ul>
+        
+          <p class="article-more-link">
+            <a href="/2017/02/05/Are-two-triangles-in-2D-space-intersecting/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://tospan.me/2017/02/05/Are-two-triangles-in-2D-space-intersecting/" data-id="cizcq854e000itdvwwvskj9p8" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linear-Algebra/">Linear Algebra</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Math/">Math</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Unity/">Unity</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Are-two-line-segments-in-2D-space-intersecting" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/02/05/Are-two-line-segments-in-2D-space-intersecting/" class="article-date">
+  <time datetime="2017-02-05T02:11:27.000Z" itemprop="datePublished">2017-02-05</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Game-Development/">Game Development</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/02/05/Are-two-line-segments-in-2D-space-intersecting/">Are two line segments in 2D space intersecting</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>You have two line segments and want to know if they are crossing each other:</p>
+<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/no-intersection.png" alt="No intersection between line segments"></p>
+        
+          <p class="article-more-link">
+            <a href="/2017/02/05/Are-two-line-segments-in-2D-space-intersecting/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://tospan.me/2017/02/05/Are-two-line-segments-in-2D-space-intersecting/" data-id="cizcq853w000atdvwcycr8ecp" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linear-Algebra/">Linear Algebra</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Math/">Math</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Unity/">Unity</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Find-the-coordinate-where-a-ray-intersects-with-a-plane" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/02/05/Find-the-coordinate-where-a-ray-intersects-with-a-plane/" class="article-date">
+  <time datetime="2017-02-05T02:08:33.000Z" itemprop="datePublished">2017-02-05</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Game-Development/">Game Development</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/02/05/Find-the-coordinate-where-a-ray-intersects-with-a-plane/">Find the coordinate where a ray intersects with a plane</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Let’s say you want to make some randomly generated clouds. To do that you fire a ray from the camera to the cloud layer where you figure out the density of the clouds at that point. It will look like this:</p>
+<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/clouds.png" alt="Volume rendered clouds"></p>
+        
+          <p class="article-more-link">
+            <a href="/2017/02/05/Find-the-coordinate-where-a-ray-intersects-with-a-plane/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://tospan.me/2017/02/05/Find-the-coordinate-where-a-ray-intersects-with-a-plane/" data-id="cizcq855c0015tdvw1oa57ou6" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linear-Algebra/">Linear Algebra</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Math/">Math</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Unity/">Unity</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Turn-left-or-right-to-reach-a-waypoint" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/02/05/Turn-left-or-right-to-reach-a-waypoint/" class="article-date">
+  <time datetime="2017-02-05T02:03:43.000Z" itemprop="datePublished">2017-02-05</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Game-Development/">Game Development</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/02/05/Turn-left-or-right-to-reach-a-waypoint/">Turn left or right to reach a waypoint</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>If you have a character following a series of waypoints, how can you tell if the character should turn left or right to reach the waypoint? We can of course always turn left, but we want to turn the smallest possible distance. This is the basic scene:</p>
+<p><img src="../_images/turn-left-or-right.png" alt="Turn left or right basic scene"><br>
+        
+          <p class="article-more-link">
+            <a href="/2017/02/05/Turn-left-or-right-to-reach-a-waypoint/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://tospan.me/2017/02/05/Turn-left-or-right-to-reach-a-waypoint/" data-id="cizcq8587003ftdvwsq42wg47" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linear-Algebra/">Linear Algebra</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Mathematics/">Mathematics</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Unity/">Unity</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-How-to-tell-if-you-have-passed-a-waypoint" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/02/05/How-to-tell-if-you-have-passed-a-waypoint/" class="article-date">
+  <time datetime="2017-02-05T01:59:08.000Z" itemprop="datePublished">2017-02-05</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Game-Development/">Game Development</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/02/05/How-to-tell-if-you-have-passed-a-waypoint/">How to tell if you have passed a waypoint</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>It might first seem like it’s easy to determine if you have passed a waypoint you are heading towards. Can’t you just use the distance between you and the waypoint and if that distance is small, then change waypoint. This will work if your character has a small turning radius. But if that turning radius is large, I promise you that you will see the character turning around the waypoint and never reach it - it will just spin around in a circle. But there may be a better way. This is the basic scene</p>
+<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/passed-waypoint.png" alt="Passed waypoint basic scene"></p>
+        
+          <p class="article-more-link">
+            <a href="/2017/02/05/How-to-tell-if-you-have-passed-a-waypoint/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://tospan.me/2017/02/05/How-to-tell-if-you-have-passed-a-waypoint/" data-id="cizcq857b002ptdvwgz0c97d6" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linear-Algebra/">Linear Algebra</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Mathematics/">Mathematics</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Unity/">Unity</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-In-front-or-behind-you" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/02/05/In-front-or-behind-you/" class="article-date">
+  <time datetime="2017-02-05T01:42:09.000Z" itemprop="datePublished">2017-02-05</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Game-Development/">Game Development</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/02/05/In-front-or-behind-you/">敌人在你前面还是后面？</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>If you’ve ever played Minecraft you will have noticed that the nasty creepers tend to sneak up on you when you face in another direction. But creepers are not smart, so have can they figure out if you are looking in another direction? The answer is math, so they are actually smarter than most people… and you until you have read this tutorial! Anyway, this is the basic scene. The green guy is the one trying to sneak up on you.</p>
+<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/in-front-behind.png" alt="Behind or in front basic scene"></p>
+        
+          <p class="article-more-link">
+            <a href="/2017/02/05/In-front-or-behind-you/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://tospan.me/2017/02/05/In-front-or-behind-you/" data-id="cizcq8578002mtdvw2yut4qgd" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linear-Algebra/">Linear Algebra</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Mathematics/">Mathematics</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Unity/">Unity</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Restart" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/01/01/Restart/" class="article-date">
+  <time datetime="2016-12-31T16:00:00.000Z" itemprop="datePublished">2017-01-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/01/01/Restart/">Restart</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>对不起，兄弟，对我来说我自己都是个谜</p>
+<p>我要离开这里了，这次是真的。</p>
+<p>我们沟通的成本很低，但沟通传递的信息量实在太低了，所以这次我选择写下来。</p>
+        
+          <p class="article-more-link">
+            <a href="/2017/01/01/Restart/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://tospan.me/2017/01/01/Restart/" data-id="cizcq8584003ctdvwk2517t4u" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+  <nav id="page-nav">
+    <a class="extend prev" rel="prev" href="/page/4/">&laquo; __('prev')</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/6/">__('next') &raquo;</a>
+  </nav>
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Algorithms/">Algorithms</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Game-Development/">Game Development</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Math/">Math</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Unity/">Unity</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/default/">default</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Algorithms/">Algorithms</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Basics/">Basics</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C#</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Games/">Games</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Geometry/">Geometry</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linear-Algebra/">Linear Algebra</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Math/">Math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mathematics/">Mathematics</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Numerical-Analysis/">Numerical Analysis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Patterns/">Patterns</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scripting/">Scripting</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Unity/">Unity</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/default/">default</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Algorithms/" style="font-size: 10px;">Algorithms</a> <a href="/tags/Basics/" style="font-size: 15px;">Basics</a> <a href="/tags/C/" style="font-size: 13.33px;">C#</a> <a href="/tags/Games/" style="font-size: 10px;">Games</a> <a href="/tags/Geometry/" style="font-size: 11.67px;">Geometry</a> <a href="/tags/Linear-Algebra/" style="font-size: 16.67px;">Linear Algebra</a> <a href="/tags/Math/" style="font-size: 15px;">Math</a> <a href="/tags/Mathematics/" style="font-size: 15px;">Mathematics</a> <a href="/tags/Numerical-Analysis/" style="font-size: 10px;">Numerical Analysis</a> <a href="/tags/Patterns/" style="font-size: 10px;">Patterns</a> <a href="/tags/Scripting/" style="font-size: 13.33px;">Scripting</a> <a href="/tags/Unity/" style="font-size: 20px;">Unity</a> <a href="/tags/default/" style="font-size: 18.33px;">default</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/12/">December 2012</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/02/16/Algorithms-Data-Structure/">算法:数据结构</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/16/Algorithms-Sorting/">算法：排序</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/16/Algorithms-Test-Bed/">搭建算法测试环境</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/16/Algorithms-Basics/">Algorithms Basics</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/16/Algorithms/">Algorithms</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 To Span<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

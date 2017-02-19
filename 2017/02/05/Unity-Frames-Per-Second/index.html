@@ -29,7 +29,7 @@ Prevent the creation of temporary string">
 <meta property="og:image" content="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/ReadyActiveIndigowingedparrot.mp4">
 <meta property="og:image" content="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/01-time-manager.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/02-statistics.png">
-<meta property="og:image" content="http://tospan.me/../images/unity/02-profiler-vsync.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/02-profiler-vsync.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/02-vsync.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/02-profiler.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/02-build.png">
@@ -103,7 +103,7 @@ Prevent the creation of temporary string">
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Søk"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://tospan.me"></form>
@@ -159,7 +159,7 @@ Prevent the creation of temporary string">
 <p>Some access modifiers are missing?<br>Yes, I’m omitting private modifiers from field and method declarations now, as they are private by default. Let’s see how it goes, whether it is confusing or not.</p>
 </blockquote>
 <p>Create two nucleon prefabs, one for protons and another for neutrons. Give each a different material so they look different. We could suffice with only one nucleon type, but that’s boring to look at.</p>
-<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/01-proton-prefab.png" alt="proton"><br><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/01-neutron-prefab.png" alt="neutron"><br>Nucleon prefabs.</p>
+<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/01-proton-prefab.png" alt="Proton Prefab"><br><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/01-neutron-prefab.png" alt="Nucleon prefab"></p>
 <p>To spawn these nucleons we need to create another component, NucleonSpawner. It needs to know the time interval between spawns, how far away from the center to spawn, and what to spawn.</p>
 <figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">using</span> UnityEngine;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">NucleonSpawner</span> : <span class="title">MonoBehaviour</span> &#123;</div><div class="line"></div><div class="line">	<span class="keyword">public</span> <span class="keyword">float</span> timeBetweenSpawns;</div><div class="line"></div><div class="line">	<span class="keyword">public</span> <span class="keyword">float</span> spawnDistance;</div><div class="line"></div><div class="line">	<span class="keyword">public</span> Nucleon[] nucleonPrefabs;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>Create an empty game object, attach a NucleonSpawner component, and configure it as you like.</p>
@@ -177,22 +177,22 @@ Prevent the creation of temporary string">
 <p>Building a nucleus through bombardment.</p>
 <p>Playing this scene should result in spheres shooting towards the center. They will overshoot for a while, until they collide with each other so much that a ball is formed. This ball will keep growing, physics computations will become more complex, and at some point you will notice a drop in frame rate.</p>
 <p>If it takes too long for you to see performance worsen, you can increase the spawn rate. Speeding up time by increasing the time scale works as well. You can find it via Edit / Project Settings / Time. You can also decrease the Fixed Timestep, which will result in more physics calculations per second.</p>
-<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/01-time-manager.png" alt=""><br>Unity time settings.</p>
+<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/01-time-manager.png" alt="Unity time settings"></p>
 <blockquote>
 <p>Why is motion not fluid for low time scales?<br>When the time scale is set to a low value like 0.1, time will move very slowly. Because the fixed time step is constant, this means that the physics system will update less often. So physics objects will remain motionless until a fixed update happens, which is only once every few frames.</p>
 <p>You can counter this phenomenon by decreasing the fixed time step as you increase the time scale. Alternatively, you could change the interpolation mode of rigidbody components so they interpolate between physics steps, hiding the low update frequency.</p>
 </blockquote>
 <h2 id="Using-the-Profiler"><a href="#Using-the-Profiler" class="headerlink" title="Using the Profiler"></a>Using the Profiler</h2><p>Now that we have a scene that will eventually bring down the frame rate of any machine, it is time to measure the actual performance. The quickest thing you can do is enable the statistics overlay of the game view.</p>
-<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/02-statistics.png" alt=""><br>Game view statistics overlay.</p>
+<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/02-statistics.png" alt="Game view statistics overlay"></p>
 <p>However, the frame rate shown there isn’t accurate at all, it’s more like a rough guess. We can do better by opening Unity’s profiler, via Window / Profiler. The profiler gives us a lot of useful information, especially the CPU usage and memory data.</p>
-<p><img src="../images/unity/02-profiler-vsync.png" alt="The profiler, showing lots of vsync time."></p>
+<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/02-profiler-vsync.png" alt="The profiler, showing lots of vsync time."></p>
 <p>If vsync is enabled, it will likely dominate the CPU graph at the start. To get a better idea of how much CPU resources our scene needs, turn vsync off. You can do this via Edit / Project Settings / Quality. It is found at the bottom, under the Other heading.</p>
 <p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/02-vsync.png" alt="No more vsync."></p>
 <blockquote>
 <p>I am getting very high frame rates now!<br>Without vsync it is possible to get very high frame rates for simple scenes, going well over 100. This can put unnecessary stress on the hardware. You can prevent this by enforcing a maximum frame rate through code by setting the Application.targetFrameRate property. Be aware that this setting persists in the editor even after exiting play mode. Setting it to −1 will remove the limitation.</p>
 </blockquote>
 <p>Now you can get a better look at the CPU usage. In my case physics requires most time, followed by rendering, and then my scripts. This remains true for a long time, even though everything will slow down as the sphere count goes up.</p>
-<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/02-profiler.png" alt=""><br>Profiler without vsync.</p>
+<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/02-profiler.png" alt="Profiler without vsync"></p>
 <p>There are also two unexpected observations that we can make. First, there are occasional spikes of CPU usage. Second, the memory graph shows frequent GC allocation spikes, which indicates that there is memory being allocated and subsequently freed. As we’re only creating new objects and never throw anything away, this is odd.</p>
 <p>Both phenomena are caused by the Unity editor. The CPU spikes happen whenever you select something in the editor. The memory allocations are caused by a call to GameView.GetMainGameViewRenderRect, which is invoked by the editor. There is additional overhead as well, especially if you have both the game and scene view visible at the same time. In short, the editor itself interferes with our measurements.</p>
 <p>You can still get plenty of useful information from in-editor profiling, but if you want to eliminate the editor itself from your measurements, you have to make a standalone build. You can still use the profiler if you make a development build and even automatically connect to it when running your app. You can configure this via File / Build Settings…</p>
@@ -211,28 +211,28 @@ Prevent the creation of temporary string">
 <p>However, there is a problem with this approach. The time delta is not the actual time it took to process the last frame, it is influence by the current time scale. This means that our FPS will be wrong unless the time scale is set to 1. Fortunately, we can also ask Unity for the unscaled time delta.</p>
 <figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">Update</span> (<span class="params"></span>) </span>&#123;</div><div class="line">	FPS = (<span class="keyword">int</span>)(<span class="number">1</span>f / Time.unscaledDeltaTime);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>Some kind of UI is needed to show the FPS. Let’s use Unity’s UI for that. Create a canvas with a panel inside it that in turn contains a text object. These can be added via the GameObject / UI submenu. When adding a canvas you’ll also get an EventSystem object to handle user input, but we don’t need that, so you can remove it.</p>
-<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/03-hierarchy.png" alt=""><br>UI object hierarchy.</p>
+<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/03-hierarchy.png" alt="UI object hierarchy"></p>
 <p>I used the default canvas settings, except that I made it pixel-perfect.</p>
-<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/03-canvas.png" alt=""><br>A pixel-perfect canvas.</p>
+<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/03-canvas.png" alt="A pixel-perfect canvas"></p>
 <p>The panel is used to create a semitransparent black background for the FPS label. That way it will always be readable. I put it at the top-left corner of the window. Set its anchor to top-left so it remains in place regardless of the window’s size. Set its pivot to (0,1) for easy placement.</p>
 <p>Position the label inside the panel in a similar way. Make it white bold text, centered both horizontally and vertically. Design the whole thing so it snugly fits two digits.</p>
-<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/03-panel.png" alt="panel"><br><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/03-label.png" alt="label"><br><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/03-panel-scene.png" alt="panel scene"><br><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/03-panel-scene.png" alt="label scene"><br>Building the UI.</p>
+<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/03-panel.png" alt="Building the UI: panel"><br><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/03-label.png" alt="Building the UI: label"><br><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/03-panel-scene.png" alt="Building the UI: panel scene"><br><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/03-panel-scene.png" alt="Building the UI: label scene"></p>
 <p>Now we need to bind the FPS value to the label. Let’s create a component for this purpose. It needs an FPSCounter component to retrieve the value from, and a reference to a Text label from the UnityEngine.UI namespace to assign the value to.</p>
 <figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">using</span> UnityEngine;</div><div class="line"><span class="keyword">using</span> UnityEngine.UI;</div><div class="line"></div><div class="line">[RequireComponent(<span class="keyword">typeof</span>(FPSCounter))]</div><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">FPSDisplay</span> : <span class="title">MonoBehaviour</span> &#123;</div><div class="line"></div><div class="line">	<span class="keyword">public</span> Text fpsLabel;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>Add this component to our panel and hook it up. We attach it to the panel because that’s our whole FPS display, not to the label. We’ll include more labels later.</p>
-<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/03-display.png" alt=""><br>Setting up the display.</p>
+<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/03-display.png" alt="Setting up the display"></p>
 <p>The display component simply has to update the label’s text each frame. Let’s cache the reference to the counter so we don’t need to invoke GetComponent every time.<br><figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">FPSCounter fpsCounter;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">Awake</span> (<span class="params"></span>) </span>&#123;</div><div class="line">	fpsCounter = GetComponent&lt;FPSCounter&gt;();</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">Update</span> (<span class="params"></span>) </span>&#123;</div><div class="line">	fpsLabel.text = fpsCounter.FPS.ToString();</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>The FPS label is now updating! But as we designed it for two digits, it will show useless values whenever our frame rate exceeds 99 per second. So let’s clamp displayed value. Anything above 99 performs good enough anyway.<br><figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">Update</span> (<span class="params"></span>) </span>&#123;</div><div class="line">	fpsLabel.text = Mathf.Clamp(fpsCounter.FPS, <span class="number">0</span>, <span class="number">99</span>).ToString();</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/03-game.png" alt=""><br>Now we can see the frame rate.</p>
+<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/03-game.png" alt="Now we can see the frame rate"></p>
 <p>Everything appears to work fine now, but there is a subtle problem. We are now creating a new string object each update, which is discarded the next update. This pollutes the managed memory, which will trigger the garbage collector. While this isn’t a big deal for desktop apps, it is more troublesome for devices with little memory to spare. It also pollutes our profiler data, which is annoying when you’re hunting for allocations.</p>
-<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/03-string-allocations.png" alt=""><br>Temporary string objects are created each update.</p>
+<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/03-string-allocations.png" alt="Temporary string objects are created each update"></p>
 <p>Can we get rid of these temporary strings? The value that we are displaying can be any integer between 0 and 99. That’s 100 different strings. Why not create all these strings once and reuse them, instead of recreating the same content all the time?</p>
 <figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">static</span> <span class="keyword">string</span>[] stringsFrom00To99 = &#123;</div><div class="line">	<span class="string">"00"</span>, <span class="string">"01"</span>, <span class="string">"02"</span>, <span class="string">"03"</span>, <span class="string">"04"</span>, <span class="string">"05"</span>, <span class="string">"06"</span>, <span class="string">"07"</span>, <span class="string">"08"</span>, <span class="string">"09"</span>,</div><div class="line">	<span class="string">"10"</span>, <span class="string">"11"</span>, <span class="string">"12"</span>, <span class="string">"13"</span>, <span class="string">"14"</span>, <span class="string">"15"</span>, <span class="string">"16"</span>, <span class="string">"17"</span>, <span class="string">"18"</span>, <span class="string">"19"</span>,</div><div class="line">	<span class="string">"20"</span>, <span class="string">"21"</span>, <span class="string">"22"</span>, <span class="string">"23"</span>, <span class="string">"24"</span>, <span class="string">"25"</span>, <span class="string">"26"</span>, <span class="string">"27"</span>, <span class="string">"28"</span>, <span class="string">"29"</span>,</div><div class="line">	<span class="string">"30"</span>, <span class="string">"31"</span>, <span class="string">"32"</span>, <span class="string">"33"</span>, <span class="string">"34"</span>, <span class="string">"35"</span>, <span class="string">"36"</span>, <span class="string">"37"</span>, <span class="string">"38"</span>, <span class="string">"39"</span>,</div><div class="line">	<span class="string">"40"</span>, <span class="string">"41"</span>, <span class="string">"42"</span>, <span class="string">"43"</span>, <span class="string">"44"</span>, <span class="string">"45"</span>, <span class="string">"46"</span>, <span class="string">"47"</span>, <span class="string">"48"</span>, <span class="string">"49"</span>,</div><div class="line">	<span class="string">"50"</span>, <span class="string">"51"</span>, <span class="string">"52"</span>, <span class="string">"53"</span>, <span class="string">"54"</span>, <span class="string">"55"</span>, <span class="string">"56"</span>, <span class="string">"57"</span>, <span class="string">"58"</span>, <span class="string">"59"</span>,</div><div class="line">	<span class="string">"60"</span>, <span class="string">"61"</span>, <span class="string">"62"</span>, <span class="string">"63"</span>, <span class="string">"64"</span>, <span class="string">"65"</span>, <span class="string">"66"</span>, <span class="string">"67"</span>, <span class="string">"68"</span>, <span class="string">"69"</span>,</div><div class="line">	<span class="string">"70"</span>, <span class="string">"71"</span>, <span class="string">"72"</span>, <span class="string">"73"</span>, <span class="string">"74"</span>, <span class="string">"75"</span>, <span class="string">"76"</span>, <span class="string">"77"</span>, <span class="string">"78"</span>, <span class="string">"79"</span>,</div><div class="line">	<span class="string">"80"</span>, <span class="string">"81"</span>, <span class="string">"82"</span>, <span class="string">"83"</span>, <span class="string">"84"</span>, <span class="string">"85"</span>, <span class="string">"86"</span>, <span class="string">"87"</span>, <span class="string">"88"</span>, <span class="string">"89"</span>,</div><div class="line">	<span class="string">"90"</span>, <span class="string">"91"</span>, <span class="string">"92"</span>, <span class="string">"93"</span>, <span class="string">"94"</span>, <span class="string">"95"</span>, <span class="string">"96"</span>, <span class="string">"97"</span>, <span class="string">"98"</span>, <span class="string">"99"</span></div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">Update</span> (<span class="params"></span>) </span>&#123;</div><div class="line">	fpsLabel.text = stringsFrom00To99[Mathf.Clamp(fpsCounter.FPS, <span class="number">0</span>, <span class="number">99</span>)];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>By using a fixed array of string representations of every number that we might need, we have eliminated all temporary string allocations!</p>
 <h2 id="Averaging-Frames-Per-Second"><a href="#Averaging-Frames-Per-Second" class="headerlink" title="Averaging Frames Per Second"></a>Averaging Frames Per Second</h2><p>Updating the FPS value each frame has an unfortunate side effect. The label will fluctuate constantly when the frame rate isn’t stable, making it hard to get a useful reading. We could update the label only once in a while, but then we would no longer get a good impression of how the frame rate is behaving.</p>
 <p>A possible solution is to average the frame rate, smoothing the impact of sudden changes, producing a less jittery value. Let’s adjust FPSCounter so it does this over a configurable range of frames. Setting this value to 1 would be the same as not averaging at all, so it is effectively optional.</p>
 <figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> frameRange = <span class="number">60</span>;</div></pre></td></tr></table></figure>
-<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/04-frame-range.png" alt=""><br>Configurable frame range.</p>
+<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/04-frame-range.png" alt="Configurable frame range"></p>
 <p>Let’s change the property name from FPS to AverageFPS, as that is a better description of the value it now represents. Either use your IDE to refactor the name, or manually update the display component to use the new name.</p>
 <figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> AverageFPS &#123; <span class="keyword">get</span>; <span class="keyword">private</span> <span class="keyword">set</span>; &#125;</div></pre></td></tr></table></figure>
 <p>Now we need a buffer to store the FPS values of multiple frames, plus an index so we know where to put the data of the next frame.</p>
@@ -254,7 +254,7 @@ Prevent the creation of temporary string">
 <p>Our FPSDisplay components can now bind two additional labels.</p>
 <figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> Text highestFPSLabel, averageFPSLabel, lowestFPSLabel;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">Update</span> (<span class="params"></span>) </span>&#123;</div><div class="line">	highestFPSLabel.text =</div><div class="line">		stringsFrom00To99[Mathf.Clamp(fpsCounter.HighestFPS, <span class="number">0</span>, <span class="number">99</span>)];</div><div class="line">	averageFPSLabel.text =</div><div class="line">		stringsFrom00To99[Mathf.Clamp(fpsCounter.AverageFPS, <span class="number">0</span>, <span class="number">99</span>)];</div><div class="line">	lowestFPSLabel.text =</div><div class="line">		stringsFrom00To99[Mathf.Clamp(fpsCounter.LowestFPS, <span class="number">0</span>, <span class="number">99</span>)];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>Add two more labels to the UI and hook them all up. I put the highest FPS at the top and the lowest FPS at the bottom, with the average FPS in the middle.</p>
-<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/04-three-labels-hierarchy.png" alt="hierarchy"><br><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/04-three-labels.png" alt="component"><br><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/04-three-labels-scene.png" alt="scene"><br><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/04-game.png" alt="game"><br>More information, less jitter.</p>
+<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/04-three-labels-hierarchy.png" alt="hierarchy"><br><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/04-three-labels.png" alt="component"><br><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/04-three-labels-scene.png" alt="scene"><br><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/04-game.png" alt="gamMore information, less jitter"></p>
 <h2 id="Coloring-the-Labels"><a href="#Coloring-the-Labels" class="headerlink" title="Coloring the Labels"></a>Coloring the Labels</h2><p>As a final touch to the FPS labels, we can colorize them. This can be done by associating colors with FPS values. Such an association can be represented with a custom struct.</p>
 <figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[System.Serializable]</div><div class="line"><span class="keyword">private</span> <span class="keyword">struct</span> FPSColor &#123;</div><div class="line">	<span class="keyword">public</span> Color color;</div><div class="line">	<span class="keyword">public</span> <span class="keyword">int</span> minimumFPS;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>As FPSDisplay is the only thing that will use this structure, we put the struct definition directly inside that class and make it private so that it won’t show up in the global namespace. Make it serializable so that it can be exposed by the Unity editor.</p>
@@ -276,7 +276,7 @@ Prevent the creation of temporary string">
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://tospan.me/2017/02/05/Unity-Frames-Per-Second/" data-id="ciyu4ntfg001h2tvw99xwer9w" class="article-share-link">Share</a>
+      <a data-url="http://tospan.me/2017/02/05/Unity-Frames-Per-Second/" data-id="ciyvdy4bn001d9qvwz1gwzgmt" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Basics/">Basics</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Unity/">Unity</a></li></ul>
@@ -287,11 +287,11 @@ Prevent the creation of temporary string">
     
 <nav id="article-nav">
   
-    <a href="/2017/02/05/Unity-Object-Pools/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2017/02/05/Unity-Object-Pools-1/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
-          Unity Object Pools
+          Unity对象池
         
       </div>
     </a>
@@ -313,9 +313,9 @@ Prevent the creation of temporary string">
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Categories</h3>
+    <h3 class="widget-title">Kategorier</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Math/">Math</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Unity/">Unity</a></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Math/">Math</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Unity/">Unity</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/default/">default</a></li></ul>
     </div>
   </div>
 
@@ -335,14 +335,14 @@ Prevent the creation of temporary string">
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Basics/" style="font-size: 15px;">Basics</a> <a href="/tags/C/" style="font-size: 13.33px;">C#</a> <a href="/tags/Games/" style="font-size: 10px;">Games</a> <a href="/tags/Geometry/" style="font-size: 11.67px;">Geometry</a> <a href="/tags/Linear-Algebra/" style="font-size: 16.67px;">Linear Algebra</a> <a href="/tags/Math/" style="font-size: 18.33px;">Math</a> <a href="/tags/Numerical-Analysis/" style="font-size: 10px;">Numerical Analysis</a> <a href="/tags/Unity/" style="font-size: 20px;">Unity</a> <a href="/tags/default/" style="font-size: 10px;">default</a>
+      <a href="/tags/Basics/" style="font-size: 14px;">Basics</a> <a href="/tags/C/" style="font-size: 12px;">C#</a> <a href="/tags/Games/" style="font-size: 10px;">Games</a> <a href="/tags/Geometry/" style="font-size: 12px;">Geometry</a> <a href="/tags/Linear-Algebra/" style="font-size: 16px;">Linear Algebra</a> <a href="/tags/Math/" style="font-size: 18px;">Math</a> <a href="/tags/Numerical-Analysis/" style="font-size: 10px;">Numerical Analysis</a> <a href="/tags/Unity/" style="font-size: 20px;">Unity</a> <a href="/tags/default/" style="font-size: 16px;">default</a>
     </div>
   </div>
 
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
+    <h3 class="widget-title">Arkiv</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/12/">December 2012</a></li></ul>
     </div>
@@ -352,28 +352,28 @@ Prevent the creation of temporary string">
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">Siste innlegg</h3>
     <div class="widget">
       <ul>
         
           <li>
-            <a href="/2017/02/06/Math-3D/">3D数学</a>
+            <a href="/2017/02/07/Unity-FSM/">Unity FSM</a>
           </li>
         
           <li>
-            <a href="/2017/02/06/Unity-Engine-Core-Concept/">Unity引擎重要概念</a>
+            <a href="/2017/02/07/Unity-Object-Pools-2/">Unity Object Pools 2</a>
           </li>
         
           <li>
-            <a href="/2017/02/06/Unity-Scripting-2D-Code-Snippet/">Unity编程 2D脚本常用代码集合</a>
+            <a href="/2017/02/07/Unity-Scripting-Coroutine-Delay/">Unity Scripting Coroutine Delay</a>
           </li>
         
           <li>
-            <a href="/2017/02/06/Unity-Scripting-Core/">Unity编程要点</a>
+            <a href="/2017/02/07/Unity-Scripting-Coroutine/">Unity Scripting Coroutine</a>
           </li>
         
           <li>
-            <a href="/2017/02/06/C-Sharp-Essential/">C#要点</a>
+            <a href="/2017/02/07/Unity-Scripting-Memory-Management/">Unity Scripting Memory Management</a>
           </li>
         
       </ul>
