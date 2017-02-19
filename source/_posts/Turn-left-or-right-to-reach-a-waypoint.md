@@ -3,10 +3,10 @@ title: Turn left or right to reach a waypoint
 date: 2017-02-05 10:03:43
 updated:
 categories: 
-  - Unity
+  - Game Development
 tags:
   - Unity
-  - Math
+  - Mathematics
   - Linear Algebra
 ---
 

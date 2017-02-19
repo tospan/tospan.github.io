@@ -3,7 +3,7 @@ title: Are two triangles in 2D space intersecting
 date: 2017-02-05 10:16:37
 updated:
 categories:
-  - Unity
+  - Game Development
 tags:
   - Unity
   - Math
@@ -251,7 +251,7 @@ bool IsIntersectingAABB(Triangle t1, Triangle t2)
 
 It should look like this in Unity:
 
-![Intersection of 2 rectangles with AABB intersection method](../_images/unity/aabb-intersection-test.png)
+![Intersection of 2 rectangles with AABB intersection method](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/aabb-intersection-test.png)
 
 ## Step 2. Line-line intersection
 
@@ -323,7 +323,7 @@ bool AreLineSegmentsIntersecting(Vector3 p1, Vector3 p2, Vector3 p3, Vector3 p4)
 
 It should look like this in Unity:
 
-![Intersection of a line and a triangle](../_images/unity/line-triangle-intersection-test.png)
+![Intersection of a line and a triangle](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/line-triangle-intersection-test.png)
 
 ## Step 3. Point in triangle intersection
 
@@ -382,7 +382,7 @@ bool IsPointInTriangle(Vector3 p, Vector3 p1, Vector3 p2, Vector3 p3)
 
 It should look like this in Unity:
 
-![Intersection of a point in a triangle](../_images/unity/line-triangle-intersection-test.png)
+![Intersection of a point in a triangle](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/line-triangle-intersection-test.png)
 That's it!
 
 ## 参考

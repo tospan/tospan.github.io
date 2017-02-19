@@ -8,7 +8,7 @@ date: 2017-02-05 14:39:07
 updated: 2017-02-05 14:39:07
 ---
 
-![Unity mesh combining final forest](../_images/unity/combine-meshes-tutorial.png)
+![Unity mesh combining final forest](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/combine-meshes-tutorial.png)
 
 ## Introduction
 
@@ -118,7 +118,7 @@ Out Tree Brush tool consists of a projector, so import Unity's standard projecto
 
 But the projector's circle doesn't look good, so we need a new one. Open the projector's material and give it a new circle by importing a circle image to Unity and then drag it to the material slot called "Cookie." I'm using this circle:
 
-![Our tree brush circle](../_images/unity/circle.png)
+![Our tree brush circle](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/circle.png)
 
 Now we need to make the circle move around with the mouse. Create a new script called "TutorialMouseMarker," and add the following to it:
 
@@ -191,7 +191,7 @@ Add the script to "_Controller" gameobject and add both the "Circle" gameobject 
 
 The last part of the script above takes care of resizing the circle so we can remove trees over a larger area and add trees over a smaller area. If you now click play you should see something that looks like this (ignore the "Tree parent" and the "Tree combined" gameobjects because we will soon add them):
 
-![How the scene should look like when you are finished](../_images/unity/setup-scene-finished.png)
+![How the scene should look like when you are finished](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/setup-scene-finished.png)
 
 Now let's learn how to combine meshes with different colors into one mesh!
 
@@ -304,7 +304,7 @@ What's different in the script above compared with Unity's example is that we fi
 
 Add the trees and the game object "Tree combined multicolor" to the script. If you now press play you should see the following:
 
-![Trees with different colors combined into one mesh in Unity](../_images/unity/multicolor-trees-combined.png)
+![Trees with different colors combined into one mesh in Unity](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/multicolor-trees-combined.png)
 
 ...and if you click the Stats button you should see that the number of batches have decreased from 22 to 18. It might not sound like much, but when we have thousands of trees, like we will have in the next part of the tutorial, you will notice a dramatic difference. So head to the next part of the tutorial!
 
@@ -395,7 +395,7 @@ public class TutorialCreateForest : MonoBehaviour {
 Add everything needed to the script and press Play. If you click to display the Stats window and if you zoom out, you should see that the number of batches has grown to almost 4000:
 
 
-![The number of batches before we combine the trees](../_images/unity/forest-before-combined-meshes.png)
+![The number of batches before we combine the trees](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/forest-before-combined-meshes.png)
 
 ### Part 2. Combine the meshes
 
@@ -536,7 +536,7 @@ I've also been lazy by assuming that the wood part of the tree and the leaf part
 
 If you now press Play and zoom out you should be able to see that the number of batches have decreased from 4000 to 200:
 
-![The number of batches after we combine the trees](../_images/unity/forest-after-combined-meshes.png)
+![The number of batches after we combine the trees](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/forest-after-combined-meshes.png)
 
 Now let's move on and learn how to add and remove trees. It might sound easy, but it will be complicated, so take a break before you begin!
 

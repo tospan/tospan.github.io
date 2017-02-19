@@ -3,10 +3,10 @@ title: 在Unity中制作Dubins曲线(C#)
 date: 2017-02-05 11:18:41
 updated:
 categories: 
-  - Unity
+  - Game Development
 tags:
   - Unity
-  - Math
+  - Mathematics
   - Geometry
 ---
 
@@ -20,7 +20,7 @@ In this tutorial you will learn how to make Dubins paths in Unity with C# code. 
 
 But why would anyone need a Dubins path? One application is self-driving cars. I've made a self-driving car in Unity and I used Dubins paths to improve the pathfinding algorithm Hybrid A*. The problem with Hybrid A* is that Hybrid A* doesn't care about the final orientation of the car, which is what Dubins paths care about. This is how it looks like:
 
-![Self driving car using Dubins paths](../_images/unity/dubins-paths-self-driving-car.png)
+![Self driving car using Dubins paths](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/dubins-paths-self-driving-car.png)
 
 The white line is the shortest Dubins path and the gray line is a modified Dubins path because it can also reverse. As the Wikipedia article said, you can modify the Dubins paths and you will end up with the so-called Reeds–Shepp curves. But we will here focus on the original Dubins paths, which can only drive forward.
 
@@ -38,18 +38,18 @@ The 6 paths are described by the following path segments: drive Right, drive Lef
 
 To be able to construct these 6 paths we first have to add 4 circles: 1 circle 90 degrees to the right of the car, 1 circle 90 degrees to the left of the car, 1 circle 90 degrees to the right of the target car, and 1 circle 90 degrees to the left of the target car. It will look like this:
 
-![Dubins path circles perpendicular to the cars](../_images/unity/left-right-circles-with-angles.png)
+![Dubins path circles perpendicular to the cars](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/left-right-circles-with-angles.png)
 
 Now we need to connect these circles with so-called tangent lines. A tangent line to a circle is perpendicular to the center of the circle. There are 2 different groups of tangent lines: Outer tangent and Inner tangent. The difference is that the inner tangent lines cross the center line that connects the center points of the circles.
 
 
-![Outer and inner tangent lines to circles](../_images/unity/outer-inner-tangent-lines.png)
+![Outer and inner tangent lines to circles](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/outer-inner-tangent-lines.png)
 
 Now we can group the 6 paths into 3 different groups, and each group needs a different calculation. RSR and LSL will always use an outer tangent line, RSL and LSR will always use an inner tangent line, and LRL and RLR will not have a tangent line at all, but 2 tangent coordinates that connects with a third circle.
 
 One good thing that will make things less complicated is that each path will always have the same tangent line. For example, RSR will always use the upper outer tangent line, no matter the orientation of the car and the target:
 
-![RSR will always use the upper outer tangent](../_images/unity/RSR.png)
+![RSR will always use the upper outer tangent](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/RSR.png)
 
 So let's learn how to calculate the tangent lines and coordinates.
 
@@ -57,7 +57,7 @@ So let's learn how to calculate the tangent lines and coordinates.
 
 Calculating the outer tangent lines are easy if the circles have the same radius. This is what we have:
 
-![Calculation of outer tangent lines](../_images/unity/RSR-or-LSL.png)
+![Calculation of outer tangent lines](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/RSR-or-LSL.png)
 
 What we have is the center coordinates of the both circles, and we want to figure out coordinate B and C. We begin with B. The angle theta is always 90 degrees if the circles have the same radius. But if the circles are not in line (are not at the same "height") we also have to calculate the angle atan2 to compensate for the rotation.
 
@@ -71,7 +71,7 @@ To get the bottom tangent line, we just repeat the above calculations, but we ad
 
 Alright, 2 paths down, 4 to go. Now we will figure out how to calculate the tangent lines belonging to LSR and RSL, which are the inner tangents. This is what we have:
 
-![Calculation of inner tangent lines](../_images/unity/LSR-or-RSL.png)
+![Calculation of inner tangent lines](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/LSR-or-RSL.png)
 
 We are interested in finding the coordinates B and E. We have the coordinates A and D (center coordinates of each circle) as well as the circle radius R.
 
@@ -87,7 +87,7 @@ Now we know the tangent line RSL (from the top of the right start circle to the 
 
 The last path curves are a little special, because now we have to add a third circle with the same size as the other two circles. It looks like this:
 
-![Calculation of RLR and LRL tangent coordinates](../_images/unity/RLR-or-LRL.png)
+![Calculation of RLR and LRL tangent coordinates](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/RLR-or-LRL.png)
 
 As before we have the center position of each circle: A and B. We also have the circle radius R. We are interested in the coordinates D and E.
 
@@ -100,7 +100,7 @@ Now E is on the same line as BC and D is one the same line as AC. So we can calc
 And that's it! The boring math part is over. Well, you'll have to learn on your own how to calculate arc lengths and how to iterate over the path with a numerical method, but that's easy. Now we will create something looking like this in the next part (the white line is the shortest of the Dubins paths):
 
 
-![Dubins paths in Unity](../_images/unity/dubins-paths-tesla.png)
+![Dubins paths in Unity](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/dubins-paths-tesla.png)
 
 
 ## Dubins Paths in Unity
@@ -111,7 +111,7 @@ Then add 4 circles with the same radius as the turning radius (R in the previous
 
 Everything should now look like this:
 
-![Unity dubins paths start scene](../_images/unity/start-scene.png)
+![Unity dubins paths start scene](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/start-scene.png)
 
 ### Script 1 - Move and Rotate the target car
 
@@ -1059,7 +1059,7 @@ namespace DubinsPathsTutorial
 ...and if you now press play (and attach a cool camera script to the scene) you should see something like this:
 
 
-![The final scene in Unity with Dubins paths](../_images/unity/dubins-paths-final.png)
+![The final scene in Unity with Dubins paths](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/dubins-paths-final.png)
 
 ## 参考
 

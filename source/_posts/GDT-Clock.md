@@ -24,7 +24,7 @@ updated: 2017-02-05 19:58:33
 
 开始本教程之前，假设你了解了Unity编辑器的基本操作，如果你简单试玩过了Unity，那么就可以大胆开始了。
 
-![You will create this in no time.](../_images/unity/tutorial-image.jpg)
+![You will create this in no time.](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/tutorial-image.jpg)
 <!--more-->
 
 ## 创建时钟
@@ -41,7 +41,7 @@ updated: 2017-02-05 19:58:33
 * 分针的位置值为`(0, 1.5, 0)`，缩放值为`(0.25, 3, 0.25)`，
 * 秒针的位置值为`(0, 2.0, 0)`，缩放值为`(0.10, 4, 0.10)`。
 
-![Clock construction and hierarchy](../_images/unity/01-objects.png)
+![Clock construction and hierarchy](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/01-objects.png)
 
 ## 让指针动起来
 
@@ -61,9 +61,7 @@ public class ClockAnimator : MonoBehaviour {
 
 这是用于作为游戏对象组件的内容最简单的脚本了。保存，然后将其从项目面板(Project)拖到层级(Hierarchy)面板的`Clock`对象上，或者通过`Add Component`按钮来添加。
 
-![ClockAnimator attached to Clock](../_images/unity/02-clockanimator.png)
-
-To animate the arms, we need access to their Transform components first. Add a public Transform variable for each arm to the script, then save it. These public variables will become component properties which you can assign object to in the editor. The editor will then grab the Transform components of these objects and assign them to our variables. Select the Clock object, then drag the corresponding objects to the new properties.
+![ClockAnimator attached to Clock](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/02-clockanimator.png)
 
 要使指针动起来，首先我们需要能访问它们的`Transform`组件。在脚本中为每个指针创建一个`public`修饰的`Transform`变量并保存。我们将在Unity编辑器中看到这些公共变量，它们都成了组件的属性。编辑器将获取这些对象的`Transform`组件并赋值给我们定义的变量。选中`Clock`对象，拖动对应的对象到这些新的属性里去。
 
@@ -78,9 +76,9 @@ public class ClockAnimator : MonoBehaviour {
 }
 ```
 
-![empty](../_images/unity/02-clockanimator_empty.png)  
+![empty](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/02-clockanimator_empty.png)  
 
-![filled](../_images/unity/02-clockanimator_update.png)
+![filled](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/02-clockanimator_update.png)
 
 ClockAnimator with empty and filled properties.
 
@@ -106,7 +104,7 @@ public class ClockAnimator : MonoBehaviour {
 
 脚本保存之后，编辑器注意到我们的脚本有Update方法（当然除此之外，Start方法之类的都有这个特征），就会显示一个复选框，让我们可以禁用或启用该脚本。当然，我们这里会确保启用，也就是勾选该脚本。
 
-![Updating ClockAnimator adorned with a checkbox](../_images/unity/02-clockanimator_update.png)
+![Updating ClockAnimator adorned with a checkbox](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/02-clockanimator_update.png)
 
 每小时时针会旋转 `360/12`度，分针每分钟旋转`360/60`度，秒针每秒钟旋转`360/60`度。 为了方便，我们先把这些值定义为私有的浮点数常量。
 
@@ -186,7 +184,7 @@ public class ClockAnimator : MonoBehaviour {
 }
 ```
 
-![Clock showing it's 12:44](../_images/unity/02-animating.png)
+![Clock showing it's 12:44](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/02-animating.png)
 
 > 什么是四元数？请查看[3D 数学](Math-3D.md)
 
@@ -241,7 +239,7 @@ public class ClockAnimator : MonoBehaviour {
 }
 ```
 
-![ClockAnimator allowing analog mode](../_images/unity/03-clockanimator_analog.png)
+![ClockAnimator allowing analog mode](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/03-clockanimator_analog.png)
 
 要实现模拟时钟特性，我们需要稍微不同的方式，不同于使用`DateTime.Now`，我们将使用`DateTime.Now.TimeOfDay`，它是`TimeSpan`类型。它可以让我们简单地获取到非常小的小时、分钟或秒钟的过渡。由于这些值是双精度的浮点数，我们需要进行强制转换。
 
@@ -284,6 +282,6 @@ public class ClockAnimator : MonoBehaviour {
 }
 ```
 
-![Clock in analog mode showing it's 12:56](../_images/unity/03-animating_analog.png)
+![Clock in analog mode showing it's 12:56](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/03-animating_analog.png)
 
 好了！现在我们的时钟也可以像模拟时钟一样工作了！

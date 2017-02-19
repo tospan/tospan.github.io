@@ -49,11 +49,11 @@ A better way is to store all enemies in a spatial data structure that organizes 
 
 The idea here is that we will have spheres chasing cubes. The sphere are the friendly while the cubes are called enemies. So in Unity you should add an empty gameobject called GameController, and two empty gameobjects called Enemy soldiers and Friendly soldiers to which we will parent the cubes and spheres to get a clean workspace. Also add a ground plane. The plane's corner has to begin at (0,0,0) for this work, so the position should be (25, 0, 25) and the scale (5, 1, 5). The reason is that we have to translate coordinates of the cubes and spheres to positions in the grid, and it's easier if everything begins at (0,0,0). Everything should look like this:
 
-![Spatial partition basic scene](../_images/unity/spatial-partition-setup-scene.png)
+![Spatial partition basic scene](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/spatial-partition-setup-scene.png)
 
 You also need a sphere and a cube, and they should be prefabs. You also need different materials. The reason is that we are going to change the cubes's materials to detect which of them is the closest.
 
-![Spatial partition more stuff](../_images/unity/spatial-partition-setup-stuff.png)
+![Spatial partition more stuff](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/spatial-partition-setup-stuff.png)
 
 ## The spatial partition scripts
 
@@ -476,6 +476,6 @@ namespace SpatialPartitionPattern
 
 If you've added all scripts and all the other stuff, and you press play, you should see the following:
 
-![Spatial partition final scene](../_images/unity/spatial-partition-final-scene.png)
+![Spatial partition final scene](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/spatial-partition-final-scene.png)
 
 You will notice that the spheres are not always chasing cubes if there's not a cube within their cell. That's a nice side-effect, so you could maybe use the script to make patrolling gameobjects.

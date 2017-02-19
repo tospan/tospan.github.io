@@ -23,7 +23,7 @@ In this tutorial we'll create a simple test scene and then measure its performan
 
 This tutorial requires a basic understanding of scripting in Unity. It has been made for Unity 5.0.1 and up. If you're new, have a look at Constructing a Fractal first.
 
-![Smash together spheres until your frame rate tanks](../_images/unity/frames-per-second-tutorial-image.png)
+![Smash together spheres until your frame rate tanks](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/frames-per-second-tutorial-image.jpg)
 
 <!--more-->
 
@@ -60,9 +60,8 @@ public class Nucleon : MonoBehaviour {
 
 Create two nucleon prefabs, one for protons and another for neutrons. Give each a different material so they look different. We could suffice with only one nucleon type, but that's boring to look at.
 
-![proton](../_images/unity/01-proton-prefab.png)  
-![neutron](../_images/unity/01-neutron-prefab.png)
-Nucleon prefabs.
+![Proton Prefab](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/01-proton-prefab.png)  
+![Nucleon prefab](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/01-neutron-prefab.png)
 
 To spawn these nucleons we need to create another component, NucleonSpawner. It needs to know the time interval between spawns, how far away from the center to spawn, and what to spawn.
 
@@ -81,7 +80,7 @@ public class NucleonSpawner : MonoBehaviour {
 
 Create an empty game object, attach a NucleonSpawner component, and configure it as you like.
 
-![Nucleon spawner](../_images/unity/01-nucleon-spawner.png)
+![Nucleon spawner](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/01-nucleon-spawner.png)
 
 To spawn at regular intervals, we need to keep track of the time since the last spawn. We can do this with a simple FixedUpdate method.
 
@@ -113,9 +112,9 @@ The actual spawning consists of three steps. Pick a random prefab, instantiate i
 	}
 ```
 
-![](../_images/unity/01-nucleus.png)
+![](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/01-nucleus.png)
 
-![nucleus](../_images/unity/ReadyActiveIndigowingedparrot.mp4)
+![nucleus](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/ReadyActiveIndigowingedparrot.mp4)
 
 Building a nucleus through bombardment.
 
@@ -123,8 +122,7 @@ Playing this scene should result in spheres shooting towards the center. They wi
 
 If it takes too long for you to see performance worsen, you can increase the spawn rate. Speeding up time by increasing the time scale works as well. You can find it via Edit / Project Settings / Time. You can also decrease the Fixed Timestep, which will result in more physics calculations per second.
 
-![](../_images/unity/01-time-manager.png)
-Unity time settings.
+![Unity time settings](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/01-time-manager.png)
 
 > Why is motion not fluid for low time scales?
 > When the time scale is set to a low value like 0.1, time will move very slowly. Because the fixed time step is constant, this means that the physics system will update less often. So physics objects will remain motionless until a fixed update happens, which is only once every few frames.
@@ -136,17 +134,16 @@ Unity time settings.
 
 Now that we have a scene that will eventually bring down the frame rate of any machine, it is time to measure the actual performance. The quickest thing you can do is enable the statistics overlay of the game view.
 
-![](../_images/unity/02-statistics.png)
-Game view statistics overlay.
+![Game view statistics overlay](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/02-statistics.png)
 
 However, the frame rate shown there isn't accurate at all, it's more like a rough guess. We can do better by opening Unity's profiler, via Window / Profiler. The profiler gives us a lot of useful information, especially the CPU usage and memory data.
 
-![The profiler, showing lots of vsync time.](../images/unity/02-profiler-vsync.png)
+![The profiler, showing lots of vsync time.](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/02-profiler-vsync.png)
 
 
 If vsync is enabled, it will likely dominate the CPU graph at the start. To get a better idea of how much CPU resources our scene needs, turn vsync off. You can do this via Edit / Project Settings / Quality. It is found at the bottom, under the Other heading.
 
-![No more vsync.](../_images/unity/02-vsync.png)
+![No more vsync.](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/02-vsync.png)
 
 
 > I am getting very high frame rates now!
@@ -154,8 +151,7 @@ If vsync is enabled, it will likely dominate the CPU graph at the start. To get 
 
 Now you can get a better look at the CPU usage. In my case physics requires most time, followed by rendering, and then my scripts. This remains true for a long time, even though everything will slow down as the sphere count goes up.
 
-![](../_images/unity/02-profiler.png)
-Profiler without vsync.
+![Profiler without vsync](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/02-profiler.png)
 
 There are also two unexpected observations that we can make. First, there are occasional spikes of CPU usage. Second, the memory graph shows frequent GC allocation spikes, which indicates that there is memory being allocated and subsequently freed. As we're only creating new objects and never throw anything away, this is odd.
 
@@ -163,8 +159,8 @@ Both phenomena are caused by the Unity editor. The CPU spikes happen whenever yo
 
 You can still get plenty of useful information from in-editor profiling, but if you want to eliminate the editor itself from your measurements, you have to make a standalone build. You can still use the profiler if you make a development build and even automatically connect to it when running your app. You can configure this via File / Build Settings...
 
-![build settings](../_images/unity/02-build.png)
-![profiler](../_images/unity/02-profiler-attached.png)
+![build settings](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/02-build.png)
+![profiler](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/02-profiler-attached.png)
 
 The profiler attached to a standalone app.
 
@@ -213,23 +209,22 @@ However, there is a problem with this approach. The time delta is not the actual
 
 Some kind of UI is needed to show the FPS. Let's use Unity's UI for that. Create a canvas with a panel inside it that in turn contains a text object. These can be added via the GameObject / UI submenu. When adding a canvas you'll also get an EventSystem object to handle user input, but we don't need that, so you can remove it.
 
-![](../_images/unity/03-hierarchy.png)
-UI object hierarchy.
+![UI object hierarchy](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/03-hierarchy.png)
 
 I used the default canvas settings, except that I made it pixel-perfect.
 
-![](../_images/unity/03-canvas.png)
-A pixel-perfect canvas.
+![A pixel-perfect canvas](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/03-canvas.png)
+
 
 The panel is used to create a semitransparent black background for the FPS label. That way it will always be readable. I put it at the top-left corner of the window. Set its anchor to top-left so it remains in place regardless of the window's size. Set its pivot to (0,1) for easy placement.
 
 Position the label inside the panel in a similar way. Make it white bold text, centered both horizontally and vertically. Design the whole thing so it snugly fits two digits.
 
-![panel](../_images/unity/03-panel.png)
-![label](../_images/unity/03-label.png)
-![panel scene](../_images/unity/03-panel-scene.png)  
-![label scene](../_images/unity/03-panel-scene.png)
-Building the UI.
+![Building the UI: panel](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/03-panel.png)
+![Building the UI: label](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/03-label.png)
+![Building the UI: panel scene](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/03-panel-scene.png)  
+![Building the UI: label scene](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/03-panel-scene.png)
+
 
 Now we need to bind the FPS value to the label. Let's create a component for this purpose. It needs an FPSCounter component to retrieve the value from, and a reference to a Text label from the UnityEngine.UI namespace to assign the value to.
 
@@ -246,8 +241,7 @@ public class FPSDisplay : MonoBehaviour {
 
 Add this component to our panel and hook it up. We attach it to the panel because that's our whole FPS display, not to the label. We'll include more labels later.
 
-![](../_images/unity/03-display.png)
-Setting up the display.
+![Setting up the display](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/03-display.png)
 
 The display component simply has to update the label's text each frame. Let's cache the reference to the counter so we don't need to invoke GetComponent every time.
 ```cs
@@ -269,13 +263,12 @@ The FPS label is now updating! But as we designed it for two digits, it will sho
 	}
 ```
 
-![](../_images/unity/03-game.png)
-Now we can see the frame rate.
+![Now we can see the frame rate](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/03-game.png)
+
 
 Everything appears to work fine now, but there is a subtle problem. We are now creating a new string object each update, which is discarded the next update. This pollutes the managed memory, which will trigger the garbage collector. While this isn't a big deal for desktop apps, it is more troublesome for devices with little memory to spare. It also pollutes our profiler data, which is annoying when you're hunting for allocations.
 
-![](../_images/unity/03-string-allocations.png)
-Temporary string objects are created each update.
+![Temporary string objects are created each update](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/03-string-allocations.png)
 
 Can we get rid of these temporary strings? The value that we are displaying can be any integer between 0 and 99. That's 100 different strings. Why not create all these strings once and reuse them, instead of recreating the same content all the time?
 
@@ -310,8 +303,7 @@ A possible solution is to average the frame rate, smoothing the impact of sudden
 	public int frameRange = 60;
 ```
 
-![](../_images/unity/04-frame-range.png)
-Configurable frame range.
+![Configurable frame range](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/04-frame-range.png)
 
 Let's change the property name from FPS to AverageFPS, as that is a better description of the value it now represents. Either use your IDE to refactor the name, or manually update the display component to use the new name.
 
@@ -428,11 +420,10 @@ Our FPSDisplay components can now bind two additional labels.
 
 Add two more labels to the UI and hook them all up. I put the highest FPS at the top and the lowest FPS at the bottom, with the average FPS in the middle.
 
-![hierarchy](../_images/unity/04-three-labels-hierarchy.png)
-![component](../_images/unity/04-three-labels.png)  
-![scene](../_images/unity/04-three-labels-scene.png) 
-![game](../_images/unity/04-game.png)
-More information, less jitter.
+![hierarchy](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/04-three-labels-hierarchy.png)
+![component](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/04-three-labels.png)  
+![scene](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/04-three-labels-scene.png) 
+![gamMore information, less jitter](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/04-game.png)
 
 ## Coloring the Labels
 
@@ -457,7 +448,7 @@ Now add an array of these struct so we can configure the coloring of the FPS lab
 
 Go ahead and add some colors! Make sure that there is at least one entry, order them from highest to lowest FPS, with the last entry for 0 FPS.
 
-![](../_images/unity/05-coloring.png)
+![](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/05-coloring.png)
 Coloring.
 
 Before applying the colors to the labels, restructure the Update method by introducing a separate Display method that takes care of adjusting a single label.
@@ -491,7 +482,7 @@ The correct color can be found by looping through the array until the minimum FP
 > Why did my labels disappear?
 > A default color has all its four channels set to zero. This includes the alpha channel, which controls opacity. If you haven't changed the alpha channels, you'll get fully transparent labels.
 
-![](../_images/unity/05-game.png)
+![](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/05-game.png)
 Colored fps labels.
 
 Done! Enjoy watching your FPS tank, in color!

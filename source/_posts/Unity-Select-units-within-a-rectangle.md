@@ -11,7 +11,7 @@ updated: 2017-02-05 19:43:17
 
 In strategy games it's common to select units by making a rectangle with the mouse. All of those units within the area will then be selected when you release the mouse button. This is how it looks like in the strategy game Red Alert:
 
-![Red Alert select units within square](../_images/unity/red-alert-square.png)
+![Red Alert select units within square](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/red-alert-square.png)
 <!--more-->
 
 I've recently been prototyping a strategy game and I realized that selecting all units within a rectangle wasn't as easy as I first had thought. The difference with the classic strategy games is that we are now operating in 3D space and not 2D space as in Red Alert. So we will se that we are not selecting units within a rectangle in 3D space, but the corners in the rectangle are actually not 90 degrees, even though it looks like the corners are 90 degrees on the screen.
@@ -67,15 +67,15 @@ The square itself will consist of a tiny 3x3 pixels large image, where the cente
 
 Change it to Texture type: Sprite (2D and UI), and add the 3x3 image as source image in the GUI Image object. Now in the GUI Image object you change the Image type to Sliced, but now Unity will complain that "This image doesn't have any borders."
 
-![GUI image object](../_images/unity/gui-image-object.png)
+![GUI image object](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/gui-image-object.png)
 
 To give it borders, select the image and click on Sprite editor. From the different sides of the image, drag to form borders across the center pixel:
 
-![Unity sprite editor](../_images/unity/sprite-editor.png)
+![Unity sprite editor](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/sprite-editor.png)
 
 Then click on apply and try to resize the GUI Image object (and uncheck Fill Center). You should now see that the border is always 1 pixel large no matter how large the image is. Also make sure the transform is anchored to the middle of the canvas.
 
-![The complete GUI rectangle](../_images/unity/gui-square-complete.png)
+![The complete GUI rectangle](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/gui-square-complete.png)
 
 ## Draw the square
 
@@ -92,9 +92,9 @@ The complicated part is to determine the corners of the rectangle, and then draw
 
 When we know the size of the GUI rectangle, we have to convert the corners back to the 3D world because two of the corners are not the same as if we had made the same calculations in 3D space. If you test to make a rectangle, then pause the game, and look at the scene from the top, you will see that what looks like a rectangle in 2D is actually not a rectangle in 3D.
 
-![Selection rectangle 2D space](../_images/unity/selection-square-example.png)
+![Selection rectangle 2D space](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/selection-square-example.png)
 
-![Selection rectangle 3D space](../_images/unity/selection-square-3d-space.png)
+![Selection rectangle 3D space](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/selection-square-3d-space.png)
 
 So to determine if a unit is within the polygon we are going to divide it into two triangles and then just check if the center position of a unit is within one of the triangles. If you want you could check all corners of your unit, but it will be a little slower.
 
@@ -470,6 +470,6 @@ namespace Tutorial
 
 That's it! What you have should now look like this:
 
-![Final version of the select units within square tutorial](../_images/unity/final-select-units-within-square.png)
+![Final version of the select units within square tutorial](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/final-select-units-within-square.png)
 
 You can test it live here.

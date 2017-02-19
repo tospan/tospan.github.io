@@ -2,17 +2,17 @@
 title: 敌人在你前面还是后面？
 date: 2017-02-05 09:42:09
 updated:
-categories:
-  - Unity
+categories: 
+  - Game Development
 tags:
   - Unity
-  - Math
+  - Mathematics
   - Linear Algebra
 ---
 
 If you've ever played Minecraft you will have noticed that the nasty creepers tend to sneak up on you when you face in another direction. But creepers are not smart, so have can they figure out if you are looking in another direction? The answer is math, so they are actually smarter than most people... and you until you have read this tutorial! Anyway, this is the basic scene. The green guy is the one trying to sneak up on you.
 
-![Behind or in front basic scene](../_images/unity/in-front-behind.png)
+![Behind or in front basic scene](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/in-front-behind.png)
 
 <!--more-->
 

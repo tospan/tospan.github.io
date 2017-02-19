@@ -26,7 +26,7 @@ This tutorial will take you from creating a simple line all the way to editing y
 This tutorial builds on the foundation laid by previous tutorials. If you completed the Maze tutorial then you're good to go.
 This tutorial was made with Unity 4.5.2. It might not work for older versions.
 
-![Fun with splines.](../_images/unity/curves-and-splines-tutorial-image.png)
+![Fun with splines.](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/curves-and-splines-tutorial-image.jpg)
 
 <!--more-->
 
@@ -43,7 +43,7 @@ public class Line : MonoBehaviour {
 }
 ```
 
-![A simple line](../_images/unity/01-a-simple-line.png)
+![A simple line](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/01-a-simple-line.png)
 
 While we can now create game objects with line components and adjust the points, we don't see anything in the scene. Let's provide some useful visual information when our line is selected. We can do this by creating a custom inspector for our component.
 Editor-related code needs to be placed inside an `Editor` folder, so create one and put a new `LineInspector` script in it.
@@ -77,8 +77,8 @@ The Editor class has a target variable, which is set to the object to be drawn w
 	}
 ```
 
-![line](../_images/unity/01-draw-line.png)  
-![editor](../_images/unity/01-editor.png)
+![line](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/01-draw-line.png)  
+![editor](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/01-editor.png)
 Showing a line.
 
 We now see the line, but it doesn't take its transform's settings into account. Moving, rotating, and scaling does not affect them at all. This is because [Handles](http://docs.unity3d.com/Documentation/ScriptReference/Handles.html) operates in world space while the points are in the local space of the line. We have to explicitly convert the points into world space points.
@@ -95,8 +95,8 @@ We now see the line, but it doesn't take its transform's settings into account. 
 	}
 ```
 
-![untransformed](../_images/unity/01-untransformed.png)  
-![transformed](../_images/unity/01-transformed.png)
+![untransformed](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/01-untransformed.png)  
+![transformed](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/01-transformed.png)
 Untransformed vs. transformed.
 
 Besides showing the line, we can also show position handles for our two points. To do this, we also need our transform's rotation so we can align them correctly.
@@ -124,10 +124,10 @@ Although we now get handles, they do not honor Unity's pivot rotation mode. Fort
 			handleTransform.rotation : Quaternion.identity;
 ```
 
-![local handles](../_images/unity/01-local-rotation.png) 
-![global handles](../_images/unity/01-global-rotation.png)
-![local mode](../_images/unity/01-local-mode.png) 
-![global mode](../_images/unity/01-global-mode.png)
+![local handles](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/01-local-rotation.png) 
+![global handles](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/01-global-rotation.png)
+![local mode](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/01-local-mode.png) 
+![global mode](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/01-global-mode.png)
 Local vs. global pivot rotation.
 
 To make the handles actually work, we need to assign their results back to the line. However, as the handle values are in world space we need to convert them back into the line's local space with the `InverseTransformPoint` method. Also, we only need to do this when a point has changed. We can use `EditorGUI.BeginChangeCheck` and `EditorGUI.EndChangeCheck` for this. The second method tells us whether a change happened after calling the first method.
@@ -232,8 +232,8 @@ public class BezierCurveInspector : Editor {
 }
 ```
 
-![project](../_images/unity/02-curve.png) 
-![scene](../_images/unity/02-straight.png)
+![project](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/02-curve.png) 
+![scene](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/02-straight.png)
 A 3-point curve.
 
 The idea of Beziér curves is that they are parametric. If you give it a value – typically named `t` – between zero and one, you get a point on the curve. As `t` increases from zero to one, you move from the first point of the curve to the last point.
@@ -293,8 +293,8 @@ public static class Bezier {
 }
 ```
 
-![bezier](../_images/unity/02-bezier.png)  
-![linear](../_images/unity/02-linear.png)
+![bezier](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/02-bezier.png)  
+![linear](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/02-linear.png)
 Beziér library and linear interpolation.
 
 Of course, linear interpolation between the end points totally ignores the middle point. So how do we incorporate the middle point? The answer is to interpolate more than once. First, linearly interpolate between the first and middle point, and also between the middle and last point. That gives us two new points. Linearly interpolating between those two gives us the final point on the curve.
@@ -305,7 +305,7 @@ Of course, linear interpolation between the end points totally ignores the middl
 	}
 ```
 
-![](../_images/unity/02-quadratic.png)
+![](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/02-quadratic.png)
 A quadratic Beziér curve.
 
 This kind of curve is known as a quadratic Beziér curve, because of the polynomial math involved.
@@ -379,7 +379,7 @@ Now we can visualize the speed along the curve in BezierCurveInspector's OnScene
 		}
 ```
 
-![](../_images/unity/02-velocity.png)
+![](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/02-velocity.png)
 Showing velocity.
 
 We can clearly see how the velocity changes along the curve, but those long lines are cluttering the view. Instead of showing the velocity, we can suffice with showing the direction of movement.
@@ -407,7 +407,7 @@ Which requires that we add GetDirection to BezierCurve, which simply normalizes 
 	}
 ```
 
-![](../_images/unity/02-direction.png)
+![](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/02-direction.png)
 Showing direction.
 
 Let's go a step further and add new methods to Bezier for cubic curves as well! It works just like the quadratic version, except that it needs a fourth point and its formula goes another step deeper, resulting in a combination of six linear interpolations. The consolidated function of that becomes **B(t) = (1 - t)3 P0 + 3 (1 - t)2 t P1 + 3 (1 - t) t2 P2 + t3 P3** which has as its first derivative **B'(t) = 3 (1 - t)2 (P1 - P0) + 6 (1 - t) t (P2 - P1) + 3 t2 (P3 - P2)**.
@@ -468,7 +468,7 @@ With that, we can upgrade BezierCurve from quadratic to cubic by taking an addit
 		Handles.DrawLine(p2, p3);
 ```
 
-![](../_images/unity/02-cubic.png)
+![](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/02-cubic.png)
 A cubic Beziér curve.
 
 It is probably visually obvious by now that we draw our curve using straight line segments. We could increase the number of steps to improve the visual quality. We could also use an iterative approach to get accurate down to pixel level. But we can also use Unity's Handles.DrawBezier method, which takes care of drawing nice cubic Beziér curves for us.
@@ -511,7 +511,7 @@ The color argument is obvious, but it also expects a texture and a width. The wi
 	}
 ```
 
-![](../_images/unity/02-draw-bezier.png)
+![](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/02-draw-bezier.png)
 Using Handles.DrawBezier and scaled direction lines.
 
 ## Splines
@@ -608,7 +608,7 @@ public class BezierSplineInspector : Editor {
 }
 ```
 
-![](../_images/unity/03-spline.png)
+![](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/03-spline.png)
 A new spline type.
 
 
@@ -672,7 +672,7 @@ Usually you need not worry about this, but be aware of it when performing heavy 
 	}
 ```
 
-![](../_images/unity/03-adding-a-curve.png)
+![](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/03-adding-a-curve.png)
 Adding a curve.
 
 Of course we still only see the first curve. So we adjust BezierSplineInspector so it loops over all the curves.
@@ -701,7 +701,7 @@ Of course we still only see the first curve. So we adjust BezierSplineInspector 
 	}
 ```
 
-![](../_images/unity/03-showing-spline.png)
+![](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/03-showing-spline.png)
 The whole spline.
 
 Now we can see all the curves, but the direction lines are only added to the first one. This is because BezierSpline's method also still only work with the first curve. It's time to change that.
@@ -769,7 +769,7 @@ We now see direction lines across the entire spline, but we can improve the visu
 	}
 ```
 
-![](../_images/unity/03-directions.png)
+![](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/03-directions.png)
 Directions along the entire spline.
 
 It's rather crowded with all those transform handles. We could only show a handle for the active point. Then then other points can suffice with dots.
@@ -804,7 +804,7 @@ Like a few other Handles method, it also needs to be told what shape to draw. Th
 	}
 ```
 
-![](../_images/unity/03-point-dots.png)
+![](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/03-point-dots.png)
 Showing dots.
 
 This works, but it is tough to get a good size for the dots. Depending on the scale you're working at, they could end up either too large or too small. It would be nice if we could keep the screen size of the dots fixed, just like the position handles always have the same screen size. We can do this by factoring in `HandleUtility.GetHandleSize`. This method gives us a fixed screen size for any point in world space.
@@ -817,7 +817,7 @@ This works, but it is tough to get a good size for the dots. Depending on the sc
 		}
 ```
 
-![](../_images/unity/03-fixed-size-dots.png)
+![](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/03-fixed-size-dots.png)
 Dots with fixed size.
 
 ## Constraining Control Points
@@ -942,7 +942,7 @@ Unfortunately, it turns out that the inspector doesn't refresh itself when we se
 	}
 ```
 
-![](../_images/unity/04-selected-point.png)
+![](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/04-selected-point.png)
 Selected point only.
 
 Let's define an enumeration type to describe our three modes. Create a new script, remove the default code, and define an `enum` with the three options.
@@ -1024,7 +1024,7 @@ Now BezierSplineInspector can allow us to change the mode of the selected point.
 	}
 ```
 
-![](../_images/unity/04-mode.png)
+![](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/04-mode.png)
 Now with adjustable control point mode.
 
 It would be useful if we also got some visual feedback about our node types in the scene view. We can easily add this by coloring the dots. I'll use white for free, yellow for aligned, and cyan for mirrored.
@@ -1056,7 +1056,7 @@ It would be useful if we also got some visual feedback about our node types in t
 		return point;
 	}
 ```
-![](../_images/unity/04-colored-points.png)
+![](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/04-colored-points.png)
 Now with color-coded points.
 
 So far we're just coloring points. It's time to enforce the constraints. We add a new method to BezierSpline to do so and call it when a point is moved or a mode is changed. It takes a point index and begins by retrieving the relevant mode.
@@ -1136,7 +1136,7 @@ For the aligned mode, we also have to make sure that the new tangent has the sam
 
 ```
 
-![](../_images/unity/04-enforced.png)
+![](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/04-enforced.png)
 Enforced constraints.
 
 From now on, whenever you move a point or change a point's mode, the constraints will be enforced. But when moving a middle point, the previous point always stays fixed and the next point is always enforced. This might be fine, but it's intuitive if both other points move along with the middle one. So let's adjust SetControlPoint so it moves them together.
@@ -1220,7 +1220,7 @@ Now we can add the loop property to BezierSplineInspector.
 	}
 ```
 
-![](../_images/unity/04-loop-property.png)
+![](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/04-loop-property.png)
 Optional loop.
 
 To correctly enforce the loop, we need to make a few more changes to BezierSpline.
@@ -1345,7 +1345,7 @@ And finally, we also have to take looping into account when adding a curve to th
 	}
 ```
 
-![](../_images/unity/04-spline-loop.png)
+![](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/04-spline-loop.png)
 A spline loop.
 
 It is great that we have loops, but it is inconvenient that we can no longer see where the spline begins. We can make this obvious by letting BezierSplineInspector always doubling the size of the dot for the first point.
@@ -1376,7 +1376,7 @@ Note that in case of a loop the last point will be drawn on top of it, so if you
 	}
 ```
 
-![](../_images/unity/04-large-begin.png)
+![](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/04-large-begin.png)
 We start big.
 
 ## Using Splines
@@ -1406,8 +1406,8 @@ public class SplineWalker : MonoBehaviour {
 
 Now we can create a walker object, assign our spline, set a duration, and watch it move after we enter play mode. I simply used a cube and gave it smaller cubes to resemble eyes, so you can see in what direction it's looking.
 
-![walker](../_images/unity/05-walker.png) 
-![walking](../_images/unity/05-walking.png)
+![walker](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/05-walker.png) 
+![walking](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/05-walking.png)
 Walking the spline.
 
 The walker now walks , but it's not looking in the direction that it's going. We can add an option for that.
@@ -1432,8 +1432,8 @@ Providing one direction is not enough to define a 3D rotation. The method also k
 	}
 ```
 
-![looking forward](../_images/unity/05-looking-forward.png)  
-![walking and looking](../_images/unity/05-walking-and-looking.png)
+![looking forward](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/05-looking-forward.png)  
+![walking and looking](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/05-walking-and-looking.png)
 Looking where you go.
 
 Another option is to keep looping the splines, instead of walking it just once. While we're at it, we could also make the walker move back and forth, ping-ponging across the spline. Let's create an enumeration to select between these modes.
@@ -1485,7 +1485,7 @@ Now SplineWalker has to remember whether it's going forward or backward. It also
 	}
 ```
 
-![](../_images/unity/05-walk-mode.png)
+![](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/05-walk-mode.png)
 Walking in different ways.
 
 Another thing we could do is create a decorator that instantiates a sequence of items along a spline when it awakens. We also give it a forward-looking option, which applies to the items it spawns. The item sequence with some frequency, allowing for repetitions. Of course, if either the frequency is zero or there are no items, we do nothing.
@@ -1524,9 +1524,9 @@ public class SplineDecorator : MonoBehaviour {
 }
 ```
 
-![decorator and prefabs](../_images/unity/05-decorator.png) 
-![decorated loop](../_images/unity/05-decorating.png)  
-![decorated non-loop](../_images/unity/05-decorating-no-loop.png)
+![decorator and prefabs](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/05-decorator.png) 
+![decorated loop](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/05-decorating.png)  
+![decorated non-loop](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/05-decorating-no-loop.png)
 Decorating splines.
 
 This works well for loops, but it doesn't go all the way to the end of splines that aren't loops. We can fix this by increasing our step size to cover the entire length of the spline, as long as it's not a loop and we have more than one item to place.
@@ -1544,7 +1544,7 @@ This works well for loops, but it doesn't go all the way to the end of splines t
 		}
 ```
 
-![](../_images/unity/05-decorating-non-loop-complete.png)
+![](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/05-decorating-non-loop-complete.png)
 Going all the way.
 
 ## 原文链接

@@ -1,5 +1,5 @@
 ---
-title: Unity Object Pools
+title: Unity对象池
 categories:
   - Unity
 tags:
@@ -20,7 +20,7 @@ This tutorial is about objects pools. What are they, how do they work, and are t
 
 The tutorial follows Frames per Second. We will be spawning objects in a similar way, and the FPS counter is useful to measure performance.
 
-![Create pools to feed your fountain](../_images/unity/object-pools-tutorial-image.png)
+![Create pools to feed your fountain](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/object-pools-tutorial-image.jpg)
 
 <!--more-->
 
@@ -28,10 +28,9 @@ The tutorial follows Frames per Second. We will be spawning objects in a similar
 
 Object pools are a tool to reuse objects, which is relevant when you are creating and destroying lots of them. So we should begin by spawning lots of objects. And to measure performance, we can reuse the frame rate counter from the previous tutorial. You can grab just the counter bits and delete everything else. It is easiest if you open its scene, turn the counter object into a prefab, and then use that in a new scene for this tutorial.
 
-![assets](../_images/unity/counter-assets.png)  
-![object](../_images/unity/counter-object.png)  
-![scene](../_images/unity/counter-scene.png)
-Reusing the frame rate counter.
+![Reusing the frame rate counter:assets](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/counter-assets.png)  
+![Reusing the frame rate counter:object](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/counter-object.png)  
+![Reusing the frame rate counter:scene](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/counter-scene.png)
 
 So we need stuff to spawn. And to make it interesting, let's make it physics stuff. We can start with a very simple component for that, similar to the nucleon of the previous tutorial.
 
@@ -51,9 +50,8 @@ public class Stuff : MonoBehaviour {
 
 Create a standard cube and sphere, and add this component to both of them. Then turn them into prefabs.
 
-![cube prefab](../_images/unity/cube-prefab.png)  
-![stuff prefabs](../_images/unity/stuff-prefabs.png)
-Stuff prefabs.
+![cube prefab](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/cube-prefab.png)  
+![stuff prefabs](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/stuff-prefabs.png)
 
 The next thing we need is a spawner of stuff, much like the nucleon spawner.
 
@@ -86,8 +84,8 @@ public class StuffSpawner : MonoBehaviour {
 
 Create an object with this component. Set the time between spawns to something small, like 0.1. Then put references to the cube and sphere prefabs in the stuff array.
 
-![spawner](../_images/unity/spawner.png)  
-![spawn](../_images/unity/spawn.png)
+![spawner](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/spawner.png)  
+![spawn](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/spawn.png)
 A spawner of stuff to spawn stuff.
 
 Now we have a spawner that create cubes and spheres at one point. It doesn't look like much. If we give the spawner access to the stuff's body, it can give them a starting velocity. So turn Stuff.body into a property.
@@ -113,8 +111,8 @@ Let's add a configurable velocity to StuffSpawner, which it will use to give its
 	}
 ```
 
-![velocity](../_images/unity/velocity.png)  
-![a tower of spawn](../_images/unity/tower-of-stuff.png)
+![velocity](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/velocity.png)  
+![a tower of spawn](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/tower-of-stuff.png)
 Building a tower of stuff, bottom-up.
 
 Now we get a neat rising tower of stuff, which quickly collapses, then rises again. If you tilt the spawner, then it will start to look more like a natural flow of stuff. In fact, if we were to put multiple spawners in a ring, it will start to resemble an elaborate fountain. Let's create a component to do just that.
@@ -156,17 +154,16 @@ To position the spawners, it is easiest to create a rotater object for each. Tha
 
 Now turn the spawner into a prefab and make a new spawner ring object.
 
-![ring](../_images/unity/ring.png)  
-![much stuff](../_images/unity/much-stuff.png)
-Definitely a lot of stuff.
+![ring](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/ring.png)  
+![Definitely a lot of stuff.](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/much-stuff.png)
+
 
 We now have a fountain of stuff that just keeps on spawning more, resulting in an endless column of falling objects. To prevent our app from choking, we have to get rid of all this stuff at some point. We can do so by introducing a kill zone. All stuff that enters this zone should be destroyed.
 
 Create an object with a box collider marked as a trigger, set it to a very large size, and place it somewhere below the fountain. Then give it a Kill Zone tag so we know its function. This tag doesn't exist, you'll have to add it yourself, which you can do via the Add Tag... option in the tag selector. Note that tags will not be included when importing a unitypackage file, you'll have to add them to your project so they show up correctly.
 
-![kill zone](../_images/unity/kill-zone.png)  
-![tag](../_images/unity/tag.png)
-A kill zone.
+![kill zone](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/kill-zone.png)  
+![A kill zone tag](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/tag.png)
 
 Now Stuff can respond to entering a trigger by checking whether it is now in a kill zone, and if so terminate itself.
 
@@ -178,9 +175,8 @@ Now Stuff can respond to entering a trigger by checking whether it is now in a k
 	}
  
 ```
-![](../_images/unity/killed-spawn.png)
-![](../_images/unity/PositiveRichHatchetfish.mp4)
-Stuff gets terminated.
+![](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/killed-spawn.png)
+![Stuff gets terminated](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/PositiveRichHatchetfish.mp4)
 
 > Why use a tag?
 > Comparing tags is quick and our kill zone doesn't need to do anything, so it doesn't need a component of its own.
@@ -222,7 +218,7 @@ Now we can mess up the timing of StuffSpawner.
 	}
 ```
 
-![Irregular spawning](../_images/unity/spawn-time-range.png)
+![Irregular spawning](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/spawn-time-range.png)
 
 Why not randomize the stuff's scale and rotation as well?
 
@@ -241,7 +237,7 @@ Why not randomize the stuff's scale and rotation as well?
 	}
 ```
 
-![The little things also count](../_images/unity/scale-range.png)
+![The little things also count](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/scale-range.png)
 
 We can also vary the velocity, but let's make this a 3D randomization. We leave the base velocity unchanged, but also add a random velocity in an arbitrary direction.
 
@@ -256,7 +252,7 @@ We can also vary the velocity, but let's make this a 3D randomization. We leave 
 	}
 ```
 
-![Extra random velocity](../_images/unity/random-velocity-range.png)
+![Extra random velocity](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/random-velocity-range.png)
 
 And as physics allows for angular momentum as well, add a random angular velocity too. Keep in mind that the physics engine limits this velocity to keep the simulation stable. The default maximum is 7.
 
@@ -271,9 +267,9 @@ And as physics allows for angular momentum as well, add a random angular velocit
 	}
 ```
 
-![angular velocity](../_images/unity/angular-velocity-range.png)
-![randomized](../_images/unity/randomized-stuff.png) 
-![stuff](../_images/unity/MiniatureDefenselessGeese.mp4)
+![angular velocity](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/angular-velocity-range.png)
+![randomized](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/randomized-stuff.png) 
+![stuff](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/MiniatureDefenselessGeese.mp4)
 
 Adding some initial spin.
 
@@ -289,7 +285,7 @@ Our fountain of stuff is looking a lot more lively by now. Adding some color wou
 	}
 ```
 
-![Configurable material](../_images/unity/material.png)
+![Configurable material](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/material.png)
 
 > Why materials and not just colors?
 > Assigning colors to the stuff's material would result in each instance getting its own material. This way all materials remain shared.
@@ -309,15 +305,15 @@ Of course we won't just use one material. Instead, create a bunch and let StuffS
 > What does % do?
 > x % y computes the remainder of x divided by y. So we get repeating sequences going from 0 to stuffMaterials.Length - 1.
 
-![materials](../_images/unity/ring-materials.png)  
-![colored stuff](../_images/unity/colored-stuff.png)
+![materials](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/ring-materials.png)  
+![A colored fountain of stuff](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/colored-stuff.png)
 
-A colored fountain of stuff.
+
 
 Our scene will look even more lively if the stuff has something to interact with besides itself. So add a large sphere at the center of the scene. I gave it a uniform scale of 15 and also increased the stuff's velocity to 17 so it has a better chance to land on top of the sphere.
 
-![](../_images/unity/sphere.png)
-![](../_images/unity/WeightyBronzeFawn.mp4)
+![](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/sphere.png)
+![](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/WeightyBronzeFawn.mp4)
 More interesting physics interactions.
 
 Now stuff can bounce around a bit and maybe spend some time on the sphere, before it inevitable ends up in the kill zone. You can add more obstacles to the scene, but the longer you delay stuff from getting to a kill zone, the more work the physics engine has to do.
@@ -331,8 +327,8 @@ You will see continuous memory allocation and maybe garbage collection runs, whi
 
 Is this memory allocation significant to warrant special attention? On desktops most likely not. Rendering and physics keep the machine busy, our scripts barely register on the profiler graph.
 
-![](../_images/unity/profiler.png)
-Our code – the blue line – is not a bottleneck in this case.
+![Our code – the blue line – is not a bottleneck in this case](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/profiler.png)
+
 
 Of course this picture might change for other devices. Mobiles and consoles typically have less and slower memory than desktops and laptops. You can end up with frequent garbage collection runs, which can wreak havoc on your app's frame rate. But you have to try and measure it before you can be sure.
 
@@ -340,14 +336,12 @@ For a desktop app, our current approach of simply creating and destroying object
 
 We need bigger stuff! Fox example, a cross made from cubes. Create three cubes, make them children of an empty game object, and set their scales to the three possible permutations of (0.5, 0.5, 2.5). Then add a Stuff component to the root object and turn the whole thing into a prefab. I set its mass to 3 because it's a larger object than the other stuff.
 
-![cross](../_images/unity/cross.png)  
-![preview](../_images/unity/cross-preview.png)
-Cross prefab.
+![cross](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/cross.png)  
+![Cross prefab preview](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/cross-preview.png)
 
 Add this new type of stuff to the spawner prefab's array so it will be included in the fountain.
 
-![](../_images/unity/array-with-cross.png)
-Cubes, spheres, and crosses.
+![Cubes, spheres, and crosses](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/array-with-cross.png)
 
 Entering play mode right now will give us trouble when trying to assigning materials. Our assumption that stuff objects always have a MeshRenderer is no longer true. So let's move the responsibility of setting the material to Stuff itself. Internally, it can collect all renderers inside itself when it awakens. Then it can forward material assignments to them all when needed.
 
@@ -376,20 +370,18 @@ Now StuffSpawner just has to invoke this method.
 	}
 ```
 
-![](../_images/unity/fountain-with-cross.png)
-More complex stuff in the fountain.
+![More complex stuff in the fountain](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/fountain-with-cross.png)
 
 What about we add caltrops as well? A caltrop consists of four legs that point away from each other. You can put capsules inside those legs to visualize them, with a Y offset of 0.5. The first leg points upwards. The second has rotation (70.52878, 180, 180). The other two have the same X and Z rotation, but their Y rotation should be 300 and 60.
 
-![caltrops](../_images/unity/caltrop.png)  
-![preview](../_images/unity/caltrop-preview.png)
-Caltrop prefab.
+![caltrops](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/caltrop.png)  
+![Caltrop prefab preview](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/caltrop-preview.png)
 
 Add the caltrop to the spawner's stuff prefab array as well. You can increase the probability of an option being chosen by adding it more than once.
 
-![prefabs](../_images/unity/array-with-caltrop.png) 
-![fountain](../_images/unity/fountain-with-caltrops.png)
-A messy fountain.
+![prefabs](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/array-with-caltrop.png) 
+![ A messy fountain fountain](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/fountain-with-caltrops.png)
+.
 
 How's our app's performance now? We're getting more memory allocations, but it is still not an issue for a desktop app. The physics calculations are much more important. Something drastic is needed to make the creation of stuff matter. For example, add the following line a few times to Stuff.Awake.
 
@@ -397,8 +389,8 @@ How's our app's performance now? We're getting more memory allocations, but it i
 		FindObjectsOfType<Stuff>();
 ```
 
-![](../_images/unity/profiling-finding-objects.png)
-This warrants attention.
+![This warrants attention](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/profiling-finding-objects.png)
+
 
 That did it. Object creation is now significant for our desktop app. Invoking FindObjectsOfType just five times per stuff generates roughly 200KB of memory allocations per frame for me. But this is a ridiculous scenario. Object pooling isn't the solution for this, getting rid of those FindObjectsOfType invocations is. And have a chat with whoever thought it a good idea to put that code there.
 
@@ -551,8 +543,8 @@ At this point we still don't have an actual object pool instance. That's all rig
 
 Pools should now appear in play mode, one for each prefab, each neatly containing their own stuff.
 
-![](../_images/unity/pool-instance.png)
-Tidy pools.
+![Tidy pools](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/pool-instances.png)
+
 
 Unfortunately, duplicate pools will be created each time Unity recompiles the scripts while in play mode. While this isn't an issue for builds, it is annoying when working in the editor. This happens because PooledObject.poolInstanceForPrefab doesn't survive a recompile, as we indicated that it should not be serialized. We can work around this by having ObjectPool.GetPool check whether a pool with the same name already exists.
 
@@ -633,24 +625,23 @@ public class SceneSwitcher : MonoBehaviour {
 
 Add a button to the canvas and add this component to it, then hook up its method to the On Click event. Also add an event system to the scene via GameObject / UI / Event System, if don't have one already.
 
-![scene switcher](../_images/unity/scene-switcher.png)  
-![button](../_images/unity/button.png)
-Scene switcher.
+![scene switcher](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/scene-switcher.png)  
+![Scene switch button](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/button.png)
+
 
 Now we need more scenes. Save and duplicate the current scene. Then change something in the duplicate so you can tell them apart, like replacing the sphere with a cube. Add both these scenes to the build, via File / Build Settings... and using the Add Current button while being inside the scene that you want to add.
 
-![](../_images/unity/scenes.png)
-Including two scenes in the build.
+![Including two scenes in the build](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/scenes.png)
+
 
 The scene switcher is now functional. However, when you try it in the editor Unity might screw up the lighting after loading another scene. This is a problem with the editor only, builds are fine. You can work around this problem by disabling Continuous Baking via Window / Lighting and manually baking each scene once, even when you're not using any baked lighting.
 
-![](../_images/unity/wrong-lighting.png)
+![](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/wrong-lighting.png)
 Lighting screws up after switching scenes in play mode.
 
 Indeed, switching scenes destroys everything from the old scene, including the pools. As the stuff prefabs have lost their pools, they will simply request new ones and start fresh.
 
-![](../_images/unity/EsteemedWarmheartedLadybird.mp4)
-Switching Scenes.
+![Switching Scenes](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/EsteemedWarmheartedLadybird.mp4)
 
 But maybe we can keep the pools alive? They're all about preventing object destruction and creation, and scene transitions do just that. We can keep them alive by instructing Unity to not destroy our ObjectPool instances when a new scene is loaded.
 
@@ -668,8 +659,7 @@ But maybe we can keep the pools alive? They're all about preventing object destr
 
 Our pools now survive scene transitions, and so do all their child objects. So all our stuff remains exactly where it is, which means that our fountain's flow is no longer interrupted. Of course changes to the scene can cause some funny physics reactions.
 
-![](../_images/unity/QueasyPessimisticDugong.mp4)
-Not destroying pools keeps the flow intact.
+![Not destroying pools keeps the flow intact](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/QueasyPessimisticDugong.mp4)
 
 Ideally, we would return all stuff to their pools when loading a new scene, instead of either destroying them or keeping them active. Fortunately, we can do this by adding the OnLevelWasLoaded event method to Stuff.
 

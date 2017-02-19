@@ -30,7 +30,7 @@ You're assumed to know the basics of the Unity editor and scripting. If you've c
 This tutorial requires at least Unity 4.5. It won't work with earlier versions.
 
 
-![Enter a random maze of your own creation.](../_images/unity/maze.png)
+![Enter a random maze of your own creation.](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/maze.png)
 <!--more-->
 
 ## Random Mazes
@@ -45,7 +45,7 @@ Press space to restart the maze generation. Once it's done, you can navigate the
 If we were to make a game, we would first have to generate a maze and then spawn a player avatar that can navigate that maze. Then whenever a new game is started, we have to destroy the current maze, generate a new one, and place the avatar in it again. Let's create a game manager to take care of this.
 Create a new project and place a default directional light somewhere out of the way for some basic lighting. Then add a new GameManager C# script. Let's arrange the assets by type, so put it in a new Scripts folder. Then create a new empty game object named Game Manager and add our new script component to it.
 
-![](../_images/unity/01-project.png)
+![](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/01-project.png)
 The Basics.
 
 Our GameManager component simply begins the game when its Start method is called. We also let it restart the game whenever the player presses space. To support that, we need to check each update whether the space key has been pressed.
@@ -88,7 +88,7 @@ using System.Collections;
 public class Maze : MonoBehaviour {}
 ```
 
-![](../_images/unity/01-maze-prefab.png)
+![](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/01-maze-prefab.png)
 Maze prefab.
 
 Now we can add a reference to this prefab to GameManager so it can create instances of it. Add a public variable for the prefab reference and a private one to hold the instance. Then we can instantiate a maze in BeginGame and destroy it in RestartGame before we begin a new game.
@@ -120,7 +120,7 @@ Note that we are destroying mazeInstance.gameObject, because we want the entire 
 	}
 ```
 
-![](../_images/unity/01-maze-config.png)
+![](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/01-maze-config.png)
 Game Manager can now create a maze.
 
 ## Maze Fundamentals
@@ -141,8 +141,8 @@ public class MazeCell : MonoBehaviour {}
 
 We need a 3D visualization for our cells. Create a new game object named Maze Cell and add the MazeCell component to it. Then create a default quad object, make it a child of the cell and set its rotation to (90,0,0). That gives us a very simple floor tile that fills the cell's area. Turn the whole thing into a prefab, get rid of the instance, and give Maze a reference to it.
 
-![maze cell](../_images/unity/02-maze-cell-prefab.png)  
-![maze](../_images/unity/02-maze-configured.png)
+![maze cell](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/02-maze-cell-prefab.png)  
+![maze](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/02-maze-configured.png)
 Maze cell prefab and a configured maze.
 
 We should now add a Generate method to Maze that will take care of constructing the maze contents. We start with creating our 2D array and simply filling the entire grid with new cells by means of a double for-loop. We put the creation of individual cells in its own method. We instantiate a new cell, put it in the array and give it a descriptive name. We also make it a child object of our maze and position it so that the entire grid is centered.
@@ -176,7 +176,7 @@ Now let GameManager call Generate and the maze should appear when you enter play
 	}
 ```
 
-![](../_images/unity/02-maze-generated.png)
+![](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/02-maze-generated.png)
 20 by 20 maze cells.
 
 We get a full grid of cells, but we can't immediately see in what order the cells were generated. It would be useful – and even a bit of fun – to slow down the generation process so we could see how it works. We can do this by turning Generate into a coroutine and inserting some delay before each step. I'll set it to 0.01 seconds, which means generating 20 by 20 cells would take roughly four seconds, assuming your frame rate is high enough.
@@ -219,8 +219,8 @@ We could have also attached the coroutine to Maze and it would work just fine wi
 	}
 ```
 
-![generating](../_images/unity/02-maze-generating.png) 
-![maze](../_images/unity/02-maze-delay.png)
+![generating](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/02-maze-generating.png) 
+![maze](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/02-maze-delay.png)
 Maze generation with step delay.
 
 ## Cell Coordinates and Integer Vectors
@@ -249,7 +249,7 @@ public struct IntVector2 {
 
 ```
 
-![](../_images/unity/03-int-vector.png)
+![](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/03-int-vector.png)
 We now have an integer vector.
 
 We will most likely be adding these vectors together at some point. We could create a method for that. But it would be even more convenient if we could simply use the + operator. Fortunately, we can do this by creating an operator method, which is how Unity's vectors support operation as well. So yes, adding two vectors means that you're calling a method.
@@ -323,7 +323,7 @@ So don't change IntVector2 into a class. If you do, the algorithm will fail unle
 public struct IntVector2
 ```
 
-![](../_images/unity/03-maze-size.png)
+![](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/03-maze-size.png)
 Maze size as an integer vector.
 
 ## Random Cell Generation
@@ -369,7 +369,7 @@ The companion of && is the || operator, which stands for "or else". So x || y is
 	}
 ```
 
-![](../_images/unity/04-line-of-cells.png)
+![](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/04-line-of-cells.png)
 A random line of cells along the Z axis.
 
 But we don't want to walk in a straight line, we want to move in a random direction each step. But what directions are there to choose from? Let's create a MazeDirection enum type to explicitly define that we have the north, east, south, and west directions. Place it in its own script file.
@@ -391,7 +391,7 @@ public enum MazeDirection {
 
 ```
 
-![](../_images/unity/04-maze-direction.png)
+![](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/04-maze-direction.png)
 Getting a sense of direction.
 
 Now it would be handy if we could ask for a random direction. Unfortunately an enum is not a class or a struct, so we cannot define methods or properties inside it. What we could do is add another static class and put a random property there. Let's use the plural version as its name and place it in the same file as MazeDirection. We also add a Count constant so we have an official way to know how many directions there are.
@@ -455,7 +455,7 @@ With these additions it is now easy to have Maze generate a new cell in a random
 	}
 ```
 
-![](../_images/unity/04-short-random-walk.png)
+![](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/04-short-random-walk.png)
 A short random walk.
 
 ## Backtracking
@@ -522,7 +522,7 @@ One additional change needed to make this work is to let CreateCell return the n
 	}
 ```
 
-![](../_images/unity/05-backtracking.png)
+![](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/05-backtracking.png)
 A larger walk with backtracking.
 
 ## Connecting the Cells
@@ -591,12 +591,12 @@ using UnityEngine;
 public class MazeWall : MazeCellEdge {}
 ```
 
-![](../_images/unity/06-edges.png)
+![](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/06-edges.png)
 Three new edgy scripts.
 
 Now we can create a prefab for the passage. It's simply an empty game object with a MazePassage component added to it. A wall prefab can be created the same way, except that we also give it a default cube as a child. This cube is our wall's 3D representation. Let's make it 0.05 units thick and position it so that it will end up flush with the north edge of a cell.
 
-![](../_images/unity/06-edge-prefabs.png)
+![](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/06-edge-prefabs.png)
 Two new prefabs, showing the wall's cube.
 
 With the prefabs ready, Maze can now get a reference to both, so it can generate instances of them.
@@ -606,7 +606,7 @@ With the prefabs ready, Maze can now get a reference to both, so it can generate
 	public MazeWall wallPrefab;
 ```
 
-![](../_images/unity/06-maze-with-edges.png)
+![](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/06-maze-with-edges.png)
 Maze with edge prefab references.
 
 Now we can create passages and walls in DoNextGenerationStep. Let's assume we have convenient methods for that. When we would go out of the maze, we add a wall. If we're still inside the maze, we need to check if the current cell's neightbor doesn't exist yet. If so, we create it and place a passage in between them. But if the neighbor already exists, we separate them with a wall.
@@ -670,7 +670,7 @@ The code above makes use of a convenient GetOpposite method that doesn't exist y
 	}
 ```
 
-![](../_images/unity/06-walls-without-rotation.png)
+![](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/06-walls-without-rotation.png)
 Walls without rotation.
 
 We have now added some invisible passages and visible walls to the maze. So we can see that the walls are always on the north side of cells, which is incorrect. We fix this by rotating in the right direction in MazeCellEdge's Initialize method.
@@ -702,7 +702,7 @@ And yes, this means we're going to add yet another convenient method to MazeDire
 	}
 ```
 
-![](../_images/unity/06-walls-rotated.png)
+![](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/06-walls-rotated.png)
 Walls with rotation.
 
 ## Generating the Entire Maze
@@ -796,15 +796,15 @@ This will work as long as there are uninitialized edges remaining, otherwise we 
 	}
 ```
 
-![](../_images/unity/07-complete-maze.png)
+![](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/07-complete-maze.png)
 A complete maze.
 
 Finally, we can generate a complete maze! We are now using one flavor of the Growing Tree algorithm. In case you're curious, you can change the nature of the maze you generate by using a different method to select the current index in DoNextGenerationStep. I have chosen to always select the last index, which causes the algorithm to dive into narrow paths that run all over the maze. Always selecting the first or the middle index will produce very different behavior. Another option is to just pick a random index. Or to choose between two approaches each step. You could even make this configurable if you like, see the Graphs tutorial for a way to do that.
 
-![first](../_images/unity/07-first-index.png)  
-![middle](../_images/unity/07-middle-index.png) 
-![random](../_images/unity/07-random-index.png)  
-![last](../_images/unity/07-last-index.png)
+![first](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/07-first-index.png)  
+![middle](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/07-middle-index.png) 
+![random](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/07-random-index.png)  
+![last](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/07-last-index.png)
 Comparing first, middle, random, and last index approaches.
 
 ## Decorating the Maze
@@ -812,8 +812,8 @@ Comparing first, middle, random, and last index approaches.
 Our maze looks rather dull. Let's add some variety by introducing different wall sections. We can do this by hanging some very simple paintings on the walls.
 First, create a few materials for the paintings, just to add some color variety. Put them together in a new Materials folder and give them any color you like. Next, drag the wall prefab into the scene and name it Wall with Painting 1. Add a new default cube named Painting to this instance. Give the cube a material, then scale and position it so it looks like it's hanging on the wall. Then turn the whole thing into a new prefab. Repeat this until you have enough paintings. I made three.
 
-![materials and prefabs](../_images/unity/08-painting.png)  
-![materials and prefabs](../_images/unity/08-wall-prefabs.png)
+![materials and prefabs](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/08-painting.png)  
+![materials and prefabs](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/08-wall-prefabs.png)
 
 Walls with paintings.
 
@@ -834,8 +834,8 @@ Now change Maze so it has an array of wall prefabs instead of a single one. Then
 
 Then you can add all your wall prefabs to the array of the maze prefab. I added the empty wall multiple times, so it is more likely to be picked. Otherwise the maze will be brimming with paintings.
 
-![wall prefab array](../_images/unity/08-maze-wall-prefabs-array.png) 
-![maze with paintings](../_images/unity/08-maze-with-paintings.png)
+![wall prefab array](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/08-maze-wall-prefabs-array.png) 
+![maze with paintings](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/08-maze-with-paintings.png)
 Making an artsy maze.
 
 ## Placing Doors
@@ -856,11 +856,11 @@ We will build a door frame from four cubes and put another cube in it with a new
 > Where are the prefab hinge's children?
 > Unfortunately, Unity only shows the direct children of a prefab asset root. Even though they aren't shown, the children do exist. The prefab's preview shows their 3D models, and they will be visible in any instance added to the scene. You can edit the invisible parts by dragging the prefab into the scene, making changes to the instance, and applying it back to the prefab. This approach will be necessary until Unity fully supports nested prefabs.
 
-![door assets](../_images/unity/09-door-assets.png)  
-![door model](../_images/unity/09-door-model.png)  
-![door hinge](../_images/unity/09-door-hinge.png)
-![door hierarchy](../_images/unity/09-door-hierarchy.png)  
-![door component](../_images/unity/09-door-component.png)
+![door assets](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/09-door-assets.png)  
+![door model](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/09-door-model.png)  
+![door hinge](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/09-door-hinge.png)
+![door hierarchy](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/09-door-hierarchy.png)  
+![door component](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/09-door-component.png)
 Creating a door.
 
 Maze can now get a reference to the door prefab. We want to spawns doors instead of passages some of the time, but really not that often because otherwise the maze will get flooded with doors. So let's add a doorProbabilty configuration option and use that to decide whether we place a door or a passage. I set it to 0.1, which means that one out of ten passage will become a door.
@@ -889,8 +889,8 @@ int y = x > 1 ? 10 : 20;
 	}
 ```
 
-![maze configured](../_images/unity/09-maze-configured.png) 
-![maze with doors](../_images/unity/09-maze-with-doors-incorrect.png)
+![maze configured](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/09-maze-configured.png) 
+![maze with doors](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/09-maze-with-doors-incorrect.png)
 Doors added to the maze.
 
 We now get doors, but there is something wrong. All the doors are have their handle on the right side, even opposite sides of the same door! We need to make sure that the other side of a door swivels in the opposite direction.
@@ -934,7 +934,7 @@ However, we can't just override any method of the class that we're extending. Th
 	}
 ```
 
-![](../_images/unity/09-maze-with-doors-correct.png)
+![](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/09-maze-with-doors-correct.png)
 Now with correct doors.
 
 ## Adding Rooms
@@ -959,8 +959,8 @@ Now we can give Maze an array of these settings, defining the available room typ
 	public MazeRoomSettings[] roomSettings;
 ```
 
-![](../_images/unity/10-room-settings-assets.png)
-![](../_images/unity/10-room-settings.png)
+![](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/10-room-settings-assets.png)
+![](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/10-room-settings.png)
 Room settings.
 
 Now we are also going to add a MazeRoom class so we can easily keep track of which cell belongs to which room. For now it simply is a wrapper for a list of cells, and it also has a reference to its settings and settings index. We have it extend ScriptableObject so Unity will keep the references intact if we were to cause a recompile while in play mode.
@@ -989,7 +989,7 @@ public class MazeRoom : ScriptableObject {
 }
 ```
 
-![](../_images/unity/10-maze-room-script.png)
+![](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/10-maze-room-script.png)
 Maze room script.
 
 We also give MazeCell a reference to its room. While we're at it, let's also give it an Initialize method that takes care of assigning the right materials. As we only have the floor quad to worry about, we just grab the first child and be done with it.
@@ -1051,7 +1051,7 @@ It is now possible to create a new room in DoFirstGenerationStep. That will take
 	}
 ```
 
-![](../_images/unity/10-colored-floors.png)
+![](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/10-colored-floors.png)
 Now with colored floors.
 
 To also color the walls, we need to adjust MazeWall. Give it a reference to its wall child and configure it for all the wall prefabs that you have created. This allows us to set the wall's material in an override of the Initialize method.
@@ -1065,7 +1065,7 @@ To also color the walls, we need to adjust MazeWall. Give it a reference to its 
 	}
 ```
 
-![](../_images/unity/10-wall-reference.png)
+![](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/10-wall-reference.png)
 Configuring a wall reference.
 
 We have to do the same for MazeDoor, except now we set the material of all its direct children except for the hinge.
@@ -1087,7 +1087,7 @@ We have to do the same for MazeDoor, except now we set the material of all its d
 		}
 	}
 ```
-![](../_images/unity/10-colored-rooms.png)
+![](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/10-colored-rooms.png)
 Fully colored rooms.
 
 ## Expanding Rooms
@@ -1131,7 +1131,7 @@ Add a new CreatePassageInSameRoom method that simply creates a passage between t
 		}
 	}
 ```
-![](../_images/unity/11-open-rooms.png)
+![](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/11-open-rooms.png)
 Some breathing room.
 
 We can go a step further and even join together adjacent rooms if they share the same settings. Besides creating larger rooms that way, fusing rooms from different parts of the maze creates loops. This means that there will be multiple ways to navigate it and you could end up walking in circles.
@@ -1193,15 +1193,15 @@ Then we have Maze check whether it's connecting different rooms, in which case i
 		}
 	}
 ```
-![](../_images/unity/11-joined-rooms.png)
+![](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/11-joined-rooms.png)
 Now with large rooms and loops.
 
 ## Walking Around
 
 It's high time we walked around in our own maze. Create a simple player model, attach a new Player component that we create as well, and turn it into a prefab.
 
-![player assets](../_images/unity/12-player-assets.png)
-![player-prefab](../_images/unity/12-player-prefab.png)
+![player assets](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/12-player-assets.png)
+![player-prefab](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/12-player-prefab.png)
 
 A square player.
 
@@ -1250,7 +1250,7 @@ Now give GameManager both a reference to the player prefab and a local reference
 	private Player playerInstance;
 ```			
 
-![](../_images/unity/12-game-manager.png)
+![](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/12-game-manager.png)
 Game manager wants a player now.
 
 We should instantiate a new player after the maze has finished generating. However, we currently start a coroutine and move on. In order to wait, we turn BeginGame into a coroutine as well. Then we can yield the other coroutine, so it finishes before we continue ourselves and create the player and give it a random location. Also, make sure to destroy the current player in RestartGame, if it has already been created.
@@ -1277,21 +1277,21 @@ We should instantiate a new player after the maze has finished generating. Howev
 	}
 ```
 
-![](../_images/unity/12-exploring.png)
+![](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/12-exploring.png)
 A player exploring our maze.
 
 ## What It Looks Like
 
 What would our maze look like, when viewing it through the eyes of the player? Let's find out by adding a camera to the player prefab! You can do so by dragging an instance of the player prefab into the scene, creating a default camera, making it a child of the player, and then clicking the prefab Apply button of the player instance. I position the camera at a height of 0.7 and rotate it ten degrees around its X axis so it doesn't stare straight ahead but looks a bit to the floor.
 
-![](../_images/unity/13-player-camera.png)
-![](../_images/unity/13-player-view.png)
+![](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/13-player-camera.png)
+![](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/13-player-view.png)
 Player camera in action.
 
 Keep in mind that the main camera is also still being rendered. The player camera is just rendered on top of it, because it has the default depth of zero while the default main camera has a depth of -1. Unity will also complain that there are two audio listeners in the scene at the same time, so we have to do something about that.
 What about we keep both cameras, but turn the main camera view into a map overlay? First, remove the audio listener from the main camera and increase its depth value to one. That will make it render after and on top of the player's camera.
 
-![](../_images/unity/13-main-camera.png)
+![](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/13-main-camera.png)
 Tweaked main camera.
 
 Now we again only see the main camera as it's rendering after the player camera. To turn it into a smaller overlay, we reduce its view rectangle after a maze has been generated. We also set it to cover the entire view before we start generating. That ensures that we get a full-size view of the maze while it is being generated.
@@ -1307,7 +1307,7 @@ Now we again only see the main camera as it's rendering after the player camera.
 	}
 ```
 
-![](../_images/unity/13-overlay-opaque.png)
+![](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/13-overlay-opaque.png)
 An overlay map.
 
 This works, but it would be nicer if the map was rendered on top of the player's view without its own background. Fortunately, we can easily achieve this by changing the camera's clear flags to Depth. When generating the maze, it should use its default flags value, which is SkyBox.
@@ -1325,7 +1325,7 @@ This works, but it would be nicer if the map was rendered on top of the player's
 	}
 ```
 
-![](../_images/unity/13-overlay-transparent.png)
+![](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/13-overlay-transparent.png)
 Now without nasty background.
 
 The player can move and have a map, but we are stuck looking to the north all the time. To change this, Player need to keep track of where it's looking and respond to user input to change its rotation. Let's use Q to rotate counterclockwise and E to rotate clockwise. While we're at it, we can also support the common WASD key bindings.
@@ -1450,7 +1450,7 @@ Now we can add overrides for MazeDoor to rotate its hinge. Because there are two
 	}
 ```
 
-![](../_images/unity/14-open-door.png)
+![](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/14-open-door.png)
 A door opened in our face.
 
 It works! Doors are now open when we stand next to them. Unfortunately the doors always rotate in the same direction. This means that about half the time the door will cut through our view in an ugly and obscuring way. We can solve this by always rotating doors away from where the player is currently standing. This can be done by remembering whether a door is mirrored and rotating based on that.
@@ -1486,7 +1486,7 @@ It works! Doors are now open when we stand next to them. Unfortunately the doors
 
 ```
 
-![](../_images/unity/14-open-door-away.png)
+![](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/14-open-door-away.png)
 Always-push doors.
 
 ## Hiding Rooms
@@ -1498,8 +1498,8 @@ An additional thing we could do is only show the room that the player is current
 > Unity only renders stuff that is active. Also, it only renders stuff that the camera could theoretically see, everything that lies outside of its view is not queued for rendering. The graphics card will detect when it's about to fill a pixel that's behind something else, so it won't need to bother to shade it. However, we had to go all the way to the pixel level before this discovery was made, which means that we have to process lots of stuff that we end up not seeing.
 To improve performance, some trick must be used to quickly determine what's really visible, and only send that to the graphics card. This is known as occlusion culling and is nontrivial. Unity Pro has a solution for it, but it is not suited for randomly generated mazes. Fortunately, our simple trick of hiding rooms already helps a lot.
 
-![without hiding](../_images/unity/15-much-overdraw.png)  
-![with hiding](../_images/unity/15-little-overdraw.png)
+![without hiding](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/15-much-overdraw.png)  
+![with hiding](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/15-little-overdraw.png)
 Overdraw without hiding and with hiding rooms.
 
 ```cs
@@ -1564,8 +1564,7 @@ This will place the player in an invisible maze. To make the rooms appear and di
 	}
 ```
 
-![](../_images/unity/15-looking-at-hidden-room.png)
-Looking into the void.
+![Looking into the void](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/15-looking-at-hidden-room.png)
 
 So all rooms except the one that we are currently in are now hidden. Unfortunately, this means that when we open a door we will look into an invisible room. Fortunately this is easy to solve. All we have to do is have MazeDoor show and hide the other cell's room when it is opened and closed.
 
@@ -1582,8 +1581,7 @@ So all rooms except the one that we are currently in are now hidden. Unfortunate
 	}
 ```
 
-![](../_images/unity/15-shown-when-door-open.png)
-Rooms shown and hidden at the right time.
+![Rooms shown and hidden at the right time](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/15-shown-when-door-open.png)
 
 And indeed now rooms also show up when we could see them through an open door.
 We can keep adding and tweaking the maze, but I will end the tutorial here. Have fun giving the maze your own special touch!

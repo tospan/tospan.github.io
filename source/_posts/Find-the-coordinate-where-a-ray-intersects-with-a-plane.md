@@ -3,7 +3,7 @@ title: Find the coordinate where a ray intersects with a plane
 date: 2017-02-05 10:08:33
 updated:
 categories:
-  - Unity
+  - Game Development
 tags:
   - Unity
   - Math
@@ -13,7 +13,7 @@ tags:
 
 Let's say you want to make some randomly generated clouds. To do that you fire a ray from the camera to the cloud layer where you figure out the density of the clouds at that point. It will look like this:
 
-![Volume rendered clouds](../_images/unity/clouds.png)
+![Volume rendered clouds](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/clouds.png)
 
 <!--more-->
 
@@ -81,7 +81,7 @@ namespace LinearAlgebra
 
 If everything is working it should look like this:
 
-![Plane ray intersection final scene](../_images/unity/plane-ray-intersection.png)
+![Plane ray intersection final scene](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/plane-ray-intersection.png)
 
 ## 参考
 

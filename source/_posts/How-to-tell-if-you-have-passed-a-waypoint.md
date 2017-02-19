@@ -2,18 +2,18 @@
 title: How to tell if you have passed a waypoint
 date: 2017-02-05 09:59:08
 updated:
-categories:
-  - Unity
+categories: 
+  - Game Development
 tags:
   - Unity
-  - Math
+  - Mathematics
   - Linear Algebra
 ---
 
 
 It might first seem like it's easy to determine if you have passed a waypoint you are heading towards. Can't you just use the distance between you and the waypoint and if that distance is small, then change waypoint. This will work if your character has a small turning radius. But if that turning radius is large, I promise you that you will see the character turning around the waypoint and never reach it - it will just spin around in a circle. But there may be a better way. This is the basic scene
 
-![Passed waypoint basic scene](../_images/unity/passed-waypoint.png)
+![Passed waypoint basic scene](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/passed-waypoint.png)
 
 <!--more-->
 

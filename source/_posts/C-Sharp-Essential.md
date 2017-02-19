@@ -1,9 +1,10 @@
 ---
 title: C#要点
 categories:
-  - Unity
+  - Game Development
 tags:
   - Unity
+  - Scripting
   - C#
 date: 2017-02-06 14:03:36
 updated: 2017-02-06 14:03:36
@@ -19,14 +20,52 @@ Unity可以使用多种编程语言，例如C#，JavaScript。大部分情况下
 
 首先需要明确的是，Unity使用了Mono
 
+<!--more-->
+
+## C#语言的生态环境
+
+我反正一开始是对什么.NET，.NET Framework，.NET Core，ASP.NET，CLI，CIL，CLR这些词语混淆了，而且看来还不止我一个，StackOverflow上有个答案清晰的解释了它们都表示什么。
+
+[.NET vs ASP.NET vs CLR vs ASP](http://stackoverflow.com/questions/3103360/net-vs-asp-net-vs-clr-vs-asp)
+
+* [ASP](http://en.wikipedia.org/wiki/Active_Server_Pages), Active Server Pages (now referred to as ASP Classic) is a server-side scripting environment that predates .Net and has nothing to do with it
+ASP pages are usually written in VBScript, but can be written in any language supported by the Windows Scripting Host - JScript and VBScript are supported natively, with third-party libraries offering support for PerlScript and other dynamic languages.
+* [.Net](http://en.wikipedia.org/wiki/.NET_Framework) is a framework for managed code and assemblies
+.Net code can be written in any language that has an CIL compiler.
+* [CLR](http://en.wikipedia.org/wiki/Common_Language_Runtime), Common Language Runtime, is the core runtime used by the .Net framework
+The CLR transforms CIL code (formerly MSIL) into machine code (this is done by the JITter or by ngen) and executes it.
+* [ASP.Net](http://en.wikipedia.org/wiki/ASP.NET) is a replacement for ASP built on .Net
+ASP.Net pages can be written in any .Net language, but are usually written in C#.
+Other terms that you didn't ask about:
+
+* [CIL](http://en.wikipedia.org/wiki/Common_Intermediate_Language), Common Intermediate Language, is an intermediate language that all .Net code is compiled to.
+The CLR executes CIL code.
+* [CLI](http://en.wikipedia.org/wiki/Common_Language_Infrastructure), Common Language Infrastructure, is the open specification for the runtime and behavior of the .Net Framework
+* [Mono](http://en.wikipedia.org/wiki/Mono_%28software%29) is an open-source implementation of the CLI that can run .Net programs
+* [ASP.Net](http://en.wikipedia.org/wiki/ASP.NET_MVC_Framework) MVC is an MVC framework built on ASP.Net
+
+
+关于从符合CLI语言标准到CIL，然后在CLR上运行过程，这里有张图片很好地说明了：
+
+![](../_images/unity/520px-Overview_of_the_Common_Language_Infrastructure.svg)
+
+这就解释了为什么说Unity使用了Mono，但是有人说它用的是C#编程语言的问题，也解释了为什么一开始Unity支持`Boo(Python)`
+
+首先`C#`和`Boo`都是符合CLI的标准的，而这些语言最终都由其编译器编译为CIL，而CIL可以运行在任何CLI的实现环境上，例如.NET中的CLR，Mono Runtime等。
+
+The Common Language Infrastructure (CLI) is an open specification (technical standard) developed by Microsoft and standardized by ISO[1] and ECMA[2] that describes executable code and a runtime environment that allows multiple high-level languages to be used on different computer platforms without being rewritten for specific architectures. This implies it is platform agnostic. The .NET Framework and the free and open source Mono and Portable.NET are implementations of the CLI.
+
+
+
 ## C#都有哪些版本
+
+
 
 **[What are the correct version numbers for C#?](http://stackoverflow.com/questions/247621/what-are-the-correct-version-numbers-for-c)**
 
 C# 只有`1.0`，`2.0`，`3.0`，`4.0`，`5.0`，`6.0`
 
 ## CLR
-
 
 ## Mono
 
@@ -72,9 +111,9 @@ By the way, the compiler will pre-compute any constant expression, so writing (1
 
 ## 变量(variable)
 
-> A variable is value that can be changed. This can be either a reference to an object or something simple like an integer. A variable must be of a specific type, which is written before its name when defined.
-> 
-> Variables exist only inside the scope that their are defined in. By default, if a variable is defined inside a class, every object instance of that class has its own version of that variable. However, it can be marked as static, in which case it exists once for that class, independent of any objects. If a variable is defined inside a method, you can think of it only existing while that method is being invoked.
+A variable is value that can be changed. This can be either a reference to an object or something simple like an integer. A variable must be of a specific type, which is written before its name when defined.
+ 
+Variables exist only inside the scope that their are defined in. By default, if a variable is defined inside a class, every object instance of that class has its own version of that variable. However, it can be marked as static, in which case it exists once for that class, independent of any objects. If a variable is defined inside a method, you can think of it only existing while that method is being invoked.
 
 ### 类型转换(cast)
 
@@ -84,15 +123,15 @@ Casting an object reference to another type doesn't convert the object, it only 
 
 ## 函数/方法(method)
 
-> A method is a chunk of behavior, which is defined in a class. It can accept input and produce an output. Input is defined and provided after the method name, in parentheses, even if there is none. The method's type is that of its output. If there's no output this is indicated with void.
->
-> By default, methods define behavior of objects, but it's possible to define behavior that doesn't need an object to function. Such methods are marked as static.
+A method is a chunk of behavior, which is defined in a class. It can accept input and produce an output. Input is defined and provided after the method name, in parentheses, even if there is none. The method's type is that of its output. If there's no output this is indicated with void.
+
+By default, methods define behavior of objects, but it's possible to define behavior that doesn't need an object to function. Such methods are marked as static.
 
 ## 什么是属性(property)
 
-> A property is a method that pretends to be a variable. It might be read-only or write-only.
->
-> Note that variables exposed by the Unity editor are also commonly called properties, but it's not the same thing.
+A property is a method that pretends to be a variable. It might be read-only or write-only.
+
+Note that variables exposed by the Unity editor are also commonly called properties, but it's not the same thing.
 
 ## if条件语句
 
@@ -125,15 +164,24 @@ A struct is a blueprint, just like a class. The difference is that whatever it c
 ## 类(class)
 A class is a blueprint that can be used to create objects that reside in your computer's memory. The blueprint defines what data these objects contain and how they behave.
 
+## new
+
+The new keyword is used to construct a new instance of an object or a struct. It's followed by calling a special constructor method, which has the same name as the class or struct it belongs to.
+
+## this
+
+The this keyword refers to the current object or struct whose method is being called. It's being used implicitly all the time when referring to stuff from the same class. For example, whenever we've access depth we could have also done it via this.depth.
+ 
+You typically only use this when you need to pass along a reference to the object itself, like we do for Initialize. Why? Because we're calling the Initialize method of the new child object, not of the parent object.
+
 ## 继承
 
 ## 多态
 
-
 ##  命名空间(namespace)
->
-> It's like a website domain, but for code stuff. For example, MonoBehaviour is defined inside the UnityEngine namespace, so it can be addressed with UnityEngine.MonoBehaviour.
->
-> Just like domains, namespaces can be nested. The big difference is that it's written the other way around. So instead of forum.unity3d.com it would be com.unity3d.forum. For example, the ArrayList type exists inside the Collections namespace, which in turn exists inside the System namespace. So you need to write System.Collections.ArrayList to get hold of it.
->
-> By declaring that we're using a namespace, we don't need to write it again each time we want to use something from it. So, when using UnityEngine, instead of having to write UnityEngine.MonoBehaviour we can suffice with MonoBehaviour.
+
+It's like a website domain, but for code stuff. For example, MonoBehaviour is defined inside the UnityEngine namespace, so it can be addressed with UnityEngine.MonoBehaviour.
+
+Just like domains, namespaces can be nested. The big difference is that it's written the other way around. So instead of forum.unity3d.com it would be com.unity3d.forum. For example, the ArrayList type exists inside the Collections namespace, which in turn exists inside the System namespace. So you need to write System.Collections.ArrayList to get hold of it.
+
+By declaring that we're using a namespace, we don't need to write it again each time we want to use something from it. So, when using UnityEngine, instead of having to write UnityEngine.MonoBehaviour we can suffice with MonoBehaviour.

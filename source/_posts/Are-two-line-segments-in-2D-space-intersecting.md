@@ -3,7 +3,7 @@ title: Are two line segments in 2D space intersecting
 date: 2017-02-05 10:11:27
 updated:
 categories:
-  - Unity
+  - Game Development
 tags:
   - Unity
   - Math
@@ -12,11 +12,11 @@ tags:
 
 You have two line segments and want to know if they are crossing each other:
 
-![No intersection between line segments](../_images/unity/no-intersection.png)
+![No intersection between line segments](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/no-intersection.png)
 
 <!--more-->
 
-![Intersection between line segments](../_images/unity/intersection.png)
+![Intersection between line segments](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/intersection.png)
 
 This is more complicated than it seems, but you can probably ignore some steps depending on which application you are making. For example, it's often unnecessary to test if the line segments are parallel if you are making a game, because the probability that they are exactly parallel is low.
 
@@ -230,7 +230,7 @@ bool IsIntersectingAlternative()
 
 There's actually a third way to figure out if two line segments in 2d space are intersecting. The problem with this way is that you can't find the point of intersection, but that doesn't matter if you don't need to. To help us we are going to use the dot product! The basic idea is this (we want to see if the blue line and the black line is intersecting):
 
-![Intersection between line segments by using the dot product](../_images/unity/dot-product-line-intersection.png)
+![Intersection between line segments by using the dot product](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/dot-product-line-intersection.png)
 
 We first have to find the normal to a line. Then we calculate the dot product between this normal and the direction between the normal and the two points on the other line. If one of these dot products is negative and the other is positive, then we know the points on the other line are on different sides of the first line. Then we repeat the process for the other line. If you want a more detailed explanation you should watch this video: TypeScript Game Development - Basic 2D Collision Detection. The code looks like this:
 

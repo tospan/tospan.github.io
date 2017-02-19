@@ -3,7 +3,7 @@ title: Are two rectangles with orientation in 2D space intersecting
 date: 2017-02-05 10:57:56
 updated:
 categories:
-  - Unity
+  - Game Development
 tags:
   - Unity
   - Math
@@ -12,7 +12,7 @@ tags:
 
 I've recently had the need to detect if two rectangles with orientation are intersecting:
 
-![Rectangle rectangle intersection intro](../_images/unity/rectangle-rectangle-intersection-intro.png)
+![Rectangle rectangle intersection intro](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/rectangle-rectangle-intersection-intro.png)
 
 <!--more-->
 
@@ -353,7 +353,7 @@ private struct Rectangle
 
 It should look like this in Unity (the red lines are the normals we need to project the corners onto):
 
-![Intersection of a rectangles](../_images/unity/rectangle-rectangle-intersection-test.png)
+![Intersection of a rectangles](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/rectangle-rectangle-intersection-test.png)
 
 ## Summary
 

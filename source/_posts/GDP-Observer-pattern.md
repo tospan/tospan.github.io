@@ -26,7 +26,7 @@ To illustrate the observer pattern we will here have three boxes (not many but h
 
 So begin by creating a sphere and three boxes. Each box should have a rigidbody attached to it so it can jump. Also add a plane. You also need an empty gameobject called _GameController which will hold the script GameController that will take care of everything. When you are done everything should now look like this:
 
-![Observer pattern start scene](../_images/unity/observer-pattern-scene.png)
+![Observer pattern start scene](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/observer-pattern-scene.png)
 
 The GameController script looks like this:
 

@@ -8,7 +8,7 @@ date: 2017-02-05 14:12:33
 updated: 2017-02-05 14:12:33
 ---
 
-![](../_images/unity/unity-bullets-snipers-artillery.png)
+![](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/unity-bullets-snipers-artillery.png)
 
 ## Introduction
 
@@ -33,7 +33,7 @@ Add an empty Game Object as a child to the Turret and rename it "Barrel connecto
 
 Make sure you can rotate the barrel if you are rotating the barrel connector, that you can rotate the turret, and that it looks like a turret with a gun by adding materials. Anyway, the exact dimensions are not important, but your scene should look like this (Ignore the GameController, it is just holding the camera and the light):
 
-![Unity realistic bullets tutorial initial scene](../_images/unity/initial-scene.png)
+![Unity realistic bullets tutorial initial scene](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/initial-scene.png)
 Now let's fire the gun!
 
 
@@ -41,7 +41,7 @@ Now let's fire the gun!
 
 When you are finished with this section of the tutorial you will have something that looks like this:
 
-![Realistic bullets tutorial part 2 finished gif](../_images/unity/gif-realistic-bullets-tutorial-unity-small.gif)
+![Realistic bullets tutorial part 2 finished gif](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/gif-realistic-bullets-tutorial-unity-small.gif)
 
 ### Part 1. Fire bullets
 
@@ -338,11 +338,11 @@ public class IntegrationMethods : MonoBehaviour
 
 If you now press play you should see a nice trajectory line from the turret towards the target. And the bullets fired from the turret should follow that path.
 
-![How the trajectory path looks like with Backward Euler](../_images/unity/bullet-path-backward-euler.png)
+![How the trajectory path looks like with Backward Euler](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/bullet-path-backward-euler.png)
 
 But if you move the target as little as 40 meters away from the turret, you will se that the trajectory line is not crossing the center of the target, and neither are the bullets. They are still hitting the box, but as we move the box further away from the turret, the accuracy will continue to fall. And that is not good enough if we want realistic bullets.
 
-![Bullet accuracy with Backward Euler](../_images/unity/bullet-accuracy-backward-euler.png)
+![Bullet accuracy with Backward Euler](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/bullet-accuracy-backward-euler.png)
 
 You can change the time step value h to a smaller value, which will improve the accuracy of the line, but the accuracy will not be nearly 100 percent as good as we want it. Also, if you decrease the time step h to a too small value, you will get rounding erros that will decrease the accuracy as if you had a large h. **So h can't be neither too small nor too large**. h has to be "lagom" as we say in Sweden. And how do we increase the accuracy of the bullets? That is the topic of the next part.
 
@@ -388,7 +388,7 @@ public static void EulerForward(
 
 You will notice that Euler Forward is overshooting the target in a similar way as Backward Euler was undershooting the target.
 
-![Bullet accuracy Euler Forward](../_images/unity/bullet-accuracy-euler-forward.png)
+![Bullet accuracy Euler Forward](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/bullet-accuracy-euler-forward.png)
 
 So we need a better integration method. Another integration method is Heun's method, which is using Euler Forward but is adding another step. It looks like this:
 
@@ -443,7 +443,7 @@ public static void Heuns(
 If you now press play you will see something beautiful. The trajectory line goes straight through the target point we are aiming at.
 
 
-![Bullet accuracy Heuns Method](../_images/unity/bullet-accuracy-heuns-method.png)
+![Bullet accuracy Heuns Method](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/bullet-accuracy-heuns-method.png)
 
 Heun's method is actually a simplified version of [Runge Kutta's method](https://en.wikipedia.org/wiki/Runge%E2%80%93Kutta_methods), which is another method you could add to the collection. I've tested to add it and it gives the same result as Heun's method in this environment. Another integration method used when simulating bullets is [Adams-Bashforth](https://en.wikiversity.org/wiki/Adams-bashforth_and_Adams-moulton_methods), but I haven't tested it because Heun's method is fast and accurate.
 
@@ -550,7 +550,7 @@ public IEnumerator FireBullet()
 
 If you now press play you will see that the bullets are also hitting the center of the target. Success!
 
-![Bullet accuracy with Heuns Method](../_images/unity/bullet-accuracy-heuns-method-2.png)
+![Bullet accuracy with Heuns Method](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/bullet-accuracy-heuns-method-2.png)
 
 
 ## Add realism
@@ -692,7 +692,7 @@ public class BulletPhysics : MonoBehaviour
 ```
 That's all of the external factors we are going to add for now. If you press play you will notice that the bullets are no longer hitting the target. The equation we used to calculate the angle is not working if we add drag and wind.
 
-![How the bullet misses the target if we add wind and drag](../_images/unity/bullet-missing-target.png)
+![How the bullet misses the target if we add wind and drag](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/bullet-missing-target.png)
 
 ## Add sniper rifle
 
@@ -706,7 +706,7 @@ Then drag both of the images into Unity. The target texture should be a Texture 
 
 The scope image should be a Sprite (2D and UI). To add the scope image to the scene, right-click -> UI -> Image, and add the scope as the source image. I also had to scale it 3 times so it fits the entire screen. Also create a cube at the center of the scene so you have somewhere to fire from. Also create some kind of arrow from 2 cubes so we can show in which direction the wind is coming from. Also add Unity's first person controller. When you are done it should look like this:
 
-![Sniper start scene](../_images/unity/sniper-start-scene.png)
+![Sniper start scene](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/sniper-start-scene.png)
 
 ### Part 2. Create a sniper rifle
 
@@ -912,9 +912,9 @@ velocityFactor += SniperController.windSpeed;
 
 That's it. Move the target to a z-coordinate of 300, and if you press play you should now be able to fire bullets.
 
-![Sniper final scene 1](../_images/unity/sniper-final-scene-1.png)
+![Sniper final scene 1](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/sniper-final-scene-1.png)
 
-![Sniper final scene 2](../_images/unity/sniper-final-scene-2.png)
+![Sniper final scene 2](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/sniper-final-scene-2.png)
 
 
 ## 参考

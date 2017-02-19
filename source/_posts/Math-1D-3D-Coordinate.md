@@ -1,5 +1,5 @@
 ---
-title: 3D数学
+title: 3D数学：一维、二维、三维，坐标系
 categories:
   - Math
 tags:

@@ -59,7 +59,7 @@ So begin by creating:
 
 Everything should now look like this:
 
-![State pattern start scene](../_images/unity/state-pattern-scene.png)
+![State pattern start scene](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/state-pattern-scene.png)
 
 The GameController script looks like this:
 
@@ -323,6 +323,6 @@ namespace StatePattern
 
 If you now press play, move the camera to a from-above-position, and move the player by changing its coordinates in Unity's window, you should see something like this:
 
-![State pattern in action scene](../_images/unity/state-pattern-in-action.png)
+![State pattern in action scene](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/state-pattern-in-action.png)
 
 Both boxes will move towards you if you are close enough, but only the green box will move towards your exact position, because the white box can attack you from a certain distance. But if the blue sphere is far away, both boxes will vibrate at their position. You should maybe implement a time parameter so they are actually strolling and not just changing direction each update, but changing random direction after a certain time!

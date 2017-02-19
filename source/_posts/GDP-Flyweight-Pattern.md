@@ -114,7 +114,7 @@ namespace FlyweightPattern
 
 If you add the `Flyweight.cs` to an empty gameobject, open the profiler, press play, click on the Memory box, you will see this image:
 
-![Unity profiler memory without flyweight pattern](../_images/unity/memory-without-flyweight.png)
+![Unity profiler memory without flyweight pattern](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/memory-without-flyweight.png)
 
 The box you should pay attention to is Mono, which, [according to Unity](http://docs.unity3d.com/Manual/ProfilerMemory.html), is the "total heap size and used heap size used by Managed Code - this memory is garbagecollected." It's currently at 0.63 Gb, which is the number we are going to lower with the flyweight pattern.
 
@@ -137,6 +137,6 @@ newAlien.legPositions = armPositions;
 
 So we generate the body-part-positions once in the beginning and then add a reference to them to each Alien object. If you now open the profiler, press play, click on the Memory box, you will see this image:
 
-![Unity profiler memory with flyweight pattern](../_images/unity/memory-with-flyweight.png)
+![Unity profiler memory with flyweight pattern](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/memory-with-flyweight.png)
 
 So the Memory has gone from 0.63 Gb to 17 Mb!

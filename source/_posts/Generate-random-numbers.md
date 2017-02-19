@@ -1,9 +1,10 @@
 ---
-title: Generate random numbers in Unity
+title: 生成随机数
 categories: 
-  - Unity
+  - Game Development
 tags:
   - Unity
+  - Algorithms
 date: 2017-02-05 13:51:47
 updated: 2017-02-05 13:51:47
 ---
@@ -92,7 +93,7 @@ void GetRandomFibonacci(int xMinusOneSeed, int xMinusTwoSeed)
 
 The Fibonacci series is a useless random number generator because the sequence is 0, 1, 1, 2, 3, 5, 8, 13, 21, ... So someone who knows the Fibonacci series can figure out the next number. Moreover, the sequence is stabilizing and repeats the sequence 0, 1836311903, 1836311903, 0, 1836311903, ... over and over again. This is called the random generator's **period**, which is how long it takes before the numbers starts repeating. So we will need something better because the period is way too low, but the Fibonacci series is a good example of the basic ideas behind how to generate random numbers.
 
-![Dilbert on randomness](../_images/unity/dilbert-randomness.gif)
+![Dilbert on randomness](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/dilbert-randomness.gif)
 
 How can we test that the pseudo random number generator is producing random numbers? The easiest way is to visualize the random numbers on the screen in the form of a grid where each square is a gray-scale color. So we need a way to convert from whatever random value we have to a range between 0 and 1. This method is doing exactly that:
 
@@ -223,10 +224,10 @@ void GetRandomMiddleSquare()
 
 This is how it looks like if we visualize the Middle Square Method. The result is actually good if you have a 10 digit seed. If the seed is like 5 digits, the algorithm stops generating new random numbers after just a few iterations.
 
-![Visualization of random numbers with the middle square method](../_images/unity/random-numbers-middle-square.png)
+![Visualization of random numbers with the middle square method](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/random-numbers-middle-square.png)
 But if you are looping the algorithm 30000 times, you will se that it stops working:
 
-![Visualization of random numbers with the failing middle square method](../_images/unity/random-numbers-middle-square-more-iterations.png)
+![Visualization of random numbers with the failing middle square method](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/random-numbers-middle-square-more-iterations.png)
 
 **The Linear Congruential Generator (LCG)**. Is one of the oldest pseudo random number generators and is the most commonly taught and commonly used RNG, so it's far more common than the Middle Square Method. It's usually the basis for RNGs in most math libraries. If I've understood everything correctly, Donald E. Knuth's subtractive random number generator algorithm, which is the algorithm probably used by Unity, is a Linear Congruential Generator. But the algorithm is far from perfect, so don't use it in cryptographic applications.
 
@@ -279,7 +280,7 @@ void GetRandomLinearCongruential()
 
 And this is the result after 30000 iterations:
 
-![Visualization of random numbers with the Linear Congruential Generator](../_images/unity/random-numbers-linear-congruential-generator.png)
+![Visualization of random numbers with the Linear Congruential Generator](https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/random-numbers-linear-congruential-generator.png)
 The Linear Congruential Generator will begin to repeat itself with some parameters, but the repetition is not as obvious as in the Middle Square Method where we got all black.
 
 ## 2. Generate random numbers with shader code
