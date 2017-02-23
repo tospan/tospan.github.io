@@ -1,8 +1,19 @@
-# Survival Shooter游戏
+---
+title: Unity教程:Survival Shooter游戏
+categories: 
+  - Unity Tutorials
+tags:
+  - Unity
+  - Patterns
+date: 2017-02-03 15:29:58
+updated: 2017-02-05 15:29:58
+---
 
 ## Environment setup
 
 This is part 1 of 10 of the Survival shooter tutorial, in which you will setup a pre-designed environment with lighting and background music.
+
+<!--more-->
 
 ## Player Character
 

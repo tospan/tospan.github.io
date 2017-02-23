@@ -1,9 +1,10 @@
 ---
-title: Unity GPP Spatial Partition pattern
+title: 游戏编程模式:Spatial Partition pattern
 categories: 
-  - Unity
+  - Game Programming Patterns
 tags:
   - Unity
+  - Patterns
 date: 2017-02-05 15:29:58
 updated: 2017-02-05 15:29:58
 ---

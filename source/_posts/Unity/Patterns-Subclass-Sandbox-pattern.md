@@ -1,9 +1,10 @@
 ---
-title: Unity GPP Subclass Sandbox pattern
+title: 游戏编程模式:Subclass Sandbox pattern
 categories: 
-  - Unity
+  - Game Programming Patterns
 tags:
   - Unity
+  - Patterns
 date: 2017-02-05 15:28:27
 updated: 2017-02-05 15:28:27
 ---

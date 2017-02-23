@@ -1,4 +1,13 @@
-# Space Shooter Tutorial
+---
+title: Unity教程:Space Shooter
+categories: 
+  - Unity Tutorials
+tags:
+  - Unity
+  - Patterns
+date: 2017-02-01 15:29:58
+updated: 2017-02-05 15:29:58
+---
 
 ## Introduction
 
@@ -6,6 +15,7 @@
 
 An introduction to the Space Shooter project, showing the final game and describing what will be covered in this project.
 
+<!--more-->
 ## 1. Game setup, Player and Camera
 
 ### [1. Setting up the project](https://unity3d.com/learn/tutorials/projects/space-shooter/setting-up-the-project?playlist=17147)

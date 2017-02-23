@@ -1,9 +1,10 @@
 ---
-title: Unity游戏编程模式:Flyweight Pattern
+title: 游戏编程模式:Flyweight Pattern
 categories: 
-  - Unity
+  - Game Programming Patterns
 tags:
   - Unity
+  - Patterns
 date: 2017-02-05 15:14:28
 updated: 2017-02-05 15:14:28
 ---

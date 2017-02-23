@@ -1,4 +1,13 @@
-# Roll a Ball
+---
+title: Unity教程:Roll a Ball
+categories: 
+  - Unity Tutorials
+tags:
+  - Unity
+  - Patterns
+date: 2017-01-31 15:29:58
+updated: 2017-02-05 15:29:58
+---
 
 We want to be able to pick up our collectable game objects when our player game object collides with them.
 To do this we need to detect our collisions
@@ -7,6 +16,7 @@ We will need to have these collisions trigger a new behaviour and we will need t
 test these collisions to make sure we are picking up the correct objects.
 The PickUp objects, the player's sphere, the ground plane and the walls all have colliders that inform us about collisions.
 
+<!--more-->
 If we didn't test our collisions to find out which objects we have collided with we could collect the wrong objects.
 We could collect the floor, or the walls.
 As a matter of face if we didn't test our collisions

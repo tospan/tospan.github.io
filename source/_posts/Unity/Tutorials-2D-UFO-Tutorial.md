@@ -1,10 +1,21 @@
-# 2D UFO教程
+---
+title: Unity教程:2D UFO
+categories: 
+  - Unity Tutorials
+tags:
+  - Unity
+  - Patterns
+date: 2017-02-02 15:29:58
+updated: 2017-02-05 15:29:58
+---
 
 通过创建一个简单的2D UFO游戏来告诉读者使用Unity以及创建2D游戏的一些基本原则，如果你是第一次使用Unity开发，创建这样一个游戏会告诉你很多关于`GameObject`, `Component`，`Prefab`，`Physics`和`Scripting`等各个方面的使用原则。
 
 学习该教程，首先需要从`Asset Store`下载 [资源](https://www.assetstore.unity3d.com/en/content/52143?_ga=1.218910416.838993178.1480250241)
 
 如果你有任何疑问，请到[对应的论坛](http://forum.unity3d.com/threads/2d-ufo-tutorial-q-a.381263/?_ga=1.183824111.838993178.1480250241)上发帖
+
+<!--more-->
 
 ## Introduction & Setup
 

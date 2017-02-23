@@ -1,9 +1,10 @@
 ---
-title: Unity GPP Command Pattern
+title: 游戏编程模式:Command Pattern
 categories: 
-  - Unity
+  - Game Programming Patterns
 tags:
   - Unity
+  - Patterns
 date: 2017-02-05 15:07:34
 updated: 2017-02-05 15:07:34
 ---
