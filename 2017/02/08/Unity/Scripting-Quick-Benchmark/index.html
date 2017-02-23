@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <title>Unity 简单基准测试 | 吐司片的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="目标:You want to test your code or compare two pieces of code to see which goes faster. This is just a short article that will show quickly how to get an efficient benchmark.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Unity 简单基准测试">
+<meta property="og:url" content="http://tospan.me/2017/02/08/Unity/Scripting-Quick-Benchmark/index.html">
+<meta property="og:site_name" content="吐司片的博客">
+<meta property="og:description" content="目标:You want to test your code or compare two pieces of code to see which goes faster. This is just a short article that will show quickly how to get an efficient benchmark.">
+<meta property="og:image" content="http://tospan.me/../_images/unity/untitled-300x163.png">
+<meta property="og:updated_time" content="2017-02-08T02:27:27.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Unity 简单基准测试">
+<meta name="twitter:description" content="目标:You want to test your code or compare two pieces of code to see which goes faster. This is just a short article that will show quickly how to get an efficient benchmark.">
+<meta name="twitter:image" content="http://tospan.me/../_images/unity/untitled-300x163.png">
+  
+    <link rel="alternate" href="/atom.xml" title="吐司片的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+</head>
+
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">吐司片的博客</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Work hard, play hard.</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://tospan.me"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Unity/Scripting-Quick-Benchmark" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/02/08/Unity/Scripting-Quick-Benchmark/" class="article-date">
+  <time datetime="2017-02-08T02:27:27.000Z" itemprop="datePublished">2017-02-08</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Unity/">Unity</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Unity 简单基准测试
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="目标"><a href="#目标" class="headerlink" title="目标:"></a>目标:</h2><p>You want to test your code or compare two pieces of code to see which goes faster. This is just a short article that will show quickly how to get an efficient benchmark.</p>
+<a id="more"></a>
+<h2 id="内容"><a href="#内容" class="headerlink" title="内容"></a>内容</h2><ul>
+<li>Using the time of your computer</li>
+<li>Using the counter of your computer</li>
+<li>Using Stopwatch</li>
+</ul>
+<h2 id="使用主机的Time"><a href="#使用主机的Time" class="headerlink" title="使用主机的Time"></a>使用主机的Time</h2><p>从某种程度上来说这是最简单直接的方法。也就是简单的获取两个操作之间的流逝时间。<br>The easy way in some way. We are simple using how much time has elapsed between two operations.</p>
+<p>我们将用Unity的GetComponent方法来做测试。</p>
+<p>你可能之前听过不少人说不要将GetComponent方法放到Update方法中，甚至应当在程序一开始的时候就保存要用的组件的引用，这里我们就看看这样的说法是否正确。</p>
+<p>首先我们需要设置基准测试环境。首先要说的是，我们将不使用<code>Thread</code>，为什么？因为也许结果不准确。并不是说进程有什么问题，只是不适用于我们的情况，你应当知道不要在游戏开发时使用<code>thread</code>，那我们也没有理由在基准测试中使用。</p>
+<p>测试代码看起来如下：</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">Start</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="comment">// Take time 0</span></div><div class="line">    <span class="comment">// Run code A</span></div><div class="line">    <span class="comment">// Take time 1</span></div><div class="line">    <span class="comment">// Result A = time 1 - time 0</span></div><div class="line"> </div><div class="line">    <span class="comment">// Take time 2</span></div><div class="line">    <span class="comment">// Run code B</span></div><div class="line">    <span class="comment">// Take time 3 </span></div><div class="line">    <span class="comment">// Result B = time 3 - time 2</span></div><div class="line"> </div><div class="line">    <span class="comment">// Compare result</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>In order to get a better view on the test, it is required to run the code a high number of time so that the little different between the two codes starts to show up. You won’t get much of two codes with 0.000001s difference.</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">using</span> UnityEngine;</div><div class="line"><span class="keyword">using</span> System.Collections;</div><div class="line"><span class="keyword">using</span> System;</div><div class="line"> </div><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Test</span> : <span class="title">MonoBehaviour</span> &#123;</div><div class="line"> </div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Start</span> (<span class="params"></span>) </span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">double</span> totalA = <span class="number">0</span>;</div><div class="line">        <span class="keyword">double</span> totalB = <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span> counter = <span class="number">1000000</span>;</div><div class="line">        <span class="comment">// Caching our transform</span></div><div class="line">        Transform tr = GetComponent&lt;Transform&gt;();</div><div class="line"> </div><div class="line">        <span class="keyword">var</span> currentTime = DateTime.Now;</div><div class="line">        <span class="comment">// First test with cache</span></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; counter;i++)</div><div class="line">        &#123;</div><div class="line">            Vector3 vec = tr.position;</div><div class="line">            vec.x = <span class="number">10</span>;</div><div class="line">            tr.position = vec;</div><div class="line">        &#125;</div><div class="line">        totalA = (DateTime.Now - currentTime).TotalMilliseconds;</div><div class="line">        <span class="comment">// Second test with no cache</span></div><div class="line">        currentTime = DateTime.Now;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">0</span>; k &lt; counter; k++)</div><div class="line">        &#123;</div><div class="line">            Vector3 vec = transform.position;</div><div class="line">            vec.x = <span class="number">10</span>;</div><div class="line">            transform.position = vec;</div><div class="line">        &#125;   </div><div class="line">        totalB = (DateTime.Now - currentTime).TotalMilliseconds;</div><div class="line">        print (totalA);</div><div class="line">        print (totalB);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>With this configuration I get around 232 for the first one and 335 for the second clearly showing our cache principle to be faster.</p>
+<p>If I modify the first loop for :</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; counter;i++)</div><div class="line">&#123;</div><div class="line">    Transform tr = GetComponent&lt;Transform&gt;();</div><div class="line">    Vector3 vec = tr.position;</div><div class="line">    vec.x = <span class="number">10</span>;</div><div class="line">    tr.position = vec;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>I get 430 / 340.</p>
+<p>As a conclusion we see that the best way is to cache in the start and use the reference we created.</p>
+<p>Also, you can see that the value tend to fluctuate from one run to another, one good practice could be to nest the loop inside another loop (make counter smaller in that case or you are up all night waiting for a result…). Each loop adds the result in a total and at the end the total is divided by the amount of outside loop to get an average.</p>
+<h2 id="Using-the-counter-of-our-computer"><a href="#Using-the-counter-of-our-computer" class="headerlink" title="Using the counter of our computer"></a>Using the counter of our computer</h2><p>The previous test was using the <code>DateTime</code> structure. Another way to perform test is to use the counter from the computer. This is a little more advanced and use some C functions.</p>
+<p>First we need to set up our program. To access the inner system, we need to use some Windows methods out of some old libraries.</p>
+<p>Here is how you do it:</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">using</span> System.Runtime.InteropServices;</div><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">NewBehaviourScript</span> : <span class="title">MonoBehaviour</span> &#123;</div><div class="line">    [DllImport(<span class="string">"kernel32"</span>)]</div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">extern</span> <span class="keyword">bool</span> <span class="title">QueryPerformanceCounter</span>(<span class="params"><span class="keyword">ref</span> <span class="keyword">long</span> perfCount</span>)</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Noticed the namespace reference? It is necessary so add it. The attribute is needed to tell where the method is stored, it is used for unmanaged native code. For more info see <a href="https://msdn.microsoft.com/en-us/library/system.runtime.interopservices.dllimportattribute.aspx" target="_blank" rel="external">there</a> .</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">using</span> UnityEngine;</div><div class="line"><span class="keyword">using</span> System.Collections;</div><div class="line"><span class="keyword">using</span> System.Runtime.InteropServices;</div><div class="line"><span class="keyword">using</span> System;</div><div class="line"> </div><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">NewBehaviourScript</span> : <span class="title">MonoBehaviour</span> &#123;</div><div class="line">    [DllImport(<span class="string">"kernel32"</span>)]</div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">extern</span> <span class="keyword">bool</span> <span class="title">QueryPerformanceCounter</span>(<span class="params"><span class="keyword">ref</span> <span class="keyword">long</span> perfCount</span>)</span>;</div><div class="line"> </div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Start</span> (<span class="params"></span>) </span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">long</span> start = <span class="number">0</span>;</div><div class="line">        <span class="keyword">long</span> totalA = <span class="number">0</span>;</div><div class="line">        <span class="keyword">long</span> totalB = <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span> counter = <span class="number">1000</span>;</div><div class="line">        <span class="comment">// Caching the component </span></div><div class="line">        Transform tr = GetComponent&lt;Transform&gt;();</div><div class="line">        <span class="comment">// Store the value and run the test with component</span></div><div class="line">        QueryPerformanceCounter(<span class="keyword">ref</span> start);</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; counter;i++)</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; counter;j++)</div><div class="line">            &#123;</div><div class="line">                Vector3 vec = tr.position;</div><div class="line">                vec.x = <span class="number">10</span>;</div><div class="line">                tr.position = vec;</div><div class="line">            &#125;</div><div class="line">            <span class="comment">// a takes the current value</span></div><div class="line">            <span class="comment">// totalA adds the difference between now and starting</span></div><div class="line">            <span class="keyword">long</span> a = <span class="number">0</span>;</div><div class="line">            QueryPerformanceCounter(<span class="keyword">ref</span> a);</div><div class="line">            totalA += (a - start);</div><div class="line">         &#125;</div><div class="line"> </div><div class="line">        <span class="comment">// Starting test with no cache</span></div><div class="line">        QueryPerformanceCounter(<span class="keyword">ref</span> start);</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">0</span>; k &lt; counter; k++)</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> l = <span class="number">0</span>; l &lt; counter; l++)</div><div class="line">            &#123;</div><div class="line">                Vector3 vec = transform.position;</div><div class="line">                vec.x = <span class="number">10</span>;</div><div class="line">                transform.position = vec;</div><div class="line">            &#125;   </div><div class="line">            <span class="keyword">long</span> a = <span class="number">0</span> ;</div><div class="line">            QueryPerformanceCounter(<span class="keyword">ref</span> a);</div><div class="line">            totalB += (a - start);</div><div class="line">        &#125;</div><div class="line">        <span class="comment">// Values are divided by amount of loop to get average</span></div><div class="line">        totalA /= counter;</div><div class="line">        totalB /= counter;</div><div class="line"> </div><div class="line">        print (totalA);</div><div class="line">        print (totalB);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>This code above includes the principle of average I introduced earlier. My result is now</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">364897 for non-cached</div><div class="line">246048 for cached</div></pre></td></tr></table></figure>
+<h2 id="3-–-使用Stopwatch"><a href="#3-–-使用Stopwatch" class="headerlink" title="3 – 使用Stopwatch"></a>3 – 使用<code>Stopwatch</code></h2><p>It is also possible to use the Stopwatch Class. Since it is a class we need first to instantiate it. The little plus about it is that it has a bunch of members we can use directly, it does pretty much what we have done above but in a neater way.</p>
+<p>For the sake of this test, since we have proven (prove, proved,proven, french people will understand…) already that caching is better, lets’s run another that was asked from me lately. Accessing a public variable or a static variable. The basic starting is that we have one object that gets accessed by many. Should we used a static variable or should we get the component (cached as we saw before) and access the public member?</p>
+<p>So we need to create a simple script:</p>
+<p>除了上面提到的两中方法，也可以使用<code>Stopwatch</code>类，我们需要实例化它，好处是，它有一系列的成员我们可以直接使用，它基本提供了我们需要的内容。</p>
+<p>由于之前我们已经证明了，对于GetComponent这样的操作，缓存的效率更高一点，本例中，我们就测试另外一个常见的问题，访问公共变量还是静态变量？背景是我们有一个对象被多个对象访问，我们是该使用静态变量呢，还是使用公共的变量呢？</p>
+<p>创建一个简单的脚本：<br><figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">OtherScript</span> : <span class="title">MonoBehaviour</span> &#123;</div><div class="line"> </div><div class="line">    <span class="keyword">public</span> <span class="keyword">int</span> pubVar;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> statVar;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">SetVar</span>(<span class="params"><span class="keyword">int</span> <span class="keyword">value</span></span>)</span>&#123;</div><div class="line">        pubVar = <span class="keyword">value</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">SetStaticVar</span>(<span class="params"> <span class="keyword">int</span> n</span>)</span>&#123;</div><div class="line">          statVar = n;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">int</span> PropVar &#123;<span class="keyword">get</span>; <span class="keyword">set</span>;&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>We can start benching (inappropriate use of the verb).</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">using</span> UnityEngine;</div><div class="line"><span class="keyword">using</span> System.Collections;</div><div class="line"><span class="keyword">using</span> System;</div><div class="line"><span class="keyword">using</span> System.Diagnostics;</div><div class="line"> </div><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Test</span> : <span class="title">MonoBehaviour</span> &#123;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Start</span> (<span class="params"></span>) </span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">int</span> counter = <span class="number">100000</span>;</div><div class="line">        <span class="comment">// Caching the component </span></div><div class="line">        OtherScript script = GetComponent&lt;OtherScript&gt;();</div><div class="line">        <span class="comment">// Create the Stopwatch object</span></div><div class="line">        Stopwatch swA = <span class="keyword">new</span> Stopwatch();</div><div class="line"> </div><div class="line">        <span class="comment">// Start the stopwatch</span></div><div class="line">        swA.Start();</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; counter;j++)</div><div class="line">        &#123;</div><div class="line">            script.pubVar = <span class="number">10</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="comment">// Stop the stopwatch</span></div><div class="line">        swA.Stop();</div><div class="line"> </div><div class="line">        Stopwatch swB = <span class="keyword">new</span> Stopwatch();</div><div class="line">        swB.Start();</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> l = <span class="number">0</span>; l &lt; counter; l++)</div><div class="line">        &#123;</div><div class="line">            script.SetVar(<span class="number">10</span>);</div><div class="line">        &#125;   </div><div class="line">        swB.Stop();</div><div class="line"> </div><div class="line">        Stopwatch swC = <span class="keyword">new</span> Stopwatch();</div><div class="line">        swC.Start();</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> n = <span class="number">0</span>; n &lt; counter; n++)</div><div class="line">        &#123;</div><div class="line">            OtherScript.statVar = <span class="number">10</span>;</div><div class="line">        &#125;   </div><div class="line">        swC.Stop();</div><div class="line"> </div><div class="line">        Stopwatch swD = <span class="keyword">new</span> Stopwatch();</div><div class="line">        swD.Start();</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> p = <span class="number">0</span>; p &lt; counter; p++)</div><div class="line">        &#123;</div><div class="line">             OtherScript.SetStaticVar( <span class="number">10</span>);</div><div class="line">        &#125;   </div><div class="line">        swD.Stop();</div><div class="line"> </div><div class="line">        Stopwatch swE = <span class="keyword">new</span> Stopwatch();</div><div class="line">        swE.Start();</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> r = <span class="number">0</span>; r &lt; counter; r++)</div><div class="line">        &#123;</div><div class="line">            script.PropVar = <span class="number">10</span>;</div><div class="line">        &#125;   </div><div class="line">        swE.Stop();</div><div class="line"> </div><div class="line">        print (<span class="string">"Public variable: "</span> + swA.Elapsed);</div><div class="line">        print (<span class="string">"Public method: "</span> + swB.Elapsed);</div><div class="line">        print (<span class="string">"Static variable: "</span> + swC.Elapsed);</div><div class="line">        print (<span class="string">"Static method: "</span> + swD.Elapsed);</div><div class="line">        print (<span class="string">"Property: "</span> + swE.Elapsed);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><img src="../_images/unity/untitled-300x163.png" alt="Untitled-300x163"></p>
+<p>The result tells us the best way is static variable, congratulation!!! But before rushing into static for performance, you need to know how they work, check out our memory management article for this.</p>
+<p>The reason why static is faster lies in the nature of the variable, since it is static it belongs to the class and not to any object. As a result the compiler is sure to find the variable and hence does not need to perform a check on if the object exists or not. Method are always a little slower since they require storing some info about the program before jumping to the location of the method, running and taking out back those info we stored. Properties shows to be a little faster despite being themselves methods.</p>
+<h2 id="All-in-one-method"><a href="#All-in-one-method" class="headerlink" title="All in one method"></a>All in one method</h2><p>As you can see a test can quickly get really long. This is going to make it down to one line (and the method…).</p>
+<p>First we need a method that will run our methods in a loop and keep track of all info we need:</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Test</span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">CompareMethods</span>(<span class="params"><span class="keyword">int</span> round,Action printMessage, <span class="keyword">params</span> Action[] actions</span>) </span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">int</span> length = actions.Length;</div><div class="line">        Stopwatch sw = <span class="keyword">new</span> Stopwatch();</div><div class="line">        <span class="keyword">float</span> [] ms = <span class="keyword">new</span> <span class="keyword">float</span>[length];</div><div class="line">        <span class="keyword">float</span> [] ticks = <span class="keyword">new</span> <span class="keyword">float</span>[length];</div><div class="line"> </div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; length; i++) </div><div class="line">        &#123;</div><div class="line">            sw.Start();</div><div class="line">            <span class="keyword">long</span> tick = sw.ElapsedTicks;</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; round; j++)</div><div class="line">            &#123;</div><div class="line">                actions[i]();</div><div class="line">            &#125;</div><div class="line">            sw.Stop();</div><div class="line">            ms[i] = sw.ElapsedMilliseconds;</div><div class="line">            ticks[i] = (<span class="keyword">float</span>)(sw.ElapsedTicks - tick);</div><div class="line">            sw.Reset();</div><div class="line">        &#125;</div><div class="line">        printMessage(<span class="keyword">new</span> TestResult(length, ms, ticks));</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>The first parameter takes how many rounds we want to perform. Some comparison will require a larger amount of call to detect which is most likely to be the best. The second parameter is the printing message. You are meant to print the info you need. In this case, a TestData class is needed. The last parameter is the list of method we want to pass. Using params, we are not limited to a finite amount of methods.</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">TestResult</span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">float</span> [] ms = <span class="literal">null</span>;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">float</span> [] ticks = <span class="literal">null</span>;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> length = <span class="number">0</span>;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">int</span> Length &#123; <span class="keyword">get</span> &#123;<span class="keyword">return</span> length; &#125; &#125;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">float</span>[] ElapsedMs &#123; <span class="keyword">get</span> &#123; <span class="keyword">return</span> ms; &#125; &#125;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">float</span> [] Ticks &#123; <span class="keyword">get</span> &#123; <span class="keyword">return</span> ticks; &#125; &#125;</div><div class="line"> </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">TestResult</span>(<span class="params"><span class="keyword">int</span> length,<span class="keyword">float</span> [] ms, <span class="keyword">float</span> [] ticks</span>)</span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">this</span>.length = length;</div><div class="line">        <span class="keyword">this</span>.ms = ms;</div><div class="line">        <span class="keyword">this</span>.ticks = ticks;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>And here is a basic test case:</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">Start</span>(<span class="params"></span>)</span></div><div class="line">&#123;   </div><div class="line">    Test.CompareMethods(<span class="number">1000</span>,PrintInfo, MethodA, MethodB, MethodC);</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">MethodA</span>(<span class="params"></span>) </span>&#123; <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">100</span>;i++) &#123;&#125; &#125;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">MethodB</span>(<span class="params"></span>) </span>&#123; <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">1000</span>;i++) &#123;&#125; &#125;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">MethodC</span>(<span class="params"></span>) </span>&#123; <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>;i++) &#123;&#125; &#125;</div><div class="line"> </div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">PrintInfo</span>(<span class="params">TestResult td</span>)</span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">float</span> [] t = td.Ticks;</div><div class="line">    <span class="keyword">float</span> [] ms = td.ElapsedMs;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> k = <span class="number">0</span>; k &lt; td.Length ; k++)</div><div class="line">    &#123;</div><div class="line">        Debug.Log (<span class="string">"Printing "</span>+ ms[k]+<span class="string">" ms, "</span>+ t[k]);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>The methods are not doing anything, this is not the point here. The PrintInfo method allows us to print the way we want. We could add more data to the TestResult class and assign the value in CompareMethods. So far, you get the amount of ticks and the elapsed milliseconds.</p>
+<p>The parameter is params Action[]. It means it only receive a method returning void and getting no parameter. The reason is simple, if you had to consider any parameter combination, even using generic, you end up with a couple of dozens.</p>
+<p>So instead we limit to provide all possibilities:</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">float</span> <span class="title">MethodToTestF</span>(<span class="params"><span class="keyword">float</span> param1, <span class="keyword">float</span> param2, <span class="keyword">int</span> extraUselessParam</span>)</span>&#123;</div><div class="line">    <span class="keyword">float</span> result = param1 + param2 * <span class="number">1.05</span>f;</div><div class="line">    <span class="comment">// extraUselessParam is useless so we do not use it</span></div><div class="line">    <span class="keyword">return</span> result;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">double</span> <span class="title">MethodToTestD</span>(<span class="params"><span class="keyword">double</span> param1, <span class="keyword">double</span> param2, <span class="keyword">int</span> extraUselessParam</span>)</span>&#123;</div><div class="line">    <span class="keyword">double</span> result = param1 + param2 * <span class="number">1.05</span>;</div><div class="line">    <span class="comment">// extraUselessParam is useless so we do not use it</span></div><div class="line">    <span class="keyword">return</span> result;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">TestMethodFloat</span>(<span class="params"></span>)</span>&#123;</div><div class="line">   MethodToTestF(<span class="number">10</span>f,<span class="number">20</span>f,<span class="number">1</span>);</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">TestMethodDouble</span>(<span class="params"></span>)</span>&#123;</div><div class="line">   MethodToTestD(<span class="number">10</span>,<span class="number">20</span>,<span class="number">1</span>);</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">Start</span>(<span class="params"></span>)</span>&#123;</div><div class="line">   Test.CompareMethods(<span class="number">1000</span>,PrintInfo, TestMethodFloat, TestMethodDouble);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Get it?</p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>Whether you choose one way or another the result will not change the outcome.</p>
+<p>Our little test clearly demonstrate that the best way is caching the component when accessed regularly like in the Update.</p>
+<p>It also shows that using GetComponent is even worse that simply accessing the component by its name.</p>
+<p>So for all your CharacterController, Transform, Rigidbody and other components being used in the Update, the way to go is the cached component.</p>
+<p>Now, we did our test for GetComponent but you do understand that you can do that with any piece of code. You do understand that don’t you? So anytime you wonder, mmmm would this go faster since it has less code, go for a benchmark since less written code does not always mean faster code.</p>
+<p>And for static vs non-static, make sure you know what you are doing and do not get tempted to save a few cycles and get all of your enemies killed at once.</p>
+<h2 id="原文链接"><a href="#原文链接" class="headerlink" title="原文链接"></a>原文链接</h2><p><a href="https://unitygem.wordpress.com/quick-benchmark/" target="_blank" rel="external">Quick Benchmark</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://tospan.me/2017/02/08/Unity/Scripting-Quick-Benchmark/" data-id="cizhorep2005b1gvwcxk3g7sa" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Unity/">Unity</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/02/10/Game-Development/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          游戏开发
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/02/07/Unity/Patterns-FSM/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">游戏编程设计模式:有限状态机(FSM)</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Algorithms/">Algorithms</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Game-Development/">Game Development</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Game-Programming-Patterns/">Game Programming Patterns</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Unity/">Unity</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Unity-Tutorials/">Unity Tutorials</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/default/">default</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Algorithms/">Algorithms</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Basics/">Basics</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C#</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Data-Structure/">Data Structure</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Games/">Games</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Geometry/">Geometry</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linear-Algebra/">Linear Algebra</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Math/">Math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mathematics/">Mathematics</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Numerical-Analysis/">Numerical Analysis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Patterns/">Patterns</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scripting/">Scripting</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Unity/">Unity</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/default/">default</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Algorithms/" style="font-size: 17.5px;">Algorithms</a> <a href="/tags/Basics/" style="font-size: 12.5px;">Basics</a> <a href="/tags/C/" style="font-size: 12.5px;">C#</a> <a href="/tags/Data-Structure/" style="font-size: 16.25px;">Data Structure</a> <a href="/tags/Games/" style="font-size: 10px;">Games</a> <a href="/tags/Geometry/" style="font-size: 11.25px;">Geometry</a> <a href="/tags/Linear-Algebra/" style="font-size: 13.75px;">Linear Algebra</a> <a href="/tags/Math/" style="font-size: 12.5px;">Math</a> <a href="/tags/Mathematics/" style="font-size: 12.5px;">Mathematics</a> <a href="/tags/Numerical-Analysis/" style="font-size: 10px;">Numerical Analysis</a> <a href="/tags/Patterns/" style="font-size: 15px;">Patterns</a> <a href="/tags/Scripting/" style="font-size: 18.75px;">Scripting</a> <a href="/tags/Unity/" style="font-size: 20px;">Unity</a> <a href="/tags/default/" style="font-size: 11.25px;">default</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">May 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">April 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/03/">March 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/02/">February 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">January 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/12/">December 2012</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/02/23/Unity-Multiplayer-And-Networking/">Unity Multiplayer And Networking</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/23/Unity-Physics/">Unity Physics</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/10/Game-Development/">游戏开发</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/08/Unity/Scripting-Quick-Benchmark/">Unity 简单基准测试</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/07/Unity/Patterns-FSM/">游戏编程设计模式:有限状态机(FSM)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 To Span<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>

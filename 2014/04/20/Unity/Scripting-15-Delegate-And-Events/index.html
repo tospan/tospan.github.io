@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <title>C# 委托(Delegate)和事件(Event) | 吐司片的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="概述： “你能帮我做点事吗？”， “好！”，这就是一个委托的过程。本文我们将讨论C#中什么是委托(Delegate)？与此同时，我们也将了解什么是事件(Event)，它们的区别，以及使用过程中要注意的一些问题。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C# 委托(Delegate)和事件(Event)">
+<meta property="og:url" content="http://tospan.me/2014/04/20/Unity/Scripting-15-Delegate-And-Events/index.html">
+<meta property="og:site_name" content="吐司片的博客">
+<meta property="og:description" content="概述： “你能帮我做点事吗？”， “好！”，这就是一个委托的过程。本文我们将讨论C#中什么是委托(Delegate)？与此同时，我们也将了解什么是事件(Event)，它们的区别，以及使用过程中要注意的一些问题。">
+<meta property="og:updated_time" content="2017-02-10T06:27:47.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C# 委托(Delegate)和事件(Event)">
+<meta name="twitter:description" content="概述： “你能帮我做点事吗？”， “好！”，这就是一个委托的过程。本文我们将讨论C#中什么是委托(Delegate)？与此同时，我们也将了解什么是事件(Event)，它们的区别，以及使用过程中要注意的一些问题。">
+  
+    <link rel="alternate" href="/atom.xml" title="吐司片的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+</head>
+
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">吐司片的博客</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Work hard, play hard.</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://tospan.me"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Unity/Scripting-15-Delegate-And-Events" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/04/20/Unity/Scripting-15-Delegate-And-Events/" class="article-date">
+  <time datetime="2014-04-20T06:27:47.000Z" itemprop="datePublished">2014-04-20</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Unity/">Unity</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      C# 委托(Delegate)和事件(Event)
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>概述：</strong> “你能帮我做点事吗？”， “好！”，这就是一个委托的过程。本文我们将讨论C#中什么是委托(Delegate)？与此同时，我们也将了解什么是事件(Event)，它们的区别，以及使用过程中要注意的一些问题。</p>
+<a id="more"></a>
+<!-- TOC -->
+<ul>
+<li><a href="#委托">委托</a><ul>
+<li><a href="#委托类型">委托类型</a></li>
+<li><a href="#委托实例">委托实例</a></li>
+</ul>
+</li>
+<li><a href="#事件">事件</a></li>
+<li><a href="#委托和事件的区别">委托和事件的区别</a></li>
+<li><a href="#常见问题">常见问题</a><ul>
+<li><a href="#若多次添加同一个事件处理函数时触发时处理函数是否也会多次触发">若多次添加同一个事件处理函数时，触发时处理函数是否也会多次触发？</a></li>
+<li><a href="#若添加了一个事件处理函数却执行了两次或多次取消事件是否会报错">若添加了一个事件处理函数，却执行了两次或多次”取消事件“，是否会报错？</a></li>
+<li><a href="#如何认定两个事件处理函数是一样的-如果是匿名函数呢">如何认定两个事件处理函数是一样的？ 如果是匿名函数呢？</a></li>
+<li><a href="#如果不手动删除事件函数系统会帮我们回收吗">如果不手动删除事件函数，系统会帮我们回收吗？</a></li>
+<li><a href="#在多线程环境下挂接事件时和对象创建所在的线程不同那事件处理函数中的代码将在哪个线程中执行">在多线程环境下，挂接事件时和对象创建所在的线程不同，那事件处理函数中的代码将在哪个线程中执行？</a></li>
+<li><a href="#当代码的层次复杂时开放委托和事件是不是会带来更大的麻烦">当代码的层次复杂时，开放委托和事件是不是会带来更大的麻烦？</a></li>
+</ul>
+</li>
+<li><a href="#参考">参考</a></li>
+</ul>
+<!-- /TOC -->
+<h2 id="委托"><a href="#委托" class="headerlink" title="委托"></a>委托</h2><p>我们可以举一个现实生活中的例子，现在有个业主想把房子租出去，在网上发了个小广告，由于房子条件不错，很多人联系他看法，没有两天，业主就被这些事儿烦了，于是他就决定找个中介帮他把房子租出去，以后中介就负责接待看房子客户了，业主松了一口气。</p>
+<p>这里面就涉及了委托哦。</p>
+<p>其实业主的需求就是<strong>将房子租给合适的人，把租金给我</strong>，我们用伪代码这么表示<code>delegate money Rent(roomer)</code>， 他可以自己完成这件事儿，但是浪费时间，所以他想找中介来替他完成这个需求，也就是委托的对象 <code>Rent Agency</code>。 中介得找个人具体去负责这件事儿，比如小王，那小王就表示具体完成的方法。</p>
+<h3 id="委托类型"><a href="#委托类型" class="headerlink" title="委托类型"></a>委托类型</h3><h3 id="委托实例"><a href="#委托实例" class="headerlink" title="委托实例"></a>委托实例</h3><p>为什么要用它？怎么用？使用过程中有什么问题？怎么解决这些问题？</p>
+<p>委托可以看做是一个 “可以传递的函数” 的容器，或者当做变量来使用，只不过变量的类型是函数，和变量一样，delegate可以赋值，以及在运行时修改……区别是，变量可以放置数据，但delegate包含函数。</p>
+<p><strong>DelegateScript</strong></p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">using</span> UnityEngine;</div><div class="line"><span class="keyword">using</span> System.Collections;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">DelegateScript</span> : <span class="title">MonoBehaviour</span> </div><div class="line">&#123;   </div><div class="line">    <span class="function"><span class="keyword">delegate</span> <span class="keyword">void</span> <span class="title">MyDelegate</span>(<span class="params"><span class="keyword">int</span> num</span>)</span>;</div><div class="line">    MyDelegate myDelegate;</div><div class="line">    </div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Start</span> (<span class="params"></span>) </span></div><div class="line">    &#123;</div><div class="line">        myDelegate = PrintNum;</div><div class="line">        myDelegate(<span class="number">50</span>);</div><div class="line">        </div><div class="line">        myDelegate = DoubleNum;</div><div class="line">        myDelegate(<span class="number">50</span>);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">PrintNum</span>(<span class="params"><span class="keyword">int</span> num</span>)</span></div><div class="line">    &#123;</div><div class="line">        print (<span class="string">"Print Num: "</span> + num);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">DoubleNum</span>(<span class="params"><span class="keyword">int</span> num</span>)</span></div><div class="line">    &#123;</div><div class="line">        print (<span class="string">"Double Num: "</span> + num * <span class="number">2</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>MulticastScript</strong></p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">using</span> UnityEngine;</div><div class="line"><span class="keyword">using</span> System.Collections;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">MulticastScript</span> : <span class="title">MonoBehaviour</span> </div><div class="line">&#123;</div><div class="line">    <span class="function"><span class="keyword">delegate</span> <span class="keyword">void</span> <span class="title">MultiDelegate</span>(<span class="params"></span>)</span>;</div><div class="line">    MultiDelegate myMultiDelegate;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Start</span> (<span class="params"></span>) </span></div><div class="line">    &#123;</div><div class="line">        myMultiDelegate += PowerUp;</div><div class="line">        myMultiDelegate += TurnRed;</div><div class="line">        </div><div class="line">        <span class="keyword">if</span>(myMultiDelegate != <span class="literal">null</span>)</div><div class="line">        &#123;</div><div class="line">            myMultiDelegate();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">PowerUp</span>(<span class="params"></span>)</span></div><div class="line">    &#123;</div><div class="line">        print (<span class="string">"Orb is powering up!"</span>);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">TurnRed</span>(<span class="params"></span>)</span></div><div class="line">    &#123;</div><div class="line">        renderer.material.color = Color.red;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="事件"><a href="#事件" class="headerlink" title="事件"></a>事件</h2><p>事件和委托的关系有点像Property和Variable之间的关系，它对委托进行了封装，还拿上面的例子来说，业主让中介把房子租出去，中介误解以为要把房子卖出去。</p>
+<p>How to create a dynamic “broadcast” system using Events.</p>
+<p>事件是一种特殊的委托（delegate），可以通知其他类某个特定的状况发生了。</p>
+<!--more-->
+<p>事件可以看做是一个广播系统，任何对该事件感兴趣的类可以通过方法订阅它，那么在某种情况发生了，例如点击了按钮，玩家掉血，我们会调用事件，与此同时会调用所有订阅该事件的方法。</p>
+<p>关于OnEnable和OnDisable</p>
+<p><strong>EventManager</strong></p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">using</span> UnityEngine;</div><div class="line"><span class="keyword">using</span> System.Collections;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">EventManager</span> : <span class="title">MonoBehaviour</span></div><div class="line">&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">delegate</span> <span class="keyword">void</span> <span class="title">ClickAction</span>(<span class="params"></span>)</span>;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">event</span> ClickAction OnClicked;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">OnGUI</span>(<span class="params"></span>)</span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">if</span>(GUI.Button(<span class="keyword">new</span> Rect(Screen.width / <span class="number">2</span> - <span class="number">50</span>, <span class="number">5</span>, <span class="number">100</span>, <span class="number">30</span>), <span class="string">"Click"</span>))</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">if</span>(OnClicked != <span class="literal">null</span>)</div><div class="line">                OnClicked();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>TeleportScript</strong></p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">using</span> UnityEngine;</div><div class="line"><span class="keyword">using</span> System.Collections;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">TeleportScript</span> : <span class="title">MonoBehaviour</span></div><div class="line">&#123;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">OnEnable</span>(<span class="params"></span>)</span></div><div class="line">    &#123;</div><div class="line">        EventManager.OnClicked += Teleport;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">OnDisable</span>(<span class="params"></span>)</span></div><div class="line">    &#123;</div><div class="line">        EventManager.OnClicked -= Teleport;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Teleport</span>(<span class="params"></span>)</span></div><div class="line">    &#123;</div><div class="line">        Vector3 pos = transform.position;</div><div class="line">        pos.y = Random.Range(<span class="number">1.0</span>f, <span class="number">3.0</span>f);</div><div class="line">        transform.position = pos;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>TurnColorScript</strong></p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">using</span> UnityEngine;</div><div class="line"><span class="keyword">using</span> System.Collections;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">TurnColorScript</span> : <span class="title">MonoBehaviour</span> </div><div class="line">&#123;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">OnEnable</span>(<span class="params"></span>)</span></div><div class="line">    &#123;</div><div class="line">        EventManager.OnClicked += TurnColor;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">OnDisable</span>(<span class="params"></span>)</span></div><div class="line">    &#123;</div><div class="line">        EventManager.OnClicked -= TurnColor;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">TurnColor</span>(<span class="params"></span>)</span></div><div class="line">    &#123;</div><div class="line">        Color col = <span class="keyword">new</span> Color(Random.<span class="keyword">value</span>, Random.<span class="keyword">value</span>, Random.<span class="keyword">value</span>);</div><div class="line">        renderer.material.color = col;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="委托和事件的区别"><a href="#委托和事件的区别" class="headerlink" title="委托和事件的区别"></a>委托和事件的区别</h2><p>An Event declaration adds a layer of abstraction and protection on the delegate instance. This protection prevents clients of the delegate from resetting the delegate and its invocation list and only allows adding or removing targets from the invocation list.</p>
+<p>In brief, you can think of an event as being a bit like a property - but instead of having get/set operations, it has add/remove. The value being added/removed is always a delegate reference.</p>
+<p>Delegates themselves support operations of:</p>
+<ul>
+<li>Combine (chain multiple delegate instances together)</li>
+<li>Remove (split them up again)</li>
+<li>Invoke (synchronous or asynchronous)</li>
+<li>Various things to do with finding out the target, invocation list etc</li>
+</ul>
+<p>Note that delegates themselves are immutable(不变的), so combine/remove operations return a new delegate instance rather than modifying the existing ones.</p>
+<h2 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h2><h3 id="若多次添加同一个事件处理函数时，触发时处理函数是否也会多次触发？"><a href="#若多次添加同一个事件处理函数时，触发时处理函数是否也会多次触发？" class="headerlink" title="若多次添加同一个事件处理函数时，触发时处理函数是否也会多次触发？"></a>若多次添加同一个事件处理函数时，触发时处理函数是否也会多次触发？</h3><h3 id="若添加了一个事件处理函数，却执行了两次或多次”取消事件“，是否会报错？"><a href="#若添加了一个事件处理函数，却执行了两次或多次”取消事件“，是否会报错？" class="headerlink" title="若添加了一个事件处理函数，却执行了两次或多次”取消事件“，是否会报错？"></a>若添加了一个事件处理函数，却执行了两次或多次”取消事件“，是否会报错？</h3><h3 id="如何认定两个事件处理函数是一样的？-如果是匿名函数呢？"><a href="#如何认定两个事件处理函数是一样的？-如果是匿名函数呢？" class="headerlink" title="如何认定两个事件处理函数是一样的？ 如果是匿名函数呢？"></a>如何认定两个事件处理函数是一样的？ 如果是匿名函数呢？</h3><h3 id="如果不手动删除事件函数，系统会帮我们回收吗？"><a href="#如果不手动删除事件函数，系统会帮我们回收吗？" class="headerlink" title="如果不手动删除事件函数，系统会帮我们回收吗？"></a>如果不手动删除事件函数，系统会帮我们回收吗？</h3><h3 id="在多线程环境下，挂接事件时和对象创建所在的线程不同，那事件处理函数中的代码将在哪个线程中执行？"><a href="#在多线程环境下，挂接事件时和对象创建所在的线程不同，那事件处理函数中的代码将在哪个线程中执行？" class="headerlink" title="在多线程环境下，挂接事件时和对象创建所在的线程不同，那事件处理函数中的代码将在哪个线程中执行？"></a>在多线程环境下，挂接事件时和对象创建所在的线程不同，那事件处理函数中的代码将在哪个线程中执行？</h3><h3 id="当代码的层次复杂时，开放委托和事件是不是会带来更大的麻烦？"><a href="#当代码的层次复杂时，开放委托和事件是不是会带来更大的麻烦？" class="headerlink" title="当代码的层次复杂时，开放委托和事件是不是会带来更大的麻烦？"></a>当代码的层次复杂时，开放委托和事件是不是会带来更大的麻烦？</h3><h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a href="http://csharpindepth.com/Articles/Chapter2/Events.aspx" target="_blank" rel="external">Delegates and Events</a></li>
+<li><a href="http://stackoverflow.com/questions/29155/what-are-the-differences-between-delegates-and-events" target="_blank" rel="external">What are the differences between delegates and events?</a></li>
+<li><a href="http://www.cnblogs.com/buptzym/archive/2013/03/15/2962300.html" target="_blank" rel="external">你可能不知道的陷阱：C#委托和事件的困惑</a></li>
+<li><a href="https://msdn.microsoft.com/en-us/library/edzehd2t(v=vs.110" target="_blank" rel="external">Handling and Raising Events</a>.aspx)</li>
+<li><a href="http://www.unitygeek.com/delegates-events-unity/" target="_blank" rel="external">Delegates and Events in Unity</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://tospan.me/2014/04/20/Unity/Scripting-15-Delegate-And-Events/" data-id="cizhoreou004w1gvw2t27icue" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Scripting/">Scripting</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2014/04/25/Unity/Scripting-17-Refelection/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          C Sharp Refelection
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2014/04/15/Unity/Scripting-14-Coroutine/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Unity协同进程(Coroutine)</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Algorithms/">Algorithms</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Game-Development/">Game Development</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Game-Programming-Patterns/">Game Programming Patterns</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Unity/">Unity</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Unity-Tutorials/">Unity Tutorials</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/default/">default</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Algorithms/">Algorithms</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Basics/">Basics</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C#</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Data-Structure/">Data Structure</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Games/">Games</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Geometry/">Geometry</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linear-Algebra/">Linear Algebra</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Math/">Math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mathematics/">Mathematics</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Numerical-Analysis/">Numerical Analysis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Patterns/">Patterns</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scripting/">Scripting</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Unity/">Unity</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/default/">default</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Algorithms/" style="font-size: 17.5px;">Algorithms</a> <a href="/tags/Basics/" style="font-size: 12.5px;">Basics</a> <a href="/tags/C/" style="font-size: 12.5px;">C#</a> <a href="/tags/Data-Structure/" style="font-size: 16.25px;">Data Structure</a> <a href="/tags/Games/" style="font-size: 10px;">Games</a> <a href="/tags/Geometry/" style="font-size: 11.25px;">Geometry</a> <a href="/tags/Linear-Algebra/" style="font-size: 13.75px;">Linear Algebra</a> <a href="/tags/Math/" style="font-size: 12.5px;">Math</a> <a href="/tags/Mathematics/" style="font-size: 12.5px;">Mathematics</a> <a href="/tags/Numerical-Analysis/" style="font-size: 10px;">Numerical Analysis</a> <a href="/tags/Patterns/" style="font-size: 15px;">Patterns</a> <a href="/tags/Scripting/" style="font-size: 18.75px;">Scripting</a> <a href="/tags/Unity/" style="font-size: 20px;">Unity</a> <a href="/tags/default/" style="font-size: 11.25px;">default</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">May 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">April 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/03/">March 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/02/">February 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">January 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/12/">December 2012</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/02/23/Unity-Multiplayer-And-Networking/">Unity Multiplayer And Networking</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/23/Unity-Physics/">Unity Physics</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/10/Game-Development/">游戏开发</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/08/Unity/Scripting-Quick-Benchmark/">Unity 简单基准测试</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/07/Unity/Patterns-FSM/">游戏编程设计模式:有限状态机(FSM)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 To Span<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>

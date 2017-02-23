@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <title>Unity教程:Roll a Ball | 吐司片的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="We want to be able to pick up our collectable game objects when our player game object collides with them.To do this we need to detect our collisionsbetween the player game object and the PickUp game">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Unity教程:Roll a Ball">
+<meta property="og:url" content="http://tospan.me/2017/01/31/Unity/Tutorials-Roll-a-Ball/index.html">
+<meta property="og:site_name" content="吐司片的博客">
+<meta property="og:description" content="We want to be able to pick up our collectable game objects when our player game object collides with them.To do this we need to detect our collisionsbetween the player game object and the PickUp game">
+<meta property="og:updated_time" content="2017-02-05T07:29:58.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Unity教程:Roll a Ball">
+<meta name="twitter:description" content="We want to be able to pick up our collectable game objects when our player game object collides with them.To do this we need to detect our collisionsbetween the player game object and the PickUp game">
+  
+    <link rel="alternate" href="/atom.xml" title="吐司片的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+</head>
+
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">吐司片的博客</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Work hard, play hard.</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://tospan.me"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Unity/Tutorials-Roll-a-Ball" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/01/31/Unity/Tutorials-Roll-a-Ball/" class="article-date">
+  <time datetime="2017-01-31T07:29:58.000Z" itemprop="datePublished">2017-01-31</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Unity-Tutorials/">Unity Tutorials</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Unity教程:Roll a Ball
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>We want to be able to pick up our collectable game objects when our player game object collides with them.<br>To do this we need to detect our collisions<br>between the player game object and the PickUp game objects.<br>We will need to have these collisions trigger a new behaviour and we will need to<br>test these collisions to make sure we are picking up the correct objects.<br>The PickUp objects, the player’s sphere, the ground plane and the walls all have colliders that inform us about collisions.</p>
+<a id="more"></a>
+<p>If we didn’t test our collisions to find out which objects we have collided with we could collect the wrong objects.<br>We could collect the floor, or the walls.<br>As a matter of face if we didn’t test our collisions<br>on the very first frame of the game we would<br>come in contact with the ground plane<br>and we would collect the ground plane<br>and then we would fall in to the void of the scene space<br>and the game would essentially be over.<br>First, we don’t need our player to remain inactive.<br>so let’s tick the Active checkbox and<br>bring back our player.<br>Next let’s select the PlayerController script<br>and open it for editing.<br>Just a note, we could edit this<br>script regardless of whether the game<br>object is active or not.<br>Now that we have the script open,<br>what code are we going to write?<br>We could write collider<br>and then search the documentation using the<br>hot key combination.<br>But there is a different way that we could do this as well.<br>Let’s return to Unity and look at the details<br>of our player game object.<br>What we are interested in here is the<br>sphere collider component.<br>In the header of each component on the left<br>is the component’s turndown arrow,<br>the icon, the Enable checkbox<br>if it’s available, and the type of the component.<br>On the right is the context sensitive gear gizmo<br>and an icon of a little book with a question mark.<br>Now this is what we need.<br>This is the quick link to the component reference.<br>If we select this icon we are taken<br>not to the scripting reference but to the<br>component reference.<br>We would read this document to find out more<br>about how to use this component in the context<br>of the editor.<br>We, however, want to find out how to<br>script to this component’s class.<br>To do this we simply switch to scripting<br>and we are taken to the scripting reference<br>for the sphere collider.<br>We want to detect and test our collisions.<br>For this project we are going to use<br>OnTriggerEnter.<br>Just imagine if we were, say, a daring plumber<br>and we jumped up to collect a perfect arch of coins<br>and bounced off the very first one as we<br>collected it and fell back to the ground.<br>Not very elegant.<br>This code will give us the ability to detect<br>the contact between our player game object<br>and our PickUp game objects<br>without actually creating a physical collision.<br>The code example however is not exactly<br>what we’re looking for.<br>But that’s okay, we can change that.<br>First, let’s copy the code,<br>and then let’s return to our scripting application.<br>Now that we’re back in scripting let’s paste the code.<br>As we have copied this code from a webpage<br>let’s correct the indents.<br>In this case I’m going to make sure the<br>indents are tabs and that all of the tabs are<br>correctly aligned.<br>Next, let’s look at this code.<br>We are using the function OnTriggerEnter.<br>OnTriggerEnter will be called by Unity<br>when our player game object first touches<br>a trigger collider.<br>We are given as an argument<br>a reference to the trigger collider that we have touched.<br>This is the collider called Other.<br>This reference gives us a way to get a<br>hold of the colliders that we touch.<br>With this code, when we touch another trigger<br>collider we will destroy the game object<br>that the trigger collider is attached to<br>through the reference other.gameObject.<br>By destroying that game object, the game object,<br>all of it’s components and all of it’s<br>children and their components are removed<br>from the scene.<br>For the sake of example in this assignment<br>we won’t destroy the other game object<br>we will deactivate it.<br>Just like we deactivated the player object<br>when we were creating our PickUp objects.<br>First, let’s remove the Destroy(other.gameobject)<br>code from the function.<br>But let’s paste it down below our script<br>as a palette to work with.<br>How will we deactivate our PickUp objects?<br>Well what clues do we have?<br>We can address the other collider’s game<br>object through other.gameObject.<br>We can see this here in the sample code.<br>And we want to test the other game object<br>and if it’s a PickUp object we want to deactivate<br>that game object.<br>So let’s look up GameObject<br>with our hot key combination and see what we can find.<br>Now we have the page on GameObject.<br>There are two important items here that we want.<br>They are tag,<br>tag allows us to identify the game object<br>by comparing the tag value to a string.<br>And SetActive.<br>This is how we activate or deactivate a game object through code.<br>The last item we need to know about is<br>Compare Tag.<br>Compare Tag allows us to efficiently<br>compare the tag of any game object to a sting value.<br>Let’s open up these three items, each in their own tab.<br>Tag allows us to identify a game object by a tag value.<br>We must declare our tags in the Tags and Layers Panel before using them.<br>It is possible to test a tag against a string value directly<br>with code like<br>if gameObject.tag is the same as some string value.<br>But there is a more efficient built-in way to do this,<br>and that is CompareTag<br>With CompareTag we can efficiently<br>compare the tag of any game object with a string value.<br>Let’s copy the sample code and<br>paste it in to our working palette.<br>Now GameObject.SetActive.<br>This is how we activate or deactivate a game object.<br>This is the code equivalent of clicking<br>the Active check box next to the<br>Name field in the Inspector.<br>In our case, just like the code snippet,<br>we will call GameObject.SetActive (false)<br>to deactivate our PickUp game objects.<br>Let’s copy this code and returning to our script editor<br>paste it in to our palette as well.<br>I feel we have enough pieces to write our code<br>so let’s write if (other.gameObject.CompareTag<br>with the string value of PickUp<br>and we will have to define this tag in Unity later.<br>other.gameObject.SetActive (false);<br>Now this code will be called every time<br>we touch a trigger collider.<br>We are given a reference to the collider we touch,<br>we test it’s tag,<br>and if the tag is the same as the string value<br>PickUp we will take the other game object<br>and we will call SetActive (false),<br>which will deactivate that game object.<br>Now we don’t need this code we’ve been saving anymore<br>and keeping it will only confuse the compiler<br>so we can delete it.<br>Let’s save this script and return to Unity<br>and check for errors.<br>The first thing we need to do it set up the tag value<br>for the PickUp objects.<br>Select the prefab asset for the PickUp object.<br>When we look at the tag list<br>we don’t see any tag called PickUp<br>so we need to add one.<br>Select Add Tag.<br>This brings up the Tags and Layers Panel.<br>Here we can customise tags and layers.<br>Note that this list is empty.<br>To create a new custom tag select the + button<br>to add a new row to the tags list.<br>In the new empty element, in our case tag 0,<br>type PickUp, and this is case sensitive<br>and needs to be exactly the same string<br>that we have in our script.<br>If in doubt we can copy and paste<br>this string to get the exact value.<br>When we look back at the prefab asset<br>note that the asset is still untagged.<br>By selecting Add Tag we changed our focus<br>from the prefab asset to the Tag Manager<br>and in the Tag Manager we created our tag.<br>Now we need to apply that tag<br>to the prefab asset.<br>Select the Tag drop down again<br>and see how we now have PickUp in the list.<br>Select this tag from the list and the asset<br>is now tagged PickUp.<br>And with the power of prefabs<br>all of the instances are now tagged PickUp as well.<br>Now let’s test our game.<br>Save the scene and enter play mode.<br>Hmm, okay, our tag is set to PickUp<br>but we are still bouncing off the PickUp cubes<br>just like we are bouncing off the walls.<br>So let’s exit play mode.<br>Before we discuss why we are bouncing off<br>the PickUp cubes rather than picking them up<br>we need to have a brief discussion about<br>Unity’s physics system.<br>I’m going to enter play mode for this discussion.<br>Let’s look at one of our cubes and our player.<br>As an aside we can select two or<br>more game objects at the same time<br>and inspect them all.<br>We do this by holding down the command key<br>on the mac or the control key on the PC,<br>and selecting the game objects.<br>When we select multiple game objects<br>note how the inspector changes to show<br>the common components and property<br>values of the selected game objects.<br>The inspector also allows for multi-object editing.<br>Using multi-object editing I’m going to<br>disable the mesh renderer on both the<br>player’s sphere and the selected cube with a single click.<br>This leaves us with the two green outlines<br>of the collider volumes for these two objects.<br>How do collisions work in Unity’s physics engine?<br>The physics engine does not allow two collider<br>volumes to overlap.<br>When the physics engine detects that any two<br>or more colliders will overlap that frame<br>the physics engine will look at the objects and<br>analyse their speed and rotation and shape<br>and calculate a collision.<br>One of the major factors in this calculation<br>is whether the colliders are static<br>or dynamic.<br>Static colliders are usually non-moving<br>parts of your scene, like the walls, the floor,<br>or the fountain in the courtyard.<br>Dynamic colliders are things that move<br>like the player’s sphere or a car.<br>When calculating a collision the static geometry<br>will not be affected by the collision.<br>But the dynamic objects will be.<br>In our case the player’s sphere is dynamic,<br>or moving geometry, and it is bouncing<br>off the static geometry of the cubes.<br>Just as it bounces off the static geometry<br>of the walls.<br>The physics engine can however allow the<br>penetration or overlap of collider volumes.<br>When it does this the physics engine<br>still calculates the collider volumes and<br>keeps track of the collider overlap.<br>But it doesn’t physically act on the overlapping<br>objects, it doesn’t cause a collision.<br>We do this by making our colliders in to<br>triggers, or trigger colliders.<br>When we make our colliders in to a trigger,<br>or trigger collider, we can detect<br>the contact with that trigger through the<br>OnTrigger event messages.<br>When a collider is a trigger you can do<br>clever things like place a trigger in the middle<br>of a doorway in, say, an adventure game,<br>and when the player enters the trigger<br>the mini-map updates and a message plays<br>‘you have discovered this room’.<br>Or every time your player walks around<br>that corner spiders drop from the ceiling<br>because the player has walked through a trigger.<br>For more information on OnCollision and on<br>trigger messages see the lessons linked below.<br>We are using OnTriggerEnter in our code<br>rather than OnCollisionEnter.<br>So we need to change our collider volumes<br>in to trigger volumes.<br>To do this we must be out of play mode.<br>Let’s select the prefab asset and look at<br>the box collider component.<br>Here we select Is Trigger<br>and again the power of prefabs<br>all of our PickUp objects are now using trigger colliders.<br>Let’s save our scene, enter play mode and test.<br>And as our player enters the trigger<br>we pickup the objects.<br>Excellent.<br>Let’s exit play mode.<br>Everything looks great.<br>We only have one issue.<br>We have made one small mistake,<br>and this is related to how Unity<br>optimises it’s physics.<br>As a performance optimisation Unity<br>calculates all the volumes<br>of all the static colliders in a scene<br>and holds this information in a cache.<br>This makes sense as static colliders<br>shouldn’t move, and this saves recalculating this<br>information every frame.<br>Where we have made our mistake is by rotating our cubes.<br>Any time we move, rotate, or scale a static collider<br>Unity will recalculate all the static colliders again<br>and update the static collider cache.<br>To recalculate the cache takes resources.<br>We can move, rotate or scale dynamic<br>colliders as often as we want and Unity won’t<br>recache any collider volumes.<br>Unity expects us to move colliders.<br>We simply need to indicate to Unity which<br>colliders are dynamic before we move them.<br>We do this by using the rigid body component.<br>Any game object with a collider<br>and a rigid body is considered dynamic.<br>Any game object with a collider attached<br>but no physics rigid body is expected to be static.<br>Currently our PickUp game objects have a<br>box collider but no rigid body.<br>So Unity is recalculating our static<br>collider cache every frame.<br>The solution is to add a rigid body<br>to the PickUp objects.<br>This will move the cubes from being static colliders<br>to being dynamic colliders.<br>Let’s save and play.<br>And our cubes fall through the floor.<br>Gravity pulls them down, and as they are triggers<br>they don’t collide with the floor.<br>Let’s exit play mode.<br>If we look at the rigid body component<br>we could simply disable Use Gravity,<br>which would prevent the cubes from being pulled downwards.<br>This is only a partial solution however.<br>If we did this, even though our cubes<br>would not respond to gravity they would still<br>respond to physics forces<br>There is a better solution.<br>And that is to select Is Kinematic.<br>When we do this we set this rigid body component to be<br>a kinematic rigid body.<br>A kinematic rigid body will not react<br>to physics forces and it can be animated<br>and moved by it’s transform.<br>This is great for everything from objects with colliders<br>like elevators and moving platforms,<br>to objects with triggers, like our collectables<br>that need to be animated or moved by their transform.<br>For more information on the rigid body<br>and Is Kinematic see the lessons linked below.<br>Let’s save our scene and enter play mode to test.<br>Now our behaviour is identical and performant.<br>So, static colliders shouldn’t move,<br>like walls and floors.<br>Dynamic colliders can move,<br>and have a rigid body attached.<br>Standard rigid bodies are moved using physics forces.<br>Kinematic rigid bodies are moved using<br>their transform.</p>
+<p>In the next assignment we will count our collectable object and make a simple UI to display our score and messages.</p>
+<h3 id="Displaying-the-Score-and-Text"><a href="#Displaying-the-Score-and-Text" class="headerlink" title="Displaying the Score and Text"></a><a href="https://unity3d.com/learn/tutorials/projects/roll-ball-tutorial/displaying-score-and-text?playlist=17141" target="_blank" rel="external">Displaying the Score and Text</a></h3><h3 id="Build-the-Game"><a href="#Build-the-Game" class="headerlink" title="Build the Game"></a><a href="https://unity3d.com/learn/tutorials/projects/roll-ball-tutorial/building-game?playlist=17141" target="_blank" rel="external">Build the Game</a></h3>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://tospan.me/2017/01/31/Unity/Tutorials-Roll-a-Ball/" data-id="cizhorepz007f1gvwmknkhw7d" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Patterns/">Patterns</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Unity/">Unity</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/02/01/Unity/Tutorials-Space-Shooter-Tutorial/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Unity教程:Space Shooter
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/01/01/Restart/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Restart</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Algorithms/">Algorithms</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Game-Development/">Game Development</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Game-Programming-Patterns/">Game Programming Patterns</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Unity/">Unity</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Unity-Tutorials/">Unity Tutorials</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/default/">default</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Algorithms/">Algorithms</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Basics/">Basics</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C#</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Data-Structure/">Data Structure</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Games/">Games</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Geometry/">Geometry</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linear-Algebra/">Linear Algebra</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Math/">Math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mathematics/">Mathematics</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Numerical-Analysis/">Numerical Analysis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Patterns/">Patterns</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scripting/">Scripting</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Unity/">Unity</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/default/">default</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Algorithms/" style="font-size: 17.5px;">Algorithms</a> <a href="/tags/Basics/" style="font-size: 12.5px;">Basics</a> <a href="/tags/C/" style="font-size: 12.5px;">C#</a> <a href="/tags/Data-Structure/" style="font-size: 16.25px;">Data Structure</a> <a href="/tags/Games/" style="font-size: 10px;">Games</a> <a href="/tags/Geometry/" style="font-size: 11.25px;">Geometry</a> <a href="/tags/Linear-Algebra/" style="font-size: 13.75px;">Linear Algebra</a> <a href="/tags/Math/" style="font-size: 12.5px;">Math</a> <a href="/tags/Mathematics/" style="font-size: 12.5px;">Mathematics</a> <a href="/tags/Numerical-Analysis/" style="font-size: 10px;">Numerical Analysis</a> <a href="/tags/Patterns/" style="font-size: 15px;">Patterns</a> <a href="/tags/Scripting/" style="font-size: 18.75px;">Scripting</a> <a href="/tags/Unity/" style="font-size: 20px;">Unity</a> <a href="/tags/default/" style="font-size: 11.25px;">default</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">May 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">April 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/03/">March 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/02/">February 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">January 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/12/">December 2012</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/02/23/Unity-Multiplayer-And-Networking/">Unity Multiplayer And Networking</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/23/Unity-Physics/">Unity Physics</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/10/Game-Development/">游戏开发</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/08/Unity/Scripting-Quick-Benchmark/">Unity 简单基准测试</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/07/Unity/Patterns-FSM/">游戏编程设计模式:有限状态机(FSM)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 To Span<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>

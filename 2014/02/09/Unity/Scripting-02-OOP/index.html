@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <title>C# 面向对象编程 | 吐司片的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="关于封装，继承，多态
+什么是封装？什么不是？为什么要封装？怎么做？什么是继承？什么不是？为什么要继承？怎么做？什么是多态？什么不是？为什么要多态？怎么做？
+…… 什么是接口？">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C# 面向对象编程">
+<meta property="og:url" content="http://tospan.me/2014/02/09/Unity/Scripting-02-OOP/index.html">
+<meta property="og:site_name" content="吐司片的博客">
+<meta property="og:description" content="关于封装，继承，多态
+什么是封装？什么不是？为什么要封装？怎么做？什么是继承？什么不是？为什么要继承？怎么做？什么是多态？什么不是？为什么要多态？怎么做？
+…… 什么是接口？">
+<meta property="og:updated_time" content="2017-02-10T05:48:23.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C# 面向对象编程">
+<meta name="twitter:description" content="关于封装，继承，多态
+什么是封装？什么不是？为什么要封装？怎么做？什么是继承？什么不是？为什么要继承？怎么做？什么是多态？什么不是？为什么要多态？怎么做？
+…… 什么是接口？">
+  
+    <link rel="alternate" href="/atom.xml" title="吐司片的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+</head>
+
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">吐司片的博客</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Work hard, play hard.</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://tospan.me"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Unity/Scripting-02-OOP" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/02/09/Unity/Scripting-02-OOP/" class="article-date">
+  <time datetime="2014-02-09T05:48:23.000Z" itemprop="datePublished">2014-02-09</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Unity/">Unity</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      C# 面向对象编程
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>关于封装，继承，多态</p>
+<p>什么是封装？什么不是？为什么要封装？怎么做？<br>什么是继承？什么不是？为什么要继承？怎么做？<br>什么是多态？什么不是？为什么要多态？怎么做？</p>
+<p>…… 什么是接口？</p>
+<a id="more"></a>
+<p>virtual<br>override<br>overload<br>抽象函数，虚函数，抽象类……<br>final<br>sealed</p>
+<p>这些都是什么？</p>
+<p>也许你不了解OOP思想……<br>也许你对OOP思想一知半解，尤其对特定语言的一些关键词很困惑，不知道它们之间的相互关系，为什么存在？<br>也许你已经掌握了OOP思想和关键词，但无法准确地将它们与现实世界相联系并运用到编程中去……</p>
+<p>人们提出概念往往是为了解决问题，如果不清楚这些概念创造的情景，那么可以推想，也许再次遇到这样的问题，我们也无法运用这些概念。</p>
+<h2 id="OOP思想"><a href="#OOP思想" class="headerlink" title="OOP思想"></a>OOP思想</h2><p>Normally every interviewer ask for a real world scenario explaining OOP and many of them fail to answer. This is the reason I am writing this article. This article is mainly intended for the audience who are knowing the Object Oriented Programming (OOP) concept theoretically but are unable to link with real world &amp; programming world.</p>
+<p>Object Oriented Programming</p>
+<p>We write programs to solve our problem and get our work done.</p>
+<p>Object Oriented Programming is basically considered as design methodology for creating a non-rigid application. In OOPS every logic is written to get our work done, but this is done based on entity which we call it as Objects. OOP allow us to decompose our problem in to small unit of work which are accessed via Objects. We build function around this objects. There are mainly four pillars (features) of OOP.</p>
+<p>If all this features fulfill our programming, then we can say it as perfect Object Oriented Programming.</p>
+<ul>
+<li>抽象(Abstraction)</li>
+<li>封装(Encapsulation)</li>
+<li>继承(Inheritance)</li>
+<li>多态(Polymorphism)</li>
+</ul>
+<p>Let’s consider an example for explaining each pillar, which at the end will make you understand &amp; follow Object Oriented Programming. Before that, we need to know something</p>
+<p>When we take a mobile as an object, its basic functionality for which it was invented were Calling &amp; Receiving a call &amp; Messaging. But now a days thousands of new features &amp; models were added &amp; the count is still increasing.</p>
+<p>mobile</p>
+<p>Mobile Brand</p>
+<p>In above diagram, each brand (Samsung, Nokia, IPhone) have their own list of features along with basic functionality of dialing, receiving a call &amp; messaging. </p>
+<p>When we talk about OOP, as the word indicate it will talk about an object (a real world object)</p>
+<p>Objects</p>
+<p>Any real world entity which can have some characteristics or which can perform some work is called as Object. This object is also called as an instance i.e. - a copy of entity in programming language. If we consider the above example, a mobile manufacturing company, at a time manufactures lacs of pieces of each model which are actually an instance. This objects are differentiated from each other via some identity or its characteristics. This characteristics is given some unique name.<br>Mobile mbl1 = new Mobile ();<br>Mobile mbl2 = new Mobile ();<br>Class</p>
+<p>A Class is a plan which describes the object. We call it as a blue print of how the object should be represented. Mainly a class would consist of a name, attributes &amp; operations. Considering the above example, A Mobile can be a class which has some attributes like Profile Type, IMEI Number, Processor, and some more.) &amp; operations like Dial, Receive &amp; SendMessage.</p>
+<p>There are some OOPS principle that need to be looked in while creating any of the class. This principle is called as SOLID where each letter has some specification. I won’t be going into this points deeper. A single line of each explanation may clear you with some points.</p>
+<p>SRP (The Single Responsibility Principle)<br>A class should have one, and only one responsibility</p>
+<p>OCP (The Open Closed Principle)<br>You should be able to extend a classes behavior, without modifying it. (Inheritance) </p>
+<p>LSP (The Liskov Substitution Principle)<br>Derived classes must be substitutable for their base classes. (Polymorphism)</p>
+<p>ISP (The Interface Segregation Principle)<br>Make fine chopped interface instead of huge interface as client cannot be forced to implement an interface which they don’t use. </p>
+<p>DIP (The Dependency Inversion Principle)<br>Depend on abstractions, not on concretions. (Abstraction)</p>
+<p>Now this class is represented as shown below</p>
+<p>class  </p>
+<p>public class Mobile<br>{<br>     private string IEMICode { get; set; }<br>     public string SIMCard { get; set; }<br>     public string Processor { get; }<br>     public int InternalMemory { get; }<br>     public bool IsSingleSIM { get; set; }  </p>
+<pre><code>public void GetIEMICode()  
+{  
+    Console.WriteLine(&quot;IEMI Code - IEDF34343435235&quot;);  
+}  
+
+public void Dial()  
+{  
+    Console.WriteLine(&quot;Dial a number&quot;);  
+}  
+public void Receive()  
+{  
+    Console.WriteLine(&quot;Receive a call&quot;);  
+}  
+public virtual void SendMessage()  
+{  
+    Console.WriteLine(&quot;Message Sent&quot;);  
+}  
+</code></pre><p> }<br>Abstraction</p>
+<p>Abstraction says, only show relevant details and rest all hide it. This is most important pillar in OOPS as it is providing us the technique to hide irrelevant details from User. If we consider an example of any mobile like Nokia, Samsung, IPhone. </p>
+<p>Some features of mobiles</p>
+<p>Dialing a number call some method internally which concatenate the numbers and displays it on screen but what is it doing we don’t know.</p>
+<p>Clicking on green button actual send signals to calling person’s mobile but we are unaware of how it is doing.<br>This is called abstraction where creating method which is taking some parameter &amp; returning some result after some logic execution without understating what is written within the method</p>
+<p>public void Dial()<br>{<br>    //Write the logic<br>    Console.WriteLine(“Dial a number”);<br>}<br>Encapsulation</p>
+<p>Encapsulation</p>
+<p>Encapsulation is defined as the process of enclosing one or more details from outside world through access right. It says how much access should be given to particular details. Both Abstraction &amp; Encapsulation works hand in hand because Abstraction says what details to be made visible &amp; Encapsulation provides the level of access right to that visible details. i.e. – It implements the desired level of abstraction.</p>
+<p>Talking about Bluetooth which we usually have it in our mobile. When we switch on the Bluetooth I am able to connect another mobile but not able to access the other mobile features like dialing a number, accessing inbox etc. This is because, Bluetooth feature is given some level of abstraction. </p>
+<p>Another point is when mobile A is connected with mobile B via Bluetooth whereas mobile B is already connected to mobile C then A is not allowed to connect C via B. This is because of accessibility restriction.<br>This is handled by access specifier like public, private, protected, and internal<br>private string IMEICode = “76567556757656”;  </p>
+<p>Polymorphism</p>
+<p>Polymorphism can be defined as the ability of doing the same operation but with different type of input.</p>
+<p>More precisely we say it as ‘many forms of single entity’. This play a vital role in the concept of OOPS.</p>
+<p>Let’s say Samsung mobile have the 5MP camera available i.e. – it is having a functionality of CameraClick(). Now same mobile is having Panorama mode available in camera, so functionality would be same but with mode. This type is said to be Static polymorphism or Compile time polymorphism. See the example below:</p>
+<p>public class Samsumg : Mobile<br>{<br>    public void GetWIFIConnection()<br>    {<br>        Console.WriteLine(“WIFI connected”);<br>    }  </p>
+<pre><code>//This is one mwthod which shows camera functionality  
+public void CameraClick()  
+{  
+    Console.WriteLine(&quot;Camera clicked&quot;);  
+}  
+
+//This is one overloaded method which shows camera functionality as well but with its camera&apos;s different mode(panaroma)  
+public void CameraClick(string CameraMode)  
+{  
+    Console.WriteLine(&quot;Camera clicked in &quot; + CameraMode + &quot; Mode&quot;);  
+}  
+</code></pre><p>}<br>Compile time polymorphism the compiler knows which overloaded method it is going to call.</p>
+<p>Compiler checks the type and number of parameters passed to the method and decides which method to call and it will give an error if there are no methods that matches the method signature of the method that is called at compile time.</p>
+<p>Another point where in SendMessage was intended to send message to single person at a time but suppose Nokia had given provision for sending message to a group at once. i.e. - Overriding the functionality to send message to a group. This type is called Dynamic polymorphism or Runtime polymorphism.</p>
+<p>For overriding you need to set the method, which can be overridden to virtual &amp; its new implementation should be decorated with override keyword.</p>
+<p>public class Nokia : Mobile<br>{<br>     public void GetBlueToothConnection()<br>     {<br>         Console.WriteLine(“Bluetooth connected”);<br>     }  </p>
+<pre><code>//New implementation for this method which was available in Mobile Class  
+//This is runtime polymorphism  
+public override void SendMessage()  
+{  
+    Console.WriteLine(&quot;Message Sent to a group&quot;);  
+}  
+</code></pre><p>}<br>By runtime polymorphism, we can point to any derived class from the object of the base class at runtime that shows the ability of runtime binding.</p>
+<p>Inheritance</p>
+<p>Inheritance</p>
+<p>Ability to extend the functionality from base entity in new entity belonging to same group. This will help us to reuse the functionality which is defined before. </p>
+<p>Considering the example, the above figure 1.1 itself shows what is inheritance. Basic Mobile functionality is to Send Message, dial &amp; receive call. So the brands of mobile is using this basic functionality by extending the mobile class functionality and adding their own new features to their respective brand.</p>
+<p>There are mainly 4 types of inheritance:<br>Single level inheritance<br>Multi-level inheritance<br>Hierarchical inheritance<br>Hybrid inheritance<br>Multiple inheritance<br>Single level inheritance </p>
+<p>In Single level inheritance, there is single base class &amp; a single derived class i.e. - A base mobile features is extended by Samsung brand.</p>
+<p>Single level inheritance</p>
+<p>Multilevel inheritance</p>
+<p>In Multilevel inheritance, there is more than one single level of derivation. i.e. - After base features are extended by Samsung brand. Now Samsung brand has manufactured its new model with new added features or advanced OS like Android OS, v4.4.2 (kitkat). From generalization, getting into more specification.</p>
+<p>Multilevel inheritance</p>
+<p>Hierarchal inheritance</p>
+<p>In this type of inheritance, multiple derived class would be extended from base class, it’s similar to single level inheritance but this time along with Samsung, Nokia is also taking part in inheritance.</p>
+<p>Hierarchal inheritance</p>
+<p>Hybrid inheritance</p>
+<p>Single, Multilevel, &amp; hierarchal inheritance all together construct a hybrid inheritance.</p>
+<p>Hybrid inheritance<br>public class Mobile<br>{<br>       //Properties<br>       //Methods<br>}  </p>
+<p>public class Samsumg : Mobile<br>{<br>       //Properties<br>       //Methods<br>}  </p>
+<p>public class Nokia : Mobile<br>{<br>    //Properties<br>   //Methods<br>}  </p>
+<p>Interface</p>
+<p>Multiple inheritance where derived class will extend from multiple base classes.</p>
+<p>Samsung will use the function of multiple Phone (Mobile &amp; Telephone). This would create a confusion for complier to understand which function to be called when any event in mobile is triggered like Dial () where Dial is available in both the Phone i.e. - (Mobile &amp; Telephone). To avoid this confusion C# came with the concept of interface which is different from multiple inheritance actually.</p>
+<p>If we take an interface it is similar to a class but without implementation &amp; only declaration of properties, methods, delegates &amp; events. Interface actually enforces the class to have a standard contract to provide all implementation to the interface members. Then what’s is the use of interface when they do not have any implementation? Answer is, they are helpful for having readymade contracts, only we need to implement functionality over this contract. </p>
+<p>I mean to say, Dial would remain Dial in case of Mobile or Telephone. It won’t be fair if we give different name when its task is to Call the person.</p>
+<p>Interface is defined with the keyword ‘interface’ .All properties &amp; methods with in the interface should be implemented if it is been used. That’s the rule of interface.</p>
+<p>Interface<br>interface IMobile<br>{<br>   Void Dial();<br>}  </p>
+<p>interface ITelephone<br>{<br>   void Dial();  </p>
+<p>}  </p>
+<p>public class Mobile : IMobile, ITelephone  </p>
+<p>{<br>    public void Dial()<br>    {<br>            Console.WriteLine(“Dial a number”);<br>    }<br>}  </p>
+<p>Conclusion</p>
+<p>Following the above principle &amp; keeping in mind the four pillars would lead you develop a good program &amp; linking it with real world scenario will make you think more deeply. I hope you like this article. Don’t forget to share your comment whether it’s good or bad. Sharing is valuable no matter what.</p>
+<h2 id="常见的问题"><a href="#常见的问题" class="headerlink" title="常见的问题"></a>常见的问题</h2><h3 id="抽象类和非抽象类的区别？"><a href="#抽象类和非抽象类的区别？" class="headerlink" title="抽象类和非抽象类的区别？"></a>抽象类和非抽象类的区别？</h3><h3 id="虚方法和抽象方法的区别？"><a href="#虚方法和抽象方法的区别？" class="headerlink" title="虚方法和抽象方法的区别？"></a>虚方法和抽象方法的区别？</h3><h3 id="抽象类和接口的区别？"><a href="#抽象类和接口的区别？" class="headerlink" title="抽象类和接口的区别？"></a>抽象类和接口的区别？</h3><h3 id="C-中的sealed与Java中的final的区别？"><a href="#C-中的sealed与Java中的final的区别？" class="headerlink" title="C#中的sealed与Java中的final的区别？"></a>C#中的sealed与Java中的final的区别？</h3><h3 id="静态类与单例的区别？"><a href="#静态类与单例的区别？" class="headerlink" title="静态类与单例的区别？"></a>静态类与单例的区别？</h3>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://tospan.me/2014/02/09/Unity/Scripting-02-OOP/" data-id="cizhorenu003w1gvw2ei16k8h" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Scripting/">Scripting</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2014/02/10/Unity/Scripting-03-Game-Object-Life-Cycle/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Unity游戏对象的生命周期
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2014/02/08/Unity/Scripting-01-Memory-Management/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Unity内存管理</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Algorithms/">Algorithms</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Game-Development/">Game Development</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Game-Programming-Patterns/">Game Programming Patterns</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Unity/">Unity</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Unity-Tutorials/">Unity Tutorials</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/default/">default</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Algorithms/">Algorithms</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Basics/">Basics</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C#</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Data-Structure/">Data Structure</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Games/">Games</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Geometry/">Geometry</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linear-Algebra/">Linear Algebra</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Math/">Math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mathematics/">Mathematics</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Numerical-Analysis/">Numerical Analysis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Patterns/">Patterns</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scripting/">Scripting</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Unity/">Unity</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/default/">default</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Algorithms/" style="font-size: 17.5px;">Algorithms</a> <a href="/tags/Basics/" style="font-size: 12.5px;">Basics</a> <a href="/tags/C/" style="font-size: 12.5px;">C#</a> <a href="/tags/Data-Structure/" style="font-size: 16.25px;">Data Structure</a> <a href="/tags/Games/" style="font-size: 10px;">Games</a> <a href="/tags/Geometry/" style="font-size: 11.25px;">Geometry</a> <a href="/tags/Linear-Algebra/" style="font-size: 13.75px;">Linear Algebra</a> <a href="/tags/Math/" style="font-size: 12.5px;">Math</a> <a href="/tags/Mathematics/" style="font-size: 12.5px;">Mathematics</a> <a href="/tags/Numerical-Analysis/" style="font-size: 10px;">Numerical Analysis</a> <a href="/tags/Patterns/" style="font-size: 15px;">Patterns</a> <a href="/tags/Scripting/" style="font-size: 18.75px;">Scripting</a> <a href="/tags/Unity/" style="font-size: 20px;">Unity</a> <a href="/tags/default/" style="font-size: 11.25px;">default</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">May 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">April 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/03/">March 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/02/">February 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">January 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/12/">December 2012</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/02/23/Unity-Multiplayer-And-Networking/">Unity Multiplayer And Networking</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/23/Unity-Physics/">Unity Physics</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/10/Game-Development/">游戏开发</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/08/Unity/Scripting-Quick-Benchmark/">Unity 简单基准测试</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/07/Unity/Patterns-FSM/">游戏编程设计模式:有限状态机(FSM)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 To Span<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>

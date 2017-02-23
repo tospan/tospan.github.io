@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <title>Unity教程:2D UFO | 吐司片的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="通过创建一个简单的2D UFO游戏来告诉读者使用Unity以及创建2D游戏的一些基本原则，如果你是第一次使用Unity开发，创建这样一个游戏会告诉你很多关于GameObject, Component，Prefab，Physics和Scripting等各个方面的使用原则。
+学习该教程，首先需要从Asset Store下载 资源
+如果你有任何疑问，请到对应的论坛上发帖">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Unity教程:2D UFO">
+<meta property="og:url" content="http://tospan.me/2017/02/02/Unity/Tutorials-2D-UFO-Tutorial/index.html">
+<meta property="og:site_name" content="吐司片的博客">
+<meta property="og:description" content="通过创建一个简单的2D UFO游戏来告诉读者使用Unity以及创建2D游戏的一些基本原则，如果你是第一次使用Unity开发，创建这样一个游戏会告诉你很多关于GameObject, Component，Prefab，Physics和Scripting等各个方面的使用原则。
+学习该教程，首先需要从Asset Store下载 资源
+如果你有任何疑问，请到对应的论坛上发帖">
+<meta property="og:image" content="http://tospan.me/_assets/images/2d_ufo_game_01.png">
+<meta property="og:updated_time" content="2017-02-05T07:29:58.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Unity教程:2D UFO">
+<meta name="twitter:description" content="通过创建一个简单的2D UFO游戏来告诉读者使用Unity以及创建2D游戏的一些基本原则，如果你是第一次使用Unity开发，创建这样一个游戏会告诉你很多关于GameObject, Component，Prefab，Physics和Scripting等各个方面的使用原则。
+学习该教程，首先需要从Asset Store下载 资源
+如果你有任何疑问，请到对应的论坛上发帖">
+<meta name="twitter:image" content="http://tospan.me/_assets/images/2d_ufo_game_01.png">
+  
+    <link rel="alternate" href="/atom.xml" title="吐司片的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+</head>
+
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">吐司片的博客</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Work hard, play hard.</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://tospan.me"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Unity/Tutorials-2D-UFO-Tutorial" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/02/02/Unity/Tutorials-2D-UFO-Tutorial/" class="article-date">
+  <time datetime="2017-02-02T07:29:58.000Z" itemprop="datePublished">2017-02-02</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Unity-Tutorials/">Unity Tutorials</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Unity教程:2D UFO
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>通过创建一个简单的2D UFO游戏来告诉读者使用Unity以及创建2D游戏的一些基本原则，如果你是第一次使用Unity开发，创建这样一个游戏会告诉你很多关于<code>GameObject</code>, <code>Component</code>，<code>Prefab</code>，<code>Physics</code>和<code>Scripting</code>等各个方面的使用原则。</p>
+<p>学习该教程，首先需要从<code>Asset Store</code>下载 <a href="https://www.assetstore.unity3d.com/en/content/52143?_ga=1.218910416.838993178.1480250241" target="_blank" rel="external">资源</a></p>
+<p>如果你有任何疑问，请到<a href="http://forum.unity3d.com/threads/2d-ufo-tutorial-q-a.381263/?_ga=1.183824111.838993178.1480250241" target="_blank" rel="external">对应的论坛</a>上发帖</p>
+<a id="more"></a>
+<h2 id="Introduction-amp-Setup"><a href="#Introduction-amp-Setup" class="headerlink" title="Introduction &amp; Setup"></a>Introduction &amp; Setup</h2><h3 id="1-Introduction-to-2D-UFO-Project"><a href="#1-Introduction-to-2D-UFO-Project" class="headerlink" title="1. Introduction to 2D UFO Project"></a><a href="https://unity3d.com/learn/tutorials/projects/2d-ufo-tutorial/introduction-2d-ufo-project?playlist=25844" target="_blank" rel="external">1. Introduction to 2D UFO Project</a></h3><h3 id="2-Setting-Up-The-Play-Field"><a href="#2-Setting-Up-The-Play-Field" class="headerlink" title="2. Setting Up The Play Field"></a><a href="https://unity3d.com/learn/tutorials/projects/2d-ufo-tutorial/setting-play-field?playlist=25844" target="_blank" rel="external">2. Setting Up The Play Field</a></h3><p>由于2D游戏是在一个面上的，所以我们需要分层来确保先后顺序，也就是通过Sort Layer值来设置，索引越小，越靠后。</p>
+<h2 id="Movement-Basics"><a href="#Movement-Basics" class="headerlink" title="Movement Basics"></a>Movement Basics</h2><h3 id="1-Controlling-the-Player"><a href="#1-Controlling-the-Player" class="headerlink" title="1. Controlling the Player"></a><a href="https://unity3d.com/learn/tutorials/projects/2d-ufo-tutorial/controlling-player?playlist=25844" target="_blank" rel="external">1. Controlling the Player</a></h3><h3 id="2-Adding-Collision"><a href="#2-Adding-Collision" class="headerlink" title="2. Adding Collision"></a><a href="https://unity3d.com/learn/tutorials/projects/2d-ufo-tutorial/adding-collision?playlist=25844" target="_blank" rel="external">2. Adding Collision</a></h3><p>其实没有什么好说的，</p>
+<p>再强调一遍，Collider 是物理引擎通过Shape或者Volume用于标识碰撞的。 物理引擎通过场景中的两个或多个Collider来检测碰撞。<br>要想物理引擎能检测到碰撞，至少一个碰撞对象（Colliding GameObject）需要有rigidbody2D组件。</p>
+<p>这里我们使用的是2D物理引擎，所以这个项目中我们将会使用Collider2D 组件。</p>
+<p>另外就是，由于我们的背景仅仅是一张图片，我们需要在上面附件4个BoxCollider2D<br><img src="_assets/images/2d_ufo_game_01.png" alt=""></p>
+<h3 id="3-Following-the-Player-with-the-Camera"><a href="#3-Following-the-Player-with-the-Camera" class="headerlink" title="3. Following the Player with the Camera"></a><a href="https://unity3d.com/learn/tutorials/projects/2d-ufo-tutorial/following-player-camera?playlist=25844" target="_blank" rel="external">3. Following the Player with the Camera</a></h3><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> CameraController : MonoBehaviour &#123;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> GameObject player;</div><div class="line">    <span class="keyword">private</span> Vector3 offset;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Start</span> <span class="params">()</span> </span>&#123;     &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">LateUpdate</span> <span class="params">()</span> </span>&#123;</div><div class="line">        transform.position = player.transform.position + offset;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="Collectable-Objects"><a href="#Collectable-Objects" class="headerlink" title="Collectable Objects"></a>Collectable Objects</h2><h3 id="1-Creating-Collectable-Objects"><a href="#1-Creating-Collectable-Objects" class="headerlink" title="1. Creating Collectable Objects"></a><a href="https://unity3d.com/learn/tutorials/projects/2d-ufo-tutorial/creating-collectable-objects?playlist=25844" target="_blank" rel="external">1. Creating Collectable Objects</a></h3><p>将Pickup Sprite拖拽到场景中，设置它的Sort Layer为<code>Pickup</code>，然后给它添加Circle Collider 2D，调节到适合大小，这不太好看，让它旋转起来吧，由于处于xy面，所以，就是沿着z轴方向旋转就好了。这里我们使用<code>transform.Rotate()</code> 方法来实现。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> Rotator : MonoBehaviour &#123;</div><div class="line"></div><div class="line">    <span class="comment">// Update is called once per frame</span></div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Update</span> <span class="params">()</span> </span>&#123;</div><div class="line">        <span class="comment">// Rotate thet transform of the game object this is attached to by 45 degrees, taking into account the time elapsed since last frame.</span></div><div class="line">        transform.Rotate (<span class="keyword">new</span> Vector3 (<span class="number">0</span>, <span class="number">0</span>, <span class="number">45</span>) * Time.deltaTime);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="2-Picking-Up-Collectables"><a href="#2-Picking-Up-Collectables" class="headerlink" title="2. Picking Up Collectables"></a><a href="https://unity3d.com/learn/tutorials/projects/2d-ufo-tutorial/picking-collectables?playlist=25844" target="_blank" rel="external">2. Picking Up Collectables</a></h3><p>So how do collisions work in Unity’s 2D physics engine? The 2D physics engine does not allow two 2D collider areas to overlap. Remember how the Player was ejected from the middle of the background sprite in our previous lesson. When the 2D physics engine detects that any two or more 2D colliders will overlap that frame the 2D physics engine will look at the objects and analyse their speed, rotation and shape and calculate a collision. One of the major factors in this calculation is whether the 2D colliders are static or dynamic. Static colliders are usually none moving parts of our scene like the walls, the floor, or other parts of the scenery. Dynamic colliders are things that move, like the Player’s UFO, or a car. When calculating a collision the static geometry will not be affected by the collision. But the dynamic objects will be. In our case the Player’s UFO is dynamic, or moving geometry, and it is bouncing off the static geometry of the pickups just as it bounces off the static geometry of the walls. However the 2D physics engine can allow the penetration or overlap of 2D collider areas. When it does this the 2D physics engine still calculates the 2D collider areas and keeps track of the collider overlap but it doesn’t physically act on the overlapping objects. It doesn’t cause a collision. We do this by making our 2D colliders in to triggers, or 2D Trigger Colliders. When we make our colliders in to a trigger we can detect the contact with that 2D trigger through the 2DOnTrigger event messages. When a 2D collider is a trigger we can do clever things like place a trigger in the middle of a doorway in for example an adventure game, and when the player enters the mini map updates and a message plays ‘you have discovered this room’. Or every time our player walks in to an area a sound plays because the player has walked through a trigger. For more information on 2DOnCollision and 2DOnTrigger messages see the lessons linked below. We are using OnTriggerEnter2D in our code rather than OnCollisionEnter2D, so we need to change our collider 2D areas in to trigger areas. Let’s select the prefab asset and look at the circle collider 2D component. I’m going to reactivate the two sprite renderers and highlight the Pickup prefab. In the Circle Collider 2D component we see a property called Is Trigger. Let’s set this to True. Now let’s enter play mode and test.</p>
+<p>Excellent, let’s exit play mode. So far everything looks great.</p>
+<p>But we have one issue. We’ve made a small mistake, which is related to how Unity optimises it’s 2D physics. When using 2D physics all of the static, or non-moving colliders are calculated as a single body. This increases performance. If we move a collider that the engine is not expecting to move the static collider or all our non-moving objects will have to be recalculated. If we do this every frame we risk our game losing performance. Where we’ve made our mistake is by rotating our pickups. We need to indicate to Unity which 2D colliders are dynamic before we move them. We do this by using the rigidbody2D component. Any game object with a 2D collider and a rigidbody2D is considered dynamic. Any game object with a 2D collider but no rigidbody2D is expected to be static. Currently our Pickup game objects have a circle collider but no rigidbody2D. So Unity is recreating the collider’s for the pickups and walls each frame. The solution is to add a rigidbody2D to the Pickup objects. Let’s enter play mode and test. As we can see, our Pickups fall off the screen. Gravity pulls them down and because they are triggers they don’t collide with the walls. If we look at the rigidbody2D component we see that we could simply set Gravity Scale to 0, which would prevent the Pickups from falling downwards. This is only a partial solution however. If we did this even though our Pickups would not respond to gravity they would still respond to physics forces. There’s a better solution. That is to select Is Kinematic. When we do this we set this rigidbody2D component to be a kinematic 2D rigidbody. A kinematic 2D rigidbody will not react to physics forces and can be animated and moved by it’s transform. This is great for everything from objects with colliders like elevators and moving platforms to objects with triggers, like our collectables, that need to be animated or moved by their transform. For more information on the rigidbody2D and Is Kinematic see the lessons linked below. Let’s save our scene and enter play mode to test. Now our behaviour is identical and performant. So static 2D colliders shouldn’t move, like walls and floors, dynamic 2D colliders can move but should have a rigidbody2D attached. Standard 2D rigidbodies like our Player are moved using 2D physics forces. Kinematic 2D rigidbodies are moved using their transform.</p>
+<h3 id="3-Counting-Collectables-and-Displaying-Score"><a href="#3-Counting-Collectables-and-Displaying-Score" class="headerlink" title="3. Counting Collectables and Displaying Score"></a><a href="https://unity3d.com/learn/tutorials/projects/2d-ufo-tutorial/counting-collectables-and-displaying-score?playlist=25844" target="_blank" rel="external">3. Counting Collectables and Displaying Score</a></h3><p>需要注意的就是添加引用：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">using</span> UnityEngine.UI;</div></pre></td></tr></table></figure>
+<h2 id="Creating-a-Playable-Build"><a href="#Creating-a-Playable-Build" class="headerlink" title="Creating a Playable Build"></a>Creating a Playable Build</h2><h3 id="1-Building-our-2D-UFO-Game"><a href="#1-Building-our-2D-UFO-Game" class="headerlink" title="1. Building our 2D UFO Game"></a><a href="https://unity3d.com/learn/tutorials/projects/2d-ufo-tutorial/building-our-2d-ufo-game?playlist=25844" target="_blank" rel="external">1. Building our 2D UFO Game</a></h3>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://tospan.me/2017/02/02/Unity/Tutorials-2D-UFO-Tutorial/" data-id="cizhorep3005e1gvwv87838az" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Patterns/">Patterns</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Unity/">Unity</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/02/03/Unity/Tutorials-Survival-Shooter/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Unity教程:Survival Shooter游戏
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/02/01/Unity/Tutorials-Space-Shooter-Tutorial/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Unity教程:Space Shooter</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Algorithms/">Algorithms</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Game-Development/">Game Development</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Game-Programming-Patterns/">Game Programming Patterns</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Unity/">Unity</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Unity-Tutorials/">Unity Tutorials</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/default/">default</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Algorithms/">Algorithms</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Basics/">Basics</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C#</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Data-Structure/">Data Structure</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Games/">Games</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Geometry/">Geometry</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linear-Algebra/">Linear Algebra</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Math/">Math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mathematics/">Mathematics</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Numerical-Analysis/">Numerical Analysis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Patterns/">Patterns</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scripting/">Scripting</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Unity/">Unity</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/default/">default</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Algorithms/" style="font-size: 17.5px;">Algorithms</a> <a href="/tags/Basics/" style="font-size: 12.5px;">Basics</a> <a href="/tags/C/" style="font-size: 12.5px;">C#</a> <a href="/tags/Data-Structure/" style="font-size: 16.25px;">Data Structure</a> <a href="/tags/Games/" style="font-size: 10px;">Games</a> <a href="/tags/Geometry/" style="font-size: 11.25px;">Geometry</a> <a href="/tags/Linear-Algebra/" style="font-size: 13.75px;">Linear Algebra</a> <a href="/tags/Math/" style="font-size: 12.5px;">Math</a> <a href="/tags/Mathematics/" style="font-size: 12.5px;">Mathematics</a> <a href="/tags/Numerical-Analysis/" style="font-size: 10px;">Numerical Analysis</a> <a href="/tags/Patterns/" style="font-size: 15px;">Patterns</a> <a href="/tags/Scripting/" style="font-size: 18.75px;">Scripting</a> <a href="/tags/Unity/" style="font-size: 20px;">Unity</a> <a href="/tags/default/" style="font-size: 11.25px;">default</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">May 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">April 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/03/">March 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/02/">February 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">January 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/12/">December 2012</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/02/23/Unity-Multiplayer-And-Networking/">Unity Multiplayer And Networking</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/23/Unity-Physics/">Unity Physics</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/10/Game-Development/">游戏开发</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/08/Unity/Scripting-Quick-Benchmark/">Unity 简单基准测试</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/07/Unity/Patterns-FSM/">游戏编程设计模式:有限状态机(FSM)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 To Span<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>

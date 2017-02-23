@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <title>C#算法与数据结构（零）：前期准备 | 吐司片的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="概述：写过几年代码，但没认真学过算法，这个没学过指的是我仅仅知道这两个字，但到底涉及什么，完全就是一个毛线球，因为我对“算法”，“数”，“数学”之类的字眼犯怵，而且我觉得我会的已经够用了，实在不理解，为什么公司招人基本都要考个排序算法。
+年后想换新工作，准备面试的资料，发现自己好像做什么都没有底气。我知道编程世界的生态，所以，Google，复制，粘贴基本解决了我80%的问题，我也就没有花太多的时间">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C#算法与数据结构（零）：前期准备">
+<meta property="og:url" content="http://tospan.me/2016/08/01/Algorithms_Basics/00-Algorithms-Basics/index.html">
+<meta property="og:site_name" content="吐司片的博客">
+<meta property="og:description" content="概述：写过几年代码，但没认真学过算法，这个没学过指的是我仅仅知道这两个字，但到底涉及什么，完全就是一个毛线球，因为我对“算法”，“数”，“数学”之类的字眼犯怵，而且我觉得我会的已经够用了，实在不理解，为什么公司招人基本都要考个排序算法。
+年后想换新工作，准备面试的资料，发现自己好像做什么都没有底气。我知道编程世界的生态，所以，Google，复制，粘贴基本解决了我80%的问题，我也就没有花太多的时间">
+<meta property="og:updated_time" content="2017-02-16T00:32:41.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C#算法与数据结构（零）：前期准备">
+<meta name="twitter:description" content="概述：写过几年代码，但没认真学过算法，这个没学过指的是我仅仅知道这两个字，但到底涉及什么，完全就是一个毛线球，因为我对“算法”，“数”，“数学”之类的字眼犯怵，而且我觉得我会的已经够用了，实在不理解，为什么公司招人基本都要考个排序算法。
+年后想换新工作，准备面试的资料，发现自己好像做什么都没有底气。我知道编程世界的生态，所以，Google，复制，粘贴基本解决了我80%的问题，我也就没有花太多的时间">
+  
+    <link rel="alternate" href="/atom.xml" title="吐司片的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+</head>
+
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">吐司片的博客</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Work hard, play hard.</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://tospan.me"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Algorithms_Basics/00-Algorithms-Basics" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/08/01/Algorithms_Basics/00-Algorithms-Basics/" class="article-date">
+  <time datetime="2016-08-01T00:32:41.000Z" itemprop="datePublished">2016-08-01</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Algorithms/">Algorithms</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      C#算法与数据结构（零）：前期准备
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>概述：</strong>写过几年代码，但没认真学过算法，这个没学过指的是我仅仅知道这两个字，但到底涉及什么，完全就是一个毛线球，因为我对“算法”，“数”，“数学”之类的字眼犯怵，而且我觉得我会的已经够用了，实在不理解，为什么公司招人基本都要考个排序算法。</p>
+<p>年后想换新工作，准备面试的资料，发现自己好像做什么都没有底气。我知道编程世界的生态，所以，Google，复制，粘贴基本解决了我80%的问题，我也就没有花太多的时间去研究某些语言的细节，以及为什么要这样设计。 为了去应付面试，想用套路，管他呢！把网上能搜到的面试题答案背下来，几个基本的算法怎么写背下来，基本就搞定了！</p>
+<p>当我去整理面试题，排序代码的时候，心里发毛……“靠，我一定是学了假的编程语言”，很多东西我都没有听过啊！</p>
+<p>之前和自己说过，以后遇到问题，解决方法是直接踩过去，不是绕过去，况且，我也很好奇，算法这里面到底有什么玩意儿，为啥就绕不开它呢？那就学吧！于是，2017.02.09就开始了算法（基础）的死磕之路，2017.02.20开始整理笔记。</p>
+<a id="more"></a>
+<!-- TOC -->
+<ul>
+<li><a href="#菜谱哦算法">菜谱，哦……算法</a></li>
+<li><a href="#数据巧妇难为无米之炊">数据，巧妇难为无米之炊</a></li>
+<li><a href="#好菜谱与好算法">好菜谱与好算法</a></li>
+<li><a href="#洗衣机与算法的组成结构">洗衣机与算法的组成结构</a></li>
+<li><a href="#数据结构">数据结构</a></li>
+<li><a href="#算法解决什么问题">算法解决什么问题？</a></li>
+<li><a href="#c">C</a><ul>
+<li><a href="#运行环境">运行环境</a></li>
+<li><a href="#效率测试">效率测试</a></li>
+</ul>
+</li>
+<li><a href="#循环处理是算法的基础">循环处理是算法的基础</a></li>
+<li><a href="#基本算法">基本算法</a><ul>
+<li><a href="#交换变量数值">交换变量数值</a></li>
+<li><a href="#求两个数值的最大公约数">求两个数值的最大公约数</a></li>
+<li><a href="#求1n的整数的总和">求1~N的整数的总和</a></li>
+<li><a href="#求斐波那契数列">求斐波那契数列</a></li>
+<li><a href="#求数组数据的总和">求数组数据的总和</a></li>
+<li><a href="#求数组数据的平均数">求数组数据的平均数</a></li>
+<li><a href="#求数组中的最大数">求数组中的最大数</a></li>
+<li><a href="#求数组中的最小数">求数组中的最小数</a></li>
+<li><a href="#为数组元素排序">为数组元素排序</a></li>
+<li><a href="#二维数组简单操作">二维数组简单操作</a></li>
+<li><a href="#对齐单位计算">对齐单位计算</a></li>
+</ul>
+</li>
+<li><a href="#应用算法">应用算法</a><ul>
+<li><a href="#首先要熟悉编程语言本身的特性">首先要熟悉编程语言本身的特性</a></li>
+<li><a href="#问题分析能力">问题分析能力</a></li>
+</ul>
+</li>
+<li><a href="#参考书籍">参考书籍</a></li>
+</ul>
+<!-- /TOC -->
+<p>如果要我说说学后感，那就是一句话，特么这么酷炫的东西，为什么早没有人告诉我！！</p>
+<p>大部分算法与数据结构的书都很枯燥，这也是很多人学不下去的原因吧！在反思自学的过程中，也有了一些心得：</p>
+<p>学一门新的东西开始的时候就把自己当个婴儿，多吃点儿稀的(资料里的干货少点儿)，好消化，一上来就吃压缩饼干，要么是对自己的智商太有信心，要么是抱着再也不吃的心态来的，但国内的教程基本都是压缩饼干，用抽象的东西来解释抽象的东西，估计是对人的抽象能力有些高估了， 以后如果看到一些书，如果里面的干货比较少，就权当喝汤，说不定里面有一两颗虾米，本质上不是写给我看的，没必要去否定人家。</p>
+<p>对自己要学的东西有了个大概的了解之后，就是一个不断补充的过程。但补充过程还会遇到让人头疼的抽象概念，否则学习也太顺利了吧？！比喻和图永远是人类的好朋友，学习时一个好的比喻或一张好图完胜专业的文字和符号。</p>
+<p>再者就是把复杂的事儿说简单了，说得像人话，这简直是个逆天的技能啊！</p>
+<p>这代表你真的思考过了，能对不同背景的人用他们的熟悉的东西表述出来，代表你掌握了本质和善于观察。</p>
+<p>代码为什么要注释？有时一段精彩的代码是违背人的直觉的，过一段时间再回过头来看自己写的代码，也会一脸懵逼，学习笔记也是，当我们好不容易理解了抽象的、违背直觉的知识，都会有种幻觉，我已经理解了，我肯定忘不了了！但根据我的经验，如果你不常用它，过一段时间你还得再理解一遍！也许会加深认识吧，但为什么不在第一次理解的时候就尝试着用自己能理解的语言、比喻、图表示出来呢？</p>
+<p>所以，我也给自己定了一个标准，如果不是为了精炼的表述写东西，我一定努力的写出易懂的文章。姑且就以算法基础开始吧。</p>
+<blockquote>
+<p>该系列文章假设你了解编程基础知识</p>
+</blockquote>
+<h2 id="菜谱，哦……算法"><a href="#菜谱，哦……算法" class="headerlink" title="菜谱，哦……算法"></a>菜谱，哦……算法</h2><p>算法是什么？这肯定是准备学它的人的第一问题。我如果直接抛出“算法是解决某个问题的特定步骤”，估计没有什么下文了。那先忘掉“算法”这个讨厌的词儿吧，自己做过饭没？没做过总听过“菜谱”吧？ 我喜欢土豆牛腩！菜谱会告诉你要准备多少牛腩，土豆，要什么佐料，材料准备好了，就开始烹饪，第一步、第二步……Duang，好了！</p>
+<p>菜谱也没见过……那洗衣机用过吧？！脏衣服扔到洗衣机里，倒点洗衣液，选择快速洗还是浸泡洗，洗完了“嘀~嘀~嘀~”，取出衣服，晾衣服。</p>
+<p>机智的你也许已经知道了，哦……就是做事儿的流程啊！是的！只不过在计算机和数学世界里人们给它取名叫“算法”。</p>
+<h2 id="数据，巧妇难为无米之炊"><a href="#数据，巧妇难为无米之炊" class="headerlink" title="数据，巧妇难为无米之炊"></a>数据，巧妇难为无米之炊</h2><p>给你一份菜谱，不给你任何食材，不准叫外卖，估计没法变出真正的美食出来。算法是一系列特定步骤，但每一步需要什么东西总得提供吧，要做土豆牛腩，食材得给我吧？要洗衣服，衣服和洗衣液总得给我吧？算法步骤里需要处理的东西就是数据了。</p>
+<p>“数据”，这个词儿也很别扭，因为看起来好像就是数字组成的，虽然本质上都是0和1吧，但是对人来说它是由数值和非数值组成的：</p>
+<ul>
+<li>数值：喏，就是1，2，3，3.14，e，等等这样的数字。</li>
+<li>非数值：就是不是数值了，比如文档，音乐，电影等等。</li>
+</ul>
+<p>当我们要做一道土豆牛腩时，我们要有一份土豆牛腩的菜谱（算法）还要有食材、佐料（数据）。</p>
+<blockquote>
+<p>就不要死扣为啥取名叫“算法”，“数据”了…… 想颜色里，为什么叫“红色”，“紫色”也没有人去问啊！</p>
+</blockquote>
+<h2 id="好菜谱与好算法"><a href="#好菜谱与好算法" class="headerlink" title="好菜谱与好算法"></a>好菜谱与好算法</h2><p>到网上搜索一下“土豆牛腩”，做法太多了……哪一个才是最好的呢？最好吃的最好！步骤最少的最好，烹饪时间最短的最好…… 嗯，好吃不好吃这个太主观了，不好判断，不过步骤多少，耗费时间还可以作为评估的条件。</p>
+<p>算法也一样，不管是要解决什么问题吧，可能解决的步骤不尽相同，</p>
+<h2 id="洗衣机与算法的组成结构"><a href="#洗衣机与算法的组成结构" class="headerlink" title="洗衣机与算法的组成结构"></a>洗衣机与算法的组成结构</h2><p>要解决一个问题，解决步骤的组成结构是怎样的呢？好吧，我知道这个问题有点儿抽象，先看看用简化的洗衣机工作流程是怎样的。</p>
+<ol>
+<li>放水</li>
+<li>洗涤：左饶圈，右绕圈，左饶圈，右绕圈……</li>
+<li>时间到了没？没到，继续洗涤步骤，到了，下一步</li>
+<li>脱水</li>
+</ol>
+<p>这里面有三个结构！</p>
+<ol>
+<li>顺序结构：按照从1到4的顺序往下执行</li>
+<li>选择结构：第3步时，洗衣机会检测洗衣服的时间到了没有，到了做什么，没到做什么。</li>
+<li>循环结构：就是第2步了，洗衣服的时间没到，就一直左饶圈，右绕圈……</li>
+</ol>
+<p>幸运的是，当我们把要解决的问题拆成一步一步来解决的时候都是由着三种结构组成的！算法也是由这些结构组成的。<br>也就是说，当我们讨论算法的时候，就是翻来覆去用这几个结构，那应该不难啊！naive！</p>
+<h2 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h2><p>想想做菜的时候，佐料多了，油、盐、酱、醋、老干妈…… </p>
+<p>如果量大就难受了……</p>
+<p>如果都是这样就好了，人们使用计算机的一大原因就是因为它可以处理大量的数据，简单的东西，人类自己就可以完成了。“大量数据”这个词儿的背后就是怎么组织数据。</p>
+<p>假设做土豆牛腩的时候，土豆和牛腩不放一块</p>
+<h2 id="算法解决什么问题？"><a href="#算法解决什么问题？" class="headerlink" title="算法解决什么问题？"></a>算法解决什么问题？</h2><p>当我们透过表现看本质的时候，发现计算机世界里的算法解决的问题大部分都是：排序和查找，细分一下：</p>
+<p>而算法和数据结构基础所讨论的问题就是在不同的数据结构里，怎么完成这些算法。到最后就是怎么用编程语言表述呢？</p>
+<p>算法从概念上理解是抽象的，解决的基础问题也是抽象的，但那是我们要解决实际问题的基础。</p>
+<p>现在的程序员要掌握的编程语言基本有好多种，学习数据结构，练习算法是必经之路，我这里给自己准备了不同语言的算法测试环境和算法效率测试代码。</p>
+<h2 id="C"><a href="#C" class="headerlink" title="C"></a>C</h2><h3 id="运行环境"><a href="#运行环境" class="headerlink" title="运行环境"></a>运行环境</h3><p>An Array Class Test Bed<br>To examine these algorithms, we will first need a test bed in which to imple- ment and test them. We’ll build a class that encapsulates the normal operations performed with an array—element insertion, element access, and displaying the contents of the array. Here’s the code:<br>class CArray {<br>private int [] arr; private int upper; private int numElements; public CArray(int size) {<br>      arr = new int[size];<br>      upper = size-1;<br>      numElements = 0;<br>}<br>public void Insert(int item) { arr[numElements] = item; numElements++;<br>}<br>public void DisplayElements() { for(int i = 0; i &lt;= upper; i++)<br>        Console.Write(arr[i] + “ “);<br>}<br>public void Clear() {<br>for(int i = 0; i &lt;= upper; i++)<br>44<br>BASIC SORTING ALGORITHMS<br>         arr[i] = 0;<br>      numElements = 0;<br>}}<br>static void Main() {<br>CArray nums = new CArray(); for(int i = 0; i &lt;= 49; i++)<br>      nums.Insert(i);<br>    nums.DisplayElements();<br>}<br>The output looks like this:<br>Before leaving the CArray class to begin the examination of sorting and searching algorithms, let’s discuss how we’re going to actually store data in a CArray class object. In order to demonstrate most effectively how the different sorting algorithms work, the data in the array needs to be in a random order. This is best achieved by using a random number generator to assign each array element to the array.<br>Random numbers can be created in C# using the Random class. An object of this type can generate random numbers. To instantiate a Random object, you have to pass a seed to the class constructor. This seed can be seen as an upper bound for the range of numbers the random number generator can create.<br>Here’s another look at a program that uses the CArray class to store num- bers, using the random number generator to select the data to store in the array:<br>static void Main() {<br>CArray nums = new CArray(); Random rnd = new Random(100); for(int i = 0; i &lt; 10; i++)<br>      nums.Insert((int)(rnd.NextDouble() * 100));<br>    nums.DisplayElements();<br> }</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">using</span> System;</div><div class="line"></div><div class="line"><span class="keyword">namespace</span> <span class="title">Algorithms</span>&#123;</div><div class="line">  <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Test</span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="keyword">string</span>[] args</span>)</span>&#123;</div><div class="line">      <span class="comment">// 你的代码</span></div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="效率测试"><a href="#效率测试" class="headerlink" title="效率测试"></a>效率测试</h3><h2 id="循环处理是算法的基础"><a href="#循环处理是算法的基础" class="headerlink" title="循环处理是算法的基础"></a>循环处理是算法的基础</h2><blockquote>
+<p>循环处理和控制变量</p>
+</blockquote>
+<h2 id="基本算法"><a href="#基本算法" class="headerlink" title="基本算法"></a>基本算法</h2><h3 id="交换变量数值"><a href="#交换变量数值" class="headerlink" title="交换变量数值"></a>交换变量数值</h3><figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Test</div></pre></td></tr></table></figure>
+<h3 id="求两个数值的最大公约数"><a href="#求两个数值的最大公约数" class="headerlink" title="求两个数值的最大公约数"></a>求两个数值的最大公约数</h3><figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Test</div></pre></td></tr></table></figure>
+<h3 id="求1-N的整数的总和"><a href="#求1-N的整数的总和" class="headerlink" title="求1~N的整数的总和"></a>求1~N的整数的总和</h3><figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Test</div></pre></td></tr></table></figure>
+<h3 id="求斐波那契数列"><a href="#求斐波那契数列" class="headerlink" title="求斐波那契数列"></a>求斐波那契数列</h3><figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Test</div></pre></td></tr></table></figure>
+<h3 id="求数组数据的总和"><a href="#求数组数据的总和" class="headerlink" title="求数组数据的总和"></a>求数组数据的总和</h3><figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Test</div></pre></td></tr></table></figure>
+<h3 id="求数组数据的平均数"><a href="#求数组数据的平均数" class="headerlink" title="求数组数据的平均数"></a>求数组数据的平均数</h3><figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Test</div></pre></td></tr></table></figure>
+<h3 id="求数组中的最大数"><a href="#求数组中的最大数" class="headerlink" title="求数组中的最大数"></a>求数组中的最大数</h3><figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Test</div></pre></td></tr></table></figure>
+<h3 id="求数组中的最小数"><a href="#求数组中的最小数" class="headerlink" title="求数组中的最小数"></a>求数组中的最小数</h3><figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Test</div></pre></td></tr></table></figure>
+<h3 id="为数组元素排序"><a href="#为数组元素排序" class="headerlink" title="为数组元素排序"></a>为数组元素排序</h3><figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Test</div></pre></td></tr></table></figure>
+<h3 id="二维数组简单操作"><a href="#二维数组简单操作" class="headerlink" title="二维数组简单操作"></a>二维数组简单操作</h3><figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Test</div></pre></td></tr></table></figure>
+<h3 id="对齐单位计算"><a href="#对齐单位计算" class="headerlink" title="对齐单位计算"></a>对齐单位计算</h3><figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Test</div></pre></td></tr></table></figure>
+<h2 id="应用算法"><a href="#应用算法" class="headerlink" title="应用算法"></a>应用算法</h2><p>数据结构和算法本身是抽象且的独立的课题，当应用的时候，取决于问题和环境我们可能需要用不同的编程语言表示。 那么应用算法的关键就是：</p>
+<blockquote>
+<p>怎么把解决问题需要的算法和数据结构用特定的编程语言表示。</p>
+</blockquote>
+<p>首先，假设你大概了解了什么是算法和数据结构</p>
+<h3 id="首先要熟悉编程语言本身的特性"><a href="#首先要熟悉编程语言本身的特性" class="headerlink" title="首先要熟悉编程语言本身的特性"></a>首先要熟悉编程语言本身的特性</h3><p>为什么大部分算法和数据结构的入门书籍都提到如下这些数据结构：</p>
+<ul>
+<li>线性（顺序）结构：数组、堆、栈</li>
+<li>非线性结构：树、图、网络</li>
+<li>组结构：集合</li>
+</ul>
+<p>因为它们实用呗！既然实用且频繁使用，编程语言，尤其是高级语言，基本都提供了常见的数据结构类型，所以需要去了解所使用的编程语言支持哪些数据结构，如果没有，怎么构建。 </p>
+<p>此外，数据结构定义了数据的组织形式同时也奠定了数据的操作的方式，也就是算法，算法是解决某个问题的特定步骤，而这些步骤都可以用以下三种结构组成：</p>
+<ul>
+<li>顺序结构</li>
+<li>选择结构</li>
+<li>循环结构</li>
+</ul>
+<p>而循环操作是最主要的。</p>
+<p>所以，在了解算法和数据结构之后，编程语言特性是首先要熟悉的。</p>
+<p>例如C#</p>
+<h3 id="问题分析能力"><a href="#问题分析能力" class="headerlink" title="问题分析能力"></a>问题分析能力</h3><p>要解决的问题却是具体且充满细节的，如何看穿问题的本质，重新以抽象的方式来定义问题就很关键，因为这会决定将匹配使用什么算法。</p>
+<h2 id="参考书籍"><a href="#参考书籍" class="headerlink" title="参考书籍"></a>参考书籍</h2>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://tospan.me/2016/08/01/Algorithms_Basics/00-Algorithms-Basics/" data-id="cizhorels000w1gvwgl2fgqiq" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Algorithms/">Algorithms</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Data-Structure/">Data Structure</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/08/02/Algorithms_Basics/01-An-Introduction-to-Data-Structures/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          C#算法与数据结构（一）：数据结构简介
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2014/05/01/Unity/Scripting-18-Object-Pools/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Unity对象池(Object Pools)</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Algorithms/">Algorithms</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Game-Development/">Game Development</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Game-Programming-Patterns/">Game Programming Patterns</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Unity/">Unity</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Unity-Tutorials/">Unity Tutorials</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/default/">default</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Algorithms/">Algorithms</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Basics/">Basics</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C#</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Data-Structure/">Data Structure</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Games/">Games</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Geometry/">Geometry</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linear-Algebra/">Linear Algebra</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Math/">Math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mathematics/">Mathematics</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Numerical-Analysis/">Numerical Analysis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Patterns/">Patterns</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scripting/">Scripting</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Unity/">Unity</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/default/">default</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Algorithms/" style="font-size: 17.5px;">Algorithms</a> <a href="/tags/Basics/" style="font-size: 12.5px;">Basics</a> <a href="/tags/C/" style="font-size: 12.5px;">C#</a> <a href="/tags/Data-Structure/" style="font-size: 16.25px;">Data Structure</a> <a href="/tags/Games/" style="font-size: 10px;">Games</a> <a href="/tags/Geometry/" style="font-size: 11.25px;">Geometry</a> <a href="/tags/Linear-Algebra/" style="font-size: 13.75px;">Linear Algebra</a> <a href="/tags/Math/" style="font-size: 12.5px;">Math</a> <a href="/tags/Mathematics/" style="font-size: 12.5px;">Mathematics</a> <a href="/tags/Numerical-Analysis/" style="font-size: 10px;">Numerical Analysis</a> <a href="/tags/Patterns/" style="font-size: 15px;">Patterns</a> <a href="/tags/Scripting/" style="font-size: 18.75px;">Scripting</a> <a href="/tags/Unity/" style="font-size: 20px;">Unity</a> <a href="/tags/default/" style="font-size: 11.25px;">default</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">May 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">April 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/03/">March 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/02/">February 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">January 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/12/">December 2012</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/02/23/Unity-Multiplayer-And-Networking/">Unity Multiplayer And Networking</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/23/Unity-Physics/">Unity Physics</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/10/Game-Development/">游戏开发</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/08/Unity/Scripting-Quick-Benchmark/">Unity 简单基准测试</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/07/Unity/Patterns-FSM/">游戏编程设计模式:有限状态机(FSM)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 To Span<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>

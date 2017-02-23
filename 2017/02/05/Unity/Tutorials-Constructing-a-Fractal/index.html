@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <title>Unity创建分形(Fractal) | 吐司片的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="概述
+Details Through Recursion
+实例化游戏对象;
+使用递归;
+使用Coroutines;
+添加随机性。
+
+分形(Fractals)既有趣又很炫。在本教程中我们将通过一个C#脚本来制作一个具有分形特征的对象。
+开始教程之前假设你了解了Unity编辑器以及如何使用脚本。如果你已经完成了Unity时钟教程，那么就开始学习吧！">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Unity创建分形(Fractal)">
+<meta property="og:url" content="http://tospan.me/2017/02/05/Unity/Tutorials-Constructing-a-Fractal/index.html">
+<meta property="og:site_name" content="吐司片的博客">
+<meta property="og:description" content="概述
+Details Through Recursion
+实例化游戏对象;
+使用递归;
+使用Coroutines;
+添加随机性。
+
+分形(Fractals)既有趣又很炫。在本教程中我们将通过一个C#脚本来制作一个具有分形特征的对象。
+开始教程之前假设你了解了Unity编辑器以及如何使用脚本。如果你已经完成了Unity时钟教程，那么就开始学习吧！">
+<meta property="og:image" content="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/constructing-a-fractal-tutorial-image.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/01-project-setup.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/02-mesh-material.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/02-added-components.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/02-cube.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/03-max-depth.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/03-children-flat.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/03-children-nested.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/04-inspector.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/04-child-scale.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/04-child-scale-comparison.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/05-two-children.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/05-three-children.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/05-three-children-overdraw.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/05-three-children-rotated.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/05-three-children-rotated-overdraw.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/05-spheres.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/05-spheres-overdraw.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/06-all-children.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/08-colored.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/08-batched.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/08-colored-tips.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/08-random-colors.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/09-inspector.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/09-meshes.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/10-inspector.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/10-irregular.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/11-inspector.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/12-inspector.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/12-twist.png">
+<meta property="og:updated_time" content="2017-02-05T12:16:12.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Unity创建分形(Fractal)">
+<meta name="twitter:description" content="概述
+Details Through Recursion
+实例化游戏对象;
+使用递归;
+使用Coroutines;
+添加随机性。
+
+分形(Fractals)既有趣又很炫。在本教程中我们将通过一个C#脚本来制作一个具有分形特征的对象。
+开始教程之前假设你了解了Unity编辑器以及如何使用脚本。如果你已经完成了Unity时钟教程，那么就开始学习吧！">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/constructing-a-fractal-tutorial-image.jpg">
+  
+    <link rel="alternate" href="/atom.xml" title="吐司片的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+</head>
+
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">吐司片的博客</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Work hard, play hard.</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://tospan.me"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Unity/Tutorials-Constructing-a-Fractal" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/02/05/Unity/Tutorials-Constructing-a-Fractal/" class="article-date">
+  <time datetime="2017-02-05T12:16:12.000Z" itemprop="datePublished">2017-02-05</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Unity/">Unity</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Unity创建分形(Fractal)
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><ul>
+<li>Details Through Recursion</li>
+<li>实例化游戏对象;</li>
+<li>使用递归;</li>
+<li>使用<code>Coroutines</code>;</li>
+<li>添加随机性。</li>
+</ul>
+<p>分形(Fractals)既有趣又很炫。在本教程中我们将通过一个C#脚本来制作一个具有分形特征的对象。</p>
+<p>开始教程之前假设你了解了Unity编辑器以及如何使用脚本。如果你已经完成了<a href="http://www.tospan.me/2017/02/05/Unity-Clock/" target="_blank" rel="external">Unity时钟</a>教程，那么就开始学习吧！</p>
+<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/constructing-a-fractal-tutorial-image.jpg" alt="You&#39;ll create randomized 3D fractals."><br><a id="more"></a></p>
+<h2 id="怎样制作一个分形"><a href="#怎样制作一个分形" class="headerlink" title="怎样制作一个分形"></a>怎样制作一个分形</h2><p>We are going to create a 3D <a href="http://en.wikipedia.org/wiki/Fractal" target="_blank" rel="external">fractal</a>. We use the concept that the details of a fractal can look exactly like the whole thing. We can apply this to an object hierarchy in Unity. Start with some root object, then add children to it that are smaller but otherwise identical. Doing this by hand would be cumbersome, so we’ll create a script to do it for us.</p>
+<p>Start with a new project and a new scene. I put a directional light in there and moved the camera to a more interesting angle, but you can set it up as you please. I also went ahead and created a material to use for the fractal later. It simply uses the specular shader with default settings, which is just a bit more pleasing to look at than the default diffuse one.</p>
+<p>我们要制作一个3D<a href="http://en.wikipedia.org/wiki/Fractal" target="_blank" rel="external">分形</a>。</p>
+<p>创建一个新项目和新场景。默认会有一个直射光(directional light)和摄像机，将它们调整到你觉得合适的位置。另外在项目(Project)面板里创建一个<code>Material</code>文件夹，然后创建一个新的材质(Material)以便之后赋给分形，这个材质很简单，使用默认的<code>Specular Shader</code>就好，至少比默认的<code>Diffuse Shader</code>好一些。</p>
+<p>创建一个空对象<code>Fractal</code>，重置它（选择它，在Transform组件的右上角有个小三角，点击它，然后选择<code>Reset</code>选项)。这就是分形项目的基本场景了。然后创建一个新的C#脚本，命名为<code>Fractal</code>并拖到<code>Fractal</code>游戏对象上。</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">using</span> UnityEngine;</div><div class="line"><span class="keyword">using</span> System.Collections;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Fractal</span> : <span class="title">MonoBehaviour</span> &#123;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/01-project-setup.png" alt="Project setup"></p>
+<h2 id="先搞个基础"><a href="#先搞个基础" class="headerlink" title="先搞个基础"></a>先搞个基础</h2><p>我们的分形看起来是什么样子的呢？首先在<code>Fractal</code>脚本中创建两个公共变量<code>mesh</code>和<code>material</code>，然后在<code>Start</code>方法中，我们为该对象创建新的<code>MeshFilter</code>组件和<code>MeshRenderer</code>组件，同时将<code>mesh</code>和<code>material</code>的值赋给它们。</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">using</span> UnityEngine;</div><div class="line"><span class="keyword">using</span> System.Collections;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Fractal</span> : <span class="title">MonoBehaviour</span> &#123;</div><div class="line">	</div><div class="line">	<span class="keyword">public</span> Mesh mesh;</div><div class="line">	<span class="keyword">public</span> Material material;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Start</span> (<span class="params"></span>) </span>&#123;</div><div class="line">		gameObject.AddComponent&lt;MeshFilter&gt;().mesh = mesh;</div><div class="line">		gameObject.AddComponent&lt;MeshRenderer&gt;().material = material;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>什么是<code>Mesh</code>，<code>Material</code>，<code>Start</code>方法什么时候调用，<code>AddComponent</code>是怎么用的？请查看<a href="Unity-Core.md">Unity要点</a></p>
+</blockquote>
+<p>在这里，我们可以将我们刚刚创建的材质赋给<code>Material</code>变量，点击<code>Mesh</code>右边的<code>圆环中间有个点</code>按钮，从弹出的对话框中选择Unity自带的<code>Cube</code>，点击<code>Play</code>按钮，游戏(Game)窗口就会出现一个Cube了。</p>
+<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/02-mesh-material.png" alt="inspector in edit mode"><br><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/02-added-components.png" alt="inspector in play mode"><br><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/02-cube.png" alt="cube in play mode"></p>
+<h2 id="创建子对象"><a href="#创建子对象" class="headerlink" title="创建子对象"></a>创建子对象</h2><p>怎么为该分形创建子对象呢？最简单直接的方式就是在<code>Start</code>方法里通过创建新的游戏对象然后添加<code>Fractal</code>组件创建一个。试试如下的代码，并运行，退出，再运行。</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Start</span> (<span class="params"></span>) </span>&#123;</div><div class="line">	gameObject.AddComponent&lt;MeshFilter&gt;().mesh = mesh;</div><div class="line">	gameObject.AddComponent&lt;MeshRenderer&gt;().material = material;</div><div class="line">	<span class="keyword">new</span> GameObject(<span class="string">"Fractal Child"</span>).AddComponent&lt;Fractal&gt;();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>new关键字是用来做什么的，请查看<a href="Unity-Core.md">Unity要点</a></p>
+</blockquote>
+<p>The problem is that every new fractal instance will create yet another one. This happens each frame, without end. Let it run for a while and your computer will get into trouble as it runs out of memory. Typically recursive algorithms that don’t stop will consume your machine’s resources almost instantly and result in either a stack overflow exception or a crash. In this case it is a rather benign explosion, because it happens slowly.</p>
+<p>To prevent this from happening, we introduce the concept of a maximum depth. Our initial fractal instance will have a depth of zero. It’s child will have a depth of one. The child of this child will have a depth of 2. And so on, until the maximum depth is reached.</p>
+<p>Add a public maxDepth integer variable and set it to 4 in the inspector. Also add a private depth integer. Then only create a new child if we are below the maximum depth.</p>
+<p>What will happen when we enter play mode now?</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> maxDepth;</div><div class="line"></div><div class="line"><span class="keyword">private</span> <span class="keyword">int</span> depth;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Start</span> (<span class="params"></span>) </span>&#123;</div><div class="line">	gameObject.AddComponent&lt;MeshFilter&gt;().mesh = mesh;</div><div class="line">	gameObject.AddComponent&lt;MeshRenderer&gt;().material = material;</div><div class="line">	<span class="keyword">if</span> (depth &lt; maxDepth) &#123;</div><div class="line">		<span class="keyword">new</span> GameObject(<span class="string">"Fractal Child"</span>).AddComponent&lt;Fractal&gt;();</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/03-max-depth.png" alt="Maximum depth"></p>
+<p>Exactly one child got created. Why? Because we never gave depth a value, it’s always zero. Because zero is less than 4, our root fractal object created a child. The child’s depth value is also zero. However, we never set the child’s maxDepth either, so it is also zero. Therefore the child did not create another one.</p>
+<p>Besides that, the child also lacks a material and a mesh. We need to copy these references from its parent. Let’s add a new method that takes care of all the necessary initializations.</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Start</span> (<span class="params"></span>) </span>&#123;</div><div class="line">	gameObject.AddComponent&lt;MeshFilter&gt;().mesh = mesh;</div><div class="line">	gameObject.AddComponent&lt;MeshRenderer&gt;().material = material;</div><div class="line">	<span class="keyword">if</span> (depth &lt; maxDepth) &#123;</div><div class="line">		<span class="keyword">new</span> GameObject(<span class="string">"Fractal Child"</span>).</div><div class="line">			AddComponent&lt;Fractal&gt;().Initialize(<span class="keyword">this</span>);</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Initialize</span> (<span class="params">Fractal parent</span>) </span>&#123;</div><div class="line">	mesh = parent.mesh;</div><div class="line">	material = parent.material;</div><div class="line">	maxDepth = parent.maxDepth;</div><div class="line">	depth = parent.depth + <span class="number">1</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>Is Initialize invoked before Start?<br>Yes, it is. First the new game object is created. Then a new Fractal component is created and added to it. At this point its Awake and OnEnable methods would be invoked, if they had existed. Then the AddComponent method finishes. Directly after that we invoke Initialize. The call to Start won’t happen until the next frame.</p>
+</blockquote>
+<p>When we enter play mode this time, four children will be created, as was expected. But they’re not really children, as they all appear in the hierarchy root. The parent–child relationship between game objects is defined by their transformation hierarchy. So a child needs to make the parent of it’s transform component equal to it’s fractal parent’s transform.</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Initialize</span> (<span class="params">Fractal parent</span>) </span>&#123;</div><div class="line">	mesh = parent.mesh;</div><div class="line">	material = parent.material;</div><div class="line">	maxDepth = parent.maxDepth;</div><div class="line">	depth = parent.depth + <span class="number">1</span>;</div><div class="line">	transform.parent = parent.transform;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/03-children-flat.png" alt="children without nesting"><br><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/03-children-nested.png" alt="children with nesting"></p>
+<h2 id="Shaping-Children"><a href="#Shaping-Children" class="headerlink" title="Shaping Children"></a>Shaping Children</h2><p>So far the children are superimposed on their parent, which means we still only see a single box. We need to move them inside their local space so that they become visible. And because they are supposed to be smaller than their parent, we have to scale them down too.</p>
+<p>First the scaling. How much? Let’s make it configurable with a new variable named childScale and assign it a value of 0.5 in the inspector. Don’t forget to pass this value from parent to child as well. Then use it to set the child’s local scale.</p>
+<p>Next, where shall we move the children? Let’s simply move them straight up, so that they touch their parent. We assume that the parent has a size of one in all directions, which is true for the cube that we’re using. Moving up by a half puts us at the point where parent and child should touch. So we have to move an additional amount equal to half the size of the child.</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">float</span> childScale;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Initialize</span> (<span class="params">Fractal parent</span>) </span>&#123;</div><div class="line">	mesh = parent.mesh;</div><div class="line">	material = parent.material;</div><div class="line">	maxDepth = parent.maxDepth;</div><div class="line">	depth = parent.depth + <span class="number">1</span>;</div><div class="line">	childScale = parent.childScale;</div><div class="line">	transform.parent = parent.transform;</div><div class="line">	transform.localScale = Vector3.one * childScale;</div><div class="line">	transform.localPosition = Vector3.up * (<span class="number">0.5</span>f + <span class="number">0.5</span>f * childScale);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/04-inspector.png" alt="inspector"><br><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/04-child-scale.png" alt="child scale of 0.5"><br><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/04-child-scale-comparison.png" alt="Child scale of 0.5, and from 0.3 to 0.7 for comparison"></p>
+<h2 id="Making-Multiple-Children"><a href="#Making-Multiple-Children" class="headerlink" title="Making Multiple Children"></a>Making Multiple Children</h2><p>What we are creating now looks like a tower, but not really a fractal. We need it to branch, by creating multiple children per parent. It is easy to just create a second object, but it also has to grow in a different direction. So let’s add a direction parameter to our Initialize method and use that to position the second child to the right instead of up.</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Start</span> (<span class="params"></span>) </span>&#123;</div><div class="line">	gameObject.AddComponent&lt;MeshFilter&gt;().mesh = mesh;</div><div class="line">	gameObject.AddComponent&lt;MeshRenderer&gt;().material = material;</div><div class="line">	<span class="keyword">if</span> (depth &lt; maxDepth) &#123;</div><div class="line">		<span class="keyword">new</span> GameObject(<span class="string">"Fractal Child"</span>).AddComponent&lt;Fractal&gt;().</div><div class="line">			Initialize(<span class="keyword">this</span>, Vector3.up);</div><div class="line">		<span class="keyword">new</span> GameObject(<span class="string">"Fractal Child"</span>).AddComponent&lt;Fractal&gt;().</div><div class="line">			Initialize(<span class="keyword">this</span>, Vector3.right);</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Initialize</span> (<span class="params">Fractal parent, Vector3 direction</span>) </span>&#123;</div><div class="line">	…</div><div class="line">	transform.localPosition = direction * (<span class="number">0.5</span>f + <span class="number">0.5</span>f * childScale);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>What does … mean?<br>It means that I have omitted a chunk of code that hasn’t changed. It should be clear where the new or changed code is situated, or its exact placement doesn’t matter.</p>
+</blockquote>
+<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/05-two-children.png" alt="Two children per parent"></p>
+<p>This is starting to look more like it! Do you still understand in what order the cubes have been created? As they’re all created in a few frames, it goes too fast for us to see it grow. I think it’s fun to slow this process down so we can watch it happen. We can do this by using a coroutine to create the children.</p>
+<p>Think of coroutines as methods in which you can insert pause statements. While the method invocation is paused, the rest of the program continues. Though this point of view is too simplistic, it is all we need to make use of it right now.</p>
+<p>Move the two child creation lines to a new method named CreateChildren. This method needs to have IEnumerator as a return type, which exists in the System.Collections namespace. That’s why Unity includes it in their default script template and why I included it in the beginning as well.</p>
+<p>Instead of just calling this method in Start, we have to call it as an argument for Unity’s StartCoroutine method.</p>
+<p>Then add a pause directive before creating each child. Do this by creating a new WaitForSeconds object for half a second or so, then yielding it back to Unity.</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Start</span> (<span class="params"></span>) </span>&#123;</div><div class="line">	gameObject.AddComponent&lt;MeshFilter&gt;().mesh = mesh;</div><div class="line">	gameObject.AddComponent&lt;MeshRenderer&gt;().material = material;</div><div class="line">	<span class="keyword">if</span> (depth &lt; maxDepth) &#123;</div><div class="line">		StartCoroutine(CreateChildren());</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">private</span> IEnumerator <span class="title">CreateChildren</span> (<span class="params"></span>) </span>&#123;</div><div class="line">	<span class="function"><span class="keyword">yield</span> return new <span class="title">WaitForSeconds</span>(<span class="params"><span class="number">0.5</span>f</span>)</span>;</div><div class="line">	<span class="keyword">new</span> GameObject(<span class="string">"Fractal Child"</span>).</div><div class="line">		AddComponent&lt;Fractal&gt;().Initialize(<span class="keyword">this</span>, Vector3.up);</div><div class="line">	<span class="function"><span class="keyword">yield</span> return new <span class="title">WaitForSeconds</span>(<span class="params"><span class="number">0.5</span>f</span>)</span>;</div><div class="line">	<span class="keyword">new</span> GameObject(<span class="string">"Fractal Child"</span>).</div><div class="line">		AddComponent&lt;Fractal&gt;().Initialize(<span class="keyword">this</span>, Vector3.right);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>What’s an enumerator?<br>Enumeration is the concept of going through some collection one item at a time, like looping over all elements in an array. An enumerator – or iterator – is an object that provides an interface for this functionality. System.Collections.IEnumerator describes such an interface.</p>
+<p>Why do we need this? Because coroutines use them. This is also why Unity includes System.Collections in their default script template, and why I included it as well.</p>
+<p>What does return do?<br>You use the return keyword to indicate that a method is finished and what its result is. What you return must match the type of the method. If it’s a void method then you simply return nothing.</p>
+<p>It’s not needed to have a return statement at the end of a void or a special constructor method, for all other methods it’s required.</p>
+<p>It is possible to have multiple return statements inside a method. In that case there are multiple possible exit points. You’d typically use if statements to determine which return gets used.</p>
+<p>What does yield do?<br>The yield statement is used by iterators to make life easy for them. To make enumeration possible, you’d need to keep track of your progress. This involves some boilerplate code that is essentially always the same. What you’d really want is to just write something like return firstItem; return secondItem; until you are done. The yield statement allows you to do exactly that.</p>
+<p>So whenever you’re using yield, an enumerator object is created behind the scenes to take care of the tedious bits. That’s why our CreateChildren method has IEnumerator as its return type.</p>
+<p>By the way, you can also yield another iterator. In that case this other iterator will be processed completely, so you can stitch them together in creative ways.</p>
+<p>How do coroutines work?<br>When you’re creating a coroutine in Unity, what you’re really doing is creating an iterator. When you pass it to the StartCoroutine method, it will get stored and gets asked for its next item every frame, until it is finished.</p>
+<p>The yield statements produce the items. The statements in between – the stuff that you want to happen – are side-effects of the iterator doing its job.</p>
+<p>You can yield special things like WaitForSeconds to have more control over when your own code continues, but the overall approach is simply that of an iterator.</p>
+</blockquote>
+<p>Now we can watch it grow! Did you see a problem in the way it did? Let’s add a third child per parent, this time on the left side.</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> IEnumerator <span class="title">CreateChildren</span> (<span class="params"></span>) </span>&#123;</div><div class="line">	<span class="function"><span class="keyword">yield</span> return new <span class="title">WaitForSeconds</span>(<span class="params"><span class="number">0.5</span>f</span>)</span>;</div><div class="line">	<span class="keyword">new</span> GameObject(<span class="string">"Fractal Child"</span>).</div><div class="line">		AddComponent&lt;Fractal&gt;().Initialize(<span class="keyword">this</span>, Vector3.up);</div><div class="line">	<span class="function"><span class="keyword">yield</span> return new <span class="title">WaitForSeconds</span>(<span class="params"><span class="number">0.5</span>f</span>)</span>;</div><div class="line">	<span class="keyword">new</span> GameObject(<span class="string">"Fractal Child"</span>).</div><div class="line">		AddComponent&lt;Fractal&gt;().Initialize(<span class="keyword">this</span>, Vector3.right);</div><div class="line">	<span class="function"><span class="keyword">yield</span> return new <span class="title">WaitForSeconds</span>(<span class="params"><span class="number">0.5</span>f</span>)</span>;</div><div class="line">	<span class="keyword">new</span> GameObject(<span class="string">"Fractal Child"</span>).</div><div class="line">		AddComponent&lt;Fractal&gt;().Initialize(<span class="keyword">this</span>, Vector3.left);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/05-three-children.png" alt="three children"><br><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/05-three-children-overdraw.png" alt="three children with overdraw"></p>
+<blockquote>
+<p>How can I use overdraw vision?<br>The toolbar of the scene view has a dropdown list that is set to RGB by default. One of its other options is Overdraw.</p>
+</blockquote>
+<p>The problem is that the children have the same orientation as their parent. This means that a left child whose parent is itself a right child will find itself inside its grandparent, and vice versa. To solve this, we have to rotate the children so that their upward direction will point away from their parent.</p>
+<p>We will solve this by adding an orientation parameter to Initialize. It will be a quaternion used to set the local rotation of the new child. The upward child needs no rotation, the right child needs to rotation 90 degrees clockwise, and the left child needs to rotate in the opposite direction.</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> IEnumerator <span class="title">CreateChildren</span> (<span class="params"></span>) </span>&#123;</div><div class="line">	<span class="function"><span class="keyword">yield</span> return new <span class="title">WaitForSeconds</span>(<span class="params"><span class="number">0.5</span>f</span>)</span>;</div><div class="line">	<span class="keyword">new</span> GameObject(<span class="string">"Fractal Child"</span>).AddComponent&lt;Fractal&gt;().</div><div class="line">		Initialize(<span class="keyword">this</span>, Vector3.up, Quaternion.identity);</div><div class="line">	<span class="function"><span class="keyword">yield</span> return new <span class="title">WaitForSeconds</span>(<span class="params"><span class="number">0.5</span>f</span>)</span>;</div><div class="line">	<span class="keyword">new</span> GameObject(<span class="string">"Fractal Child"</span>).AddComponent&lt;Fractal&gt;().</div><div class="line">		Initialize(<span class="keyword">this</span>, Vector3.right, Quaternion.Euler(<span class="number">0</span>f, <span class="number">0</span>f, <span class="number">-90</span>f));</div><div class="line">	<span class="function"><span class="keyword">yield</span> return new <span class="title">WaitForSeconds</span>(<span class="params"><span class="number">0.5</span>f</span>)</span>;</div><div class="line">	<span class="keyword">new</span> GameObject(<span class="string">"Fractal Child"</span>).AddComponent&lt;Fractal&gt;().</div><div class="line">		Initialize(<span class="keyword">this</span>, Vector3.left, Quaternion.Euler(<span class="number">0</span>f, <span class="number">0</span>f, <span class="number">90</span>f));</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Initialize</span> (<span class="params">Fractal parent,</span></span></div><div class="line">                         Vector3 direction,</div><div class="line">                         Quaternion orientation) &#123;</div><div class="line">	…</div><div class="line">	transform.localRotation = orientation;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/05-three-children-rotated.png" alt="three children rotated"><br><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/05-three-children-rotated-overdraw.png" alt="three children rotated with overdraw"></p>
+<p>Now that the children are rotated, they no longer immediately grow back into the fractal. But you might have noticed that some of the smallest children still end up disappearing into the root cube. This happens because with a scaling factor of 0.5, this fractal will self-intersect in four steps. You can reduce the scaling to solve this problem, or use spheres instead of cubes.</p>
+<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/05-spheres.png" alt="spheres"><br><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/05-spheres-overdraw.png" alt="spheres with overdraw"></p>
+<p>Spheres don’t self-intersect with a child scale of 0.5.</p>
+<h2 id="Better-Code-For-More-Children"><a href="#Better-Code-For-More-Children" class="headerlink" title="Better Code For More Children"></a>Better Code For More Children</h2><p>Our code has become a bit unwieldy. Let us generalize by moving the direction and orientation data to static arrays. Then we can reduce CreateChildren to a short loop and use the child index as a parameter for Initialize.</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> <span class="keyword">static</span> Vector3[] childDirections = &#123;</div><div class="line">	Vector3.up,</div><div class="line">	Vector3.right,</div><div class="line">	Vector3.left</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">private</span> <span class="keyword">static</span> Quaternion[] childOrientations = &#123;</div><div class="line">	Quaternion.identity,</div><div class="line">	Quaternion.Euler(<span class="number">0</span>f, <span class="number">0</span>f, <span class="number">-90</span>f),</div><div class="line">	Quaternion.Euler(<span class="number">0</span>f, <span class="number">0</span>f, <span class="number">90</span>f)</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">private</span> IEnumerator <span class="title">CreateChildren</span> (<span class="params"></span>) </span>&#123;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; childDirections.Length; i++) &#123;</div><div class="line">		<span class="function"><span class="keyword">yield</span> return new <span class="title">WaitForSeconds</span>(<span class="params"><span class="number">0.5</span>f</span>)</span>;</div><div class="line">		<span class="keyword">new</span> GameObject(<span class="string">"Fractal Child"</span>).AddComponent&lt;Fractal&gt;().</div><div class="line">			Initialize(<span class="keyword">this</span>, i);</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Initialize</span> (<span class="params">Fractal parent, <span class="keyword">int</span> childIndex</span>) </span>&#123;</div><div class="line">	…</div><div class="line">	transform.localPosition =</div><div class="line">		childDirections[childIndex] * (<span class="number">0.5</span>f + <span class="number">0.5</span>f * childScale);</div><div class="line">	transform.localRotation = childOrientations[childIndex];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>How do arrays work?<br>Arrays are objects of fixed length that contain a linear sequence of variables. When declaring a variable, putting square brackets behind its type indicates that you want an array of that type. So int myVariable; gets you an integer, while int[] myVariable; get you an array of integers.</p>
+<p>Accessing one of the entries inside an array is done by putting its array index – not its position – between square brackets behind the variable. So myVariable[0] gets you the first entry in the array, myVariable[1] gets you the second, and so on.</p>
+<p>Actually creating an array and assigning it to the variable is done with myVariable = new int[10]; which in this case creates a new array with room for ten entries. Alternatively, you can create one implicitly by listing its initial values between curly brackets, like myVariable = {1, 2, 3}; does.</p>
+<p>How does a for loop work?<br>A for loop is a compact way of writing a loop that iterates over something. In this case we use an integer named i as the iterator. The first part declares the iterator integer, the second part checks the loop’s condition, and the third part increments the iterator.</p>
+<p>You can use a while loop to get the exact same result, but it doesn’t conveniently group the iterator code.</p>
+<p>for(int i = 0; i &lt; 10; i++) { DoStuff(i); }</p>
+<p>is the same as</p>
+<p>int i = 0; while(i &lt; 10) { DoStuff(i); i++; }</p>
+<p>By the way, i++ is shorthand for i += 1, which is shorthand for i = i + 1.</p>
+</blockquote>
+<p>Now let’s introduce two more children by simple adding their data to the arrays. One going forward, the other going backward.</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> <span class="keyword">static</span> Vector3[] childDirections = &#123;</div><div class="line">	Vector3.up,</div><div class="line">	Vector3.right,</div><div class="line">	Vector3.left,</div><div class="line">	Vector3.forward,</div><div class="line">	Vector3.back</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">private</span> <span class="keyword">static</span> Quaternion[] childOrientations = &#123;</div><div class="line">	Quaternion.identity,</div><div class="line">	Quaternion.Euler(<span class="number">0</span>f, <span class="number">0</span>f, <span class="number">-90</span>f),</div><div class="line">	Quaternion.Euler(<span class="number">0</span>f, <span class="number">0</span>f, <span class="number">90</span>f),</div><div class="line">	Quaternion.Euler(<span class="number">90</span>f, <span class="number">0</span>f, <span class="number">0</span>f),</div><div class="line">	Quaternion.Euler(<span class="number">-90</span>f, <span class="number">0</span>f, <span class="number">0</span>f)</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/06-all-children.png" alt="Five children per parent, the full fractal"></p>
+<p>We now have the full fractal structure. But what about the underside of the root cube? The idea is that the fractal is growing out of something, like a plant. Although I won’t, if you want to, you could add a special sixth child going downward that’s only added to the root node. Adding it to all nodes would be a waste, because it would grow directly into its grandparent.</p>
+<h2 id="Explosive-Growth"><a href="#Explosive-Growth" class="headerlink" title="Explosive Growth"></a>Explosive Growth</h2><p>How many cubes are we actually creating? As we’re always creating five children per parent, the total number of cubes when fully grown will depend on the maximum depth. A maximum depth of zero produces only one cube, the initial root. A maximum depth of one produces five additional children, for a total of six cubes. As it is fractal, this pattern repeats and we can write it as the function f(0) = 1, f(n) = 5 × f(n - 1) + 1.</p>
+<p>The above function produces the sequence 1, 6, 31, 156, 781, 3906, 19531, 97656, and so on. You will see these numbers show up as the amount of draw calls in the game view statistics of Unity. If you have dynamic batching enabled, it will be the sum of Draw Calls and Saved by batching.</p>
+<p>Unity will probably be able to handle a maximum depth up to four or five. Any higher and your frame rate will become horrible.</p>
+<p>Besides quantity, duration is also an issue. Right now we’re pausing half a second before creating a new child. This produces synchronized bursts of growth for a few seconds. We could distribute the growth more evenly by randomizing the delays. This also results in a more unpredictable and organic pattern that I find more fun to watch.</p>
+<p>So let’s replace the fixed delay with a random range between 0.1 and 0.5. I also increased the maximum depth to 5 to make the effect more noticeable.</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> IEnumerator <span class="title">CreateChildren</span> (<span class="params"></span>) </span>&#123;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; childDirections.Length; i++) &#123;</div><div class="line">		<span class="function"><span class="keyword">yield</span> return new <span class="title">WaitForSeconds</span>(<span class="params">Random.Range(<span class="number">0.1</span>f, <span class="number">0.5</span>f</span>))</span>;</div><div class="line">		<span class="keyword">new</span> GameObject(<span class="string">"Fractal Child"</span>).AddComponent&lt;Fractal&gt;().</div><div class="line">			Initialize(<span class="keyword">this</span>, i);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>How does the random range work?<br>Random is a utility class that contains some stuff to create random values. Its Range method can be used to generate a random value within some range.</p>
+<p>There are two versions of the Range method. You can call it with two floats, in which case it returns a float between the minimum and maximum value, both inclusive.</p>
+<p>Alternatively, you can call Range with two integers, in which case it returns an integer between the minimum, inclusive, and maximum, exclusive. The typical use case for this version is selecting an index at random, like someArray[Random.Range(0, someArray.Length)].</p>
+</blockquote>
+<h2 id="Adding-Color"><a href="#Adding-Color" class="headerlink" title="Adding Color"></a>Adding Color</h2><p>The fractal is a little dull. Let’s liven it up by adding some color variation. We do this by interpolating from white at the root to yellow at the smallest children. The static Color.Lerp method is a handy way to do this. The interpolator goes from zero to one, which we do by dividing our current depth by the maximum depth. Because we don’t want an integer division here, we convert depth to a float first.</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Start</span> (<span class="params"></span>) </span>&#123;</div><div class="line">	gameObject.AddComponent&lt;MeshFilter&gt;().mesh = mesh;</div><div class="line">	gameObject.AddComponent&lt;MeshRenderer&gt;().material = material;</div><div class="line">	GetComponent&lt;MeshRenderer&gt;().material.color =</div><div class="line">		Color.Lerp(Color.white, Color.yellow, (<span class="keyword">float</span>)depth / maxDepth);</div><div class="line">	<span class="keyword">if</span> (depth &lt; maxDepth) &#123;</div><div class="line">		StartCoroutine(CreateChildren());</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>What does Lerp do?<br>Lerp is shorthand for linear interpolation. Its typical signature is Lerp(a, b, t) and it computes a + (b - a) * t, with t clamped to the 0–1 range. Multiple versions exist for various types, including floats, vectors, and colors.</p>
+</blockquote>
+<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/08-colored.png" alt="Colored, but no dynamic batching"></p>
+<p>This already looks a lot more interesting! But another thing happened as well. Dynamic batching used to work, but now it doesn’t. How do we fix this?</p>
+<blockquote>
+<p>What is dynamic batching?<br>Dynamic batching is a form of draw call batching performed by Unity. In short, it combines meshes that share the same material into larger meshes. Doing so reduces the amount of communication between the CPU and the GPU. You can enable or disable it via Edit / Projects Settings / Player, in the Other Settings group.</p>
+<p>It only works for small meshes. For example, you’ll find that it works with Unity’s default cube, but not with the default sphere.</p>
+</blockquote>
+<p>The problem is that by adjusting the color or a child’s material we silently created a duplicate of that material. This is necessary because otherwise everything using that material would end up with the same color. However, batching only works when the exact same material is used for multiple items. Equivalence is not checked – that would be too expensive to do – it must really be the same material.</p>
+<p>Let’s create only one material duplicate per depth instead of per cube. Add a new array field to hold the materials. Then check whether an array exists in Start and if not call a new InitializeMaterials method. In this method we will explicitly duplicate our material and change its color per depth.</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> Material[] materials;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">InitializeMaterials</span> (<span class="params"></span>) </span>&#123;</div><div class="line">	materials = <span class="keyword">new</span> Material[maxDepth + <span class="number">1</span>];</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= maxDepth; i++) &#123;</div><div class="line">		materials[i] = <span class="keyword">new</span> Material(material);</div><div class="line">		materials[i].color =</div><div class="line">			Color.Lerp(Color.white, Color.yellow, (<span class="keyword">float</span>)i / maxDepth);</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Start</span> (<span class="params"></span>) </span>&#123;</div><div class="line">	<span class="keyword">if</span> (materials == <span class="literal">null</span>) &#123;</div><div class="line">		InitializeMaterials();</div><div class="line">	&#125;</div><div class="line">	gameObject.AddComponent&lt;MeshFilter&gt;().mesh = mesh;</div><div class="line">	gameObject.AddComponent&lt;MeshRenderer&gt;().material = materials[depth];</div><div class="line">	<span class="keyword">if</span> (depth &lt; maxDepth) &#123;</div><div class="line">		StartCoroutine(CreateChildren());</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>What’s null?<br>The default value of a variable that’s not a simple value is null. This means that the variable doesn’t reference anything. Trying to invoke or access anything from a variable that is null results in an error. You can test for this value to make sure that doesn’t happen. You can also set such a variable to null yourself, in case you no longer need whatever it was referencing.</p>
+<p>Note that objects don’t automatically cease to exist when setting a reference to them to null. Only when there’s nobody left with a reference to them will they be become candidates for removal by the garbage collector.</p>
+</blockquote>
+<p>Now instead of passing the material reference from parent to child, pass the materials array reference instead. If we didn’t, each child would be forced to create its own materials array and we wouldn’t have solved the problem.</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Initialize</span> (<span class="params">Fractal parent, <span class="keyword">int</span> childIndex</span>) </span>&#123;</div><div class="line">	mesh = parent.mesh;</div><div class="line">	materials = parent.materials;</div><div class="line">	…</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>Why not make materials static?<br>We’re not making the materials array static because it depends on the maximum depth, which can be different from fractal to fractal. Why yes, you can have multiple fractals at the same time, and of course they can have different maximum depths.</p>
+</blockquote>
+<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/08-batched.png" alt="Colored, now with dynamic batching"></p>
+<p>We have our batching back, and it makes quite a difference in this case! The color is still not that interesting though. A nice tweak is to give the deepest level a radically different color. This can reveal patterns in the fractal that you might not have noticed before.</p>
+<p>Simply change the last color to magenta afterwards. Also adjust the interpolator so that we still see the full transition to yellow. And while we’re at it, squaring it results in a slightly nicer transition.</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">InitializeMaterials</span> (<span class="params"></span>) </span>&#123;</div><div class="line">	materials = <span class="keyword">new</span> Material[maxDepth + <span class="number">1</span>];</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= maxDepth; i++) &#123;</div><div class="line">		<span class="keyword">float</span> t = i / (maxDepth - <span class="number">1</span>f);</div><div class="line">		t *= t;</div><div class="line">		materials[i] = <span class="keyword">new</span> Material(material);</div><div class="line">		materials[i].color = Color.Lerp(Color.white, Color.yellow, t);</div><div class="line">	&#125;</div><div class="line">	materials[maxDepth].color = Color.magenta;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/08-colored-tips.png" alt="Now with magenta tips"></p>
+<p>Let’s add a second color progression, say from white to cyan with red tips. We’ll use a single two-dimensional array to hold them both, then select one at random when we need a material. This way our fractal will look different each time we enter play mode. Feel free to add a third progression if you like.</p>
+<blockquote>
+<p>How do two-dimensional arrays work?<br>You can add a second dimension to an array by inserting a comma inside its brackets. You then also need to provide two indexes whenever you want to access one of the array’s elements. This approach extends to higher dimensions as well.</p>
+</blockquote>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> Material[,] materials;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">InitializeMaterials</span> (<span class="params"></span>) </span>&#123;</div><div class="line">	materials = <span class="keyword">new</span> Material[maxDepth + <span class="number">1</span>, <span class="number">2</span>];</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= maxDepth; i++) &#123;</div><div class="line">		<span class="keyword">float</span> t = i / (maxDepth - <span class="number">1</span>f);</div><div class="line">		t *= t;</div><div class="line">		materials[i, <span class="number">0</span>] = <span class="keyword">new</span> Material(material);</div><div class="line">		materials[i, <span class="number">0</span>].color = Color.Lerp(Color.white, Color.yellow, t);</div><div class="line">		materials[i, <span class="number">1</span>] = <span class="keyword">new</span> Material(material);</div><div class="line">		materials[i, <span class="number">1</span>].color = Color.Lerp(Color.white, Color.cyan, t);</div><div class="line">	&#125;</div><div class="line">	materials[maxDepth, <span class="number">0</span>].color = Color.magenta;</div><div class="line">	materials[maxDepth, <span class="number">1</span>].color = Color.red;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Start</span> (<span class="params"></span>) </span>&#123;</div><div class="line">	<span class="keyword">if</span> (materials == <span class="literal">null</span>) &#123;</div><div class="line">		InitializeMaterials();</div><div class="line">	&#125;</div><div class="line">	gameObject.AddComponent&lt;MeshFilter&gt;().mesh = mesh;</div><div class="line">	gameObject.AddComponent&lt;MeshRenderer&gt;().material =</div><div class="line">		materials[depth, Random.Range(<span class="number">0</span>, <span class="number">2</span>)];</div><div class="line">	<span class="keyword">if</span> (depth &lt; maxDepth) &#123;</div><div class="line">		StartCoroutine(CreateChildren());</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/08-random-colors.png" alt="Randomized colors"></p>
+<h2 id="Randomizing-Meshes"><a href="#Randomizing-Meshes" class="headerlink" title="Randomizing Meshes"></a>Randomizing Meshes</h2><p>Besides colors, we also also randomly choose which mesh to use. Let’s replace our public mesh variable with an array and pick one out of it at random in Start.</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> Mesh[] meshes;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Start</span> (<span class="params"></span>) </span>&#123;</div><div class="line">	<span class="keyword">if</span> (materials == <span class="literal">null</span>) &#123;</div><div class="line">		InitializeMaterials();</div><div class="line">	&#125;</div><div class="line">	gameObject.AddComponent&lt;MeshFilter&gt;().mesh =</div><div class="line">		meshes[Random.Range(<span class="number">0</span>, meshes.Length)];</div><div class="line">	gameObject.AddComponent&lt;MeshRenderer&gt;().material =</div><div class="line">		materials[depth, Random.Range(<span class="number">0</span>, <span class="number">2</span>)];</div><div class="line">	<span class="keyword">if</span> (depth &lt; maxDepth) &#123;</div><div class="line">		StartCoroutine(CreateChildren());</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Initialize</span> (<span class="params">Fractal parent, <span class="keyword">int</span> childIndex</span>) </span>&#123;</div><div class="line">	meshes = parent.meshes;</div><div class="line">	…</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>If we were to put only a single cube in our new array property in the inspector, then the result would be the same as before. But add a sphere and you suddenly get a 50% chance of spawning either a cube or a sphere per element of the fractal.</p>
+<p>Fill this array however you like. I put the sphere in there twice so it is twice as likely to be used as the cube. You can also add other meshes, though capsules and cylinders don’t work so well because they’re elongated.</p>
+<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/09-inspector.png" alt="inspector"><br><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/09-meshes.png" alt="Randomly choosing between a cube and a sphere"></p>
+<h2 id="Making-the-Fractal-Irregular"><a href="#Making-the-Fractal-Irregular" class="headerlink" title="Making the Fractal Irregular"></a>Making the Fractal Irregular</h2><p>Our fractal is nice and complete, but we can make it a bit more organic by cutting off some of its branches. We do that by introducing a new public spawnProbability variable. We pass it along and use it to randomly determine whether we spawn a child or skip it. A probability of 0 means that no children will spawn at all, while a probability of 1 means that all children will spawn. Even values a little below one could drastically alter the shape of our fractal.</p>
+<p>The static Random.value property produces a random value between zero and one. Comparing it to spawnProbability tells us whether we should create a new child or not.</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">float</span> spawnProbability;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">private</span> IEnumerator <span class="title">CreateChildren</span> (<span class="params"></span>) </span>&#123;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; childDirections.Length; i++) &#123;</div><div class="line">		<span class="keyword">if</span> (Random.<span class="keyword">value</span> &lt; spawnProbability) &#123;</div><div class="line">			<span class="function"><span class="keyword">yield</span> return new <span class="title">WaitForSeconds</span>(<span class="params">Random.Range(<span class="number">0.1</span>f, <span class="number">0.5</span>f</span>))</span>;</div><div class="line">			<span class="keyword">new</span> GameObject(<span class="string">"Fractal Child"</span>).AddComponent&lt;Fractal&gt;().</div><div class="line">				Initialize(<span class="keyword">this</span>, i);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Initialize</span> (<span class="params">Fractal parent, <span class="keyword">int</span> childIndex</span>) </span>&#123;</div><div class="line">	…</div><div class="line">	spawnProbability = parent.spawnProbability;</div><div class="line">	…</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/10-inspector.png" alt="inspector"><br><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/10-irregular.png" alt="A 70% spawn chance produces irregular growth shapes"></p>
+<h2 id="Rotating-the-Fractal"><a href="#Rotating-the-Fractal" class="headerlink" title="Rotating the Fractal"></a>Rotating the Fractal</h2><p>All this time our fractal has been a good boy and stayed motionless. But a little movement would make it a lot more interesting to watch. Let’s add a very simple Update method that rotates around the current Y axis at a speed of 30 degrees per second.</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Update</span> (<span class="params"></span>) </span>&#123;</div><div class="line">	transform.Rotate(<span class="number">0</span>f, <span class="number">30</span>f * Time.deltaTime, <span class="number">0</span>f);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>With this simple addition all the fractal’s parts are now merrily spinning. All at the same speed. Yes, let’s randomize it! And make the maximum speed configurable too.</p>
+<p>Note that we have to initialize our rotation speed in Start – not in Initialize – because the root element should rotate too.</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">float</span> maxRotationSpeed;</div><div class="line"></div><div class="line"><span class="keyword">private</span> <span class="keyword">float</span> rotationSpeed;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Start</span> (<span class="params"></span>) </span>&#123;</div><div class="line">	rotationSpeed = Random.Range(-maxRotationSpeed, maxRotationSpeed);</div><div class="line">	…</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Initialize</span> (<span class="params">Fractal parent, <span class="keyword">int</span> childIndex</span>) </span>&#123;</div><div class="line">	…</div><div class="line">	maxRotationSpeed = parent.maxRotationSpeed;</div><div class="line">	…</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Update</span> (<span class="params"></span>) </span>&#123;</div><div class="line">	transform.Rotate(<span class="number">0</span>f, rotationSpeed * Time.deltaTime, <span class="number">0</span>f);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/11-inspector.png" alt="Configured for speed"></p>
+<h2 id="Adding-More-Chaos"><a href="#Adding-More-Chaos" class="headerlink" title="Adding More Chaos"></a>Adding More Chaos</h2><p>Are there more adjustments that we could do to throw our fractal out of whack in subtle ways? There are many! One of them is to knock the fractal’s elements out of alignment by adding a subtle rotation. Let’s call it twist.</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">float</span> maxTwist;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Start</span> (<span class="params"></span>) </span>&#123;</div><div class="line">	rotationSpeed = Random.Range(-maxRotationSpeed, maxRotationSpeed);</div><div class="line">	transform.Rotate(Random.Range(-maxTwist, maxTwist), <span class="number">0</span>f, <span class="number">0</span>f);</div><div class="line">	…</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Initialize</span> (<span class="params">Fractal parent, <span class="keyword">int</span> childIndex</span>) </span>&#123;</div><div class="line">	…</div><div class="line">	maxTwist = parent.maxTwist;</div><div class="line">	…</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/12-inspector.png" alt="inspector"><br><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/12-twist.png" alt="Some nice twist"></p>
+<p>Another option would be to mess with the child scale. Or maybe skip a depth sometimes. Fiddle with positions? From this point I leave it up to you!</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a href="http://catlikecoding.com/unity/tutorials/constructing-a-fractal/" target="_blank" rel="external">Constructing a Fractal </a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://tospan.me/2017/02/05/Unity/Tutorials-Constructing-a-Fractal/" data-id="cizhorep6005o1gvwban3tx7z" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Basics/">Basics</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Geometry/">Geometry</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Unity/">Unity</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/02/05/Unity/Tutorials-Frames-Per-Second/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Unity FPS
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/02/05/Unity/Tutorials-Clock/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Unity时钟</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Algorithms/">Algorithms</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Game-Development/">Game Development</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Game-Programming-Patterns/">Game Programming Patterns</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Unity/">Unity</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Unity-Tutorials/">Unity Tutorials</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/default/">default</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Algorithms/">Algorithms</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Basics/">Basics</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C#</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Data-Structure/">Data Structure</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Games/">Games</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Geometry/">Geometry</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linear-Algebra/">Linear Algebra</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Math/">Math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mathematics/">Mathematics</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Numerical-Analysis/">Numerical Analysis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Patterns/">Patterns</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scripting/">Scripting</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Unity/">Unity</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/default/">default</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Algorithms/" style="font-size: 17.5px;">Algorithms</a> <a href="/tags/Basics/" style="font-size: 12.5px;">Basics</a> <a href="/tags/C/" style="font-size: 12.5px;">C#</a> <a href="/tags/Data-Structure/" style="font-size: 16.25px;">Data Structure</a> <a href="/tags/Games/" style="font-size: 10px;">Games</a> <a href="/tags/Geometry/" style="font-size: 11.25px;">Geometry</a> <a href="/tags/Linear-Algebra/" style="font-size: 13.75px;">Linear Algebra</a> <a href="/tags/Math/" style="font-size: 12.5px;">Math</a> <a href="/tags/Mathematics/" style="font-size: 12.5px;">Mathematics</a> <a href="/tags/Numerical-Analysis/" style="font-size: 10px;">Numerical Analysis</a> <a href="/tags/Patterns/" style="font-size: 15px;">Patterns</a> <a href="/tags/Scripting/" style="font-size: 18.75px;">Scripting</a> <a href="/tags/Unity/" style="font-size: 20px;">Unity</a> <a href="/tags/default/" style="font-size: 11.25px;">default</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">May 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">April 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/03/">March 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/02/">February 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">January 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/12/">December 2012</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/02/23/Unity-Multiplayer-And-Networking/">Unity Multiplayer And Networking</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/23/Unity-Physics/">Unity Physics</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/10/Game-Development/">游戏开发</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/08/Unity/Scripting-Quick-Benchmark/">Unity 简单基准测试</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/07/Unity/Patterns-FSM/">游戏编程设计模式:有限状态机(FSM)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 To Span<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>

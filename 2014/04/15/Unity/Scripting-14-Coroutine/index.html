@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <title>Unity协同进程(Coroutine) | 吐司片的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="什么是协同进程？为什么要用它？怎么用？使用过程中会遇到哪些问题？又怎么解决？
+与此同时，什么是多线程？为什么用它？怎么用？使用过程会遇到哪些问题？又怎么解决？
+协同进程和多线程之间有什么关系？异同点？
+Following the coroutine article, this one will present a few actions that could be done better with">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Unity协同进程(Coroutine)">
+<meta property="og:url" content="http://tospan.me/2014/04/15/Unity/Scripting-14-Coroutine/index.html">
+<meta property="og:site_name" content="吐司片的博客">
+<meta property="og:description" content="什么是协同进程？为什么要用它？怎么用？使用过程中会遇到哪些问题？又怎么解决？
+与此同时，什么是多线程？为什么用它？怎么用？使用过程会遇到哪些问题？又怎么解决？
+协同进程和多线程之间有什么关系？异同点？
+Following the coroutine article, this one will present a few actions that could be done better with">
+<meta property="og:updated_time" content="2017-02-07T08:56:14.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Unity协同进程(Coroutine)">
+<meta name="twitter:description" content="什么是协同进程？为什么要用它？怎么用？使用过程中会遇到哪些问题？又怎么解决？
+与此同时，什么是多线程？为什么用它？怎么用？使用过程会遇到哪些问题？又怎么解决？
+协同进程和多线程之间有什么关系？异同点？
+Following the coroutine article, this one will present a few actions that could be done better with">
+  
+    <link rel="alternate" href="/atom.xml" title="吐司片的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+</head>
+
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">吐司片的博客</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Work hard, play hard.</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://tospan.me"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Unity/Scripting-14-Coroutine" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/04/15/Unity/Scripting-14-Coroutine/" class="article-date">
+  <time datetime="2014-04-15T08:56:14.000Z" itemprop="datePublished">2014-04-15</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Unity/">Unity</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Unity协同进程(Coroutine)
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>什么是协同进程？为什么要用它？怎么用？使用过程中会遇到哪些问题？又怎么解决？</p>
+<p>与此同时，什么是多线程？为什么用它？怎么用？使用过程会遇到哪些问题？又怎么解决？</p>
+<p>协同进程和多线程之间有什么关系？异同点？</p>
+<p>Following the coroutine article, this one will present a few actions that could be done better with coroutine.</p>
+<h2 id="Make-something-happen-in-the-future"><a href="#Make-something-happen-in-the-future" class="headerlink" title="Make something happen in the future"></a>Make something happen in the future</h2><p>There are several ways to delay an action, you may think of Invoke which is the most simple way I would recommend. Yet, simplicity often brings restriction, for instance Invoke does not allow to pass arguments but it may be enough in some cases.</p>
+<a id="more"></a>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">Start</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    Invoke(<span class="number">2.0</span>f, <span class="string">"MyMethod"</span>);</div><div class="line">    StartCoroutine(Delay(<span class="number">2.0</span>f,MyMethod))</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">MyMethod</span>(<span class="params"></span>)</span>&#123;Debug.Log(<span class="string">"Call"</span>);&#125;</div><div class="line"><span class="function">IEnumerator <span class="title">Delay</span>(<span class="params"><span class="keyword">float</span> timer, Action action</span>)</span>&#123;</div><div class="line">    <span class="keyword">while</span>(timer &gt; <span class="number">0</span>f)&#123;</div><div class="line">        timer-=Time.deltaTime;</div><div class="line">        <span class="keyword">yield</span> <span class="keyword">return</span> <span class="literal">null</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span>(action != <span class="literal">null</span>)&#123;</div><div class="line">        action();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Using the script <a href="https://raw.githubusercontent.com/fafase/unity-utilities/master/Scripts/DelayCoroutine" target="_blank" rel="external">from there</a> we can delay actions and pass parameters as well:</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">MyClass</span>:<span class="title">MonoBehaviour</span>&#123;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">MyMethod</span>(<span class="params"><span class="keyword">int</span> a, <span class="keyword">string</span> s</span>)</span>&#123;</div><div class="line">        Debug.Log(a+<span class="string">" "</span> +s);</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Start</span>(<span class="params"></span>)</span>&#123;</div><div class="line">        <span class="keyword">this</span>.DelayedInvoke(<span class="number">2.0</span>f, <span class="string">"MyMethod"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>The method needs to be a member of the calling class. The order of parameters have to match the method order or you get an exception.</p>
+<h2 id="Make-an-object-live-for-a-few-seconds"><a href="#Make-an-object-live-for-a-few-seconds" class="headerlink" title="Make an object live for a few seconds"></a>Make an object live for a few seconds</h2><p>If you want your object to only appear on screen for a few seconds, just destroy it in Start!  Destroy can take a parameter which is the delay before it actually gets killed.</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Start</span>(<span class="params"></span>)</span></div><div class="line">&#123;</div><div class="line">       <span class="comment">//Destroy the game object in 5 seconds</span></div><div class="line">       Destroy(<span class="keyword">this</span>.gameObject, <span class="number">5</span>f);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="Delaying-an-action"><a href="#Delaying-an-action" class="headerlink" title="Delaying an action"></a>Delaying an action</h2><p>You want something to happen and another action after a defined amount of time. UnityScript and C# use different action for the same result. In those example, the check variable is necessary to enter the statement. When entering it is set to false, after 2 seconds it is set back to true.</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">using</span> UnityEngine;</div><div class="line"><span class="keyword">using</span> System.Collections;</div><div class="line"> </div><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Wait</span> : <span class="title">MonoBehaviour</span> </div><div class="line">&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">bool</span> check = <span class="literal">true</span>;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> i =<span class="number">0</span>;</div><div class="line"> </div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Update</span> (<span class="params"></span>) </span></div><div class="line">        &#123;</div><div class="line">        <span class="keyword">if</span>(Input.GetKeyDown(KeyCode.A) &amp;&amp; <span class="keyword">this</span>.check)</div><div class="line">                &#123;</div><div class="line">            <span class="keyword">this</span>.check = <span class="literal">false</span>;</div><div class="line">            Debug.Log(<span class="string">"Inside"</span> + i++);</div><div class="line">            StartCoroutine(WaitForIt());</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">private</span> IEnumerator <span class="title">WaitForIt</span>(<span class="params"></span>)</span></div><div class="line">        &#123;</div><div class="line">        <span class="function"><span class="keyword">yield</span> return new <span class="title">WaitForSeconds</span>(<span class="params"><span class="number">2.0</span>f</span>)</span>;</div><div class="line">        <span class="keyword">this</span>.check = <span class="literal">true</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Running those scripts, you see that you can press A and it prints out ”Inside” and the value of i. But you will have to wait for 2 seconds before being able to print again.</p>
+<h2 id="Do-something-in-a-few-seconds-time"><a href="#Do-something-in-a-few-seconds-time" class="headerlink" title="Do something in a few seconds time"></a>Do something in a few seconds time</h2><p>If you want something to happen a couple of seconds after something else then you can just use Invoke.   Write a function containing the script you want to run, then call Invoke(“NameOfYourFunction”, delayInSeconds). In the example below, the TurnMeBlue function is called after 2 seconds.</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Start</span>(<span class="params"></span>)</span></div><div class="line">&#123;</div><div class="line">      <span class="comment">//Turn the object blue in 2 seconds</span></div><div class="line">      Invoke(<span class="string">"TurnMeBlue"</span>, <span class="number">2</span>f);</div><div class="line">&#125;</div><div class="line"> </div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">TurnMeBlue</span>(<span class="params"></span>)</span></div><div class="line">&#123;</div><div class="line">       renderer.material.color = Color.blue;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>You might even want to use multiple invokes to make things happen in a sequence:</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> Vector3 startPosition = Vector3.zero;</div><div class="line"><span class="keyword">private</span> <span class="keyword">float</span> health = <span class="number">100.0</span>;</div><div class="line"><span class="keyword">private</span> <span class="keyword">bool</span> respawning = <span class="literal">false</span>;</div><div class="line"><span class="keyword">private</span> Renderer renderer = <span class="literal">null</span>;</div><div class="line"> </div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Start</span>(<span class="params"></span>)</span></div><div class="line">&#123;</div><div class="line">    <span class="comment">//Cache were this object started</span></div><div class="line">    <span class="keyword">this</span>.startPosition = <span class="keyword">this</span>.transform.position;</div><div class="line">    <span class="keyword">this</span>.renderer = GetComponent&lt;Renderer&gt;();</div><div class="line">&#125;</div><div class="line"> </div><div class="line"><span class="comment">//Reset the object</span></div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Respawn</span>(<span class="params"></span>)</span></div><div class="line">&#123;</div><div class="line">      <span class="keyword">this</span>.transform.position = <span class="keyword">this</span>.startPosition;</div><div class="line">      <span class="keyword">this</span>.health = <span class="number">100</span>f;</div><div class="line">      <span class="keyword">this</span>.renderer.enabled = <span class="literal">true</span>;</div><div class="line">      <span class="keyword">this</span>.respawning = <span class="literal">false</span>;</div><div class="line">&#125;</div><div class="line"> </div><div class="line"><span class="comment">//Hide the character</span></div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Hide</span>(<span class="params"></span>)</span></div><div class="line">&#123;</div><div class="line">     <span class="keyword">this</span>.renderer.enabled = <span class="literal">false</span>;</div><div class="line">     <span class="keyword">this</span>.transform.position = <span class="keyword">new</span> Vector3(<span class="number">1000</span>f,<span class="number">1000</span>f,<span class="number">1000</span>f);</div><div class="line">&#125;</div><div class="line"> </div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Update</span>(<span class="params"></span>)</span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span>(health &lt; <span class="number">0</span> &amp;&amp; <span class="keyword">this</span>.respawning == <span class="literal">false</span>)</div><div class="line">    &#123;</div><div class="line">         <span class="keyword">this</span>.respawning = <span class="literal">true</span>;</div><div class="line">         animation.Play(<span class="string">"die"</span>);</div><div class="line">         Invoke(<span class="string">"Hide"</span>, <span class="number">3</span>f);</div><div class="line">         Invoke(<span class="string">"Respawn"</span>, <span class="number">10</span>f);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>This script uses invoke to play a death animation and then respawn the character.  When the health drops below 0 a “die” animation is played.  The model is hidden (and moved out of the way) in 3 seconds and then respawned in 10 seconds.</p>
+<h2 id="Do-something-every-few-seconds"><a href="#Do-something-every-few-seconds" class="headerlink" title="Do something every few seconds"></a>Do something every few seconds</h2><p>Rather than writing a coroutine with a loop you can simply write a function that contains the script you want and use InvokeRepeating(“YourFunctionName”, delayForFirstCall, timeBetweenCalls).</p>
+<p>You can always cancel this using CancelInvoke(“YourFunctionName”) or without any parameters to cancel all of them.</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> <span class="keyword">float</span> health = <span class="number">100</span>f;</div><div class="line"> </div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Start</span>(<span class="params"></span>)</span></div><div class="line">&#123;</div><div class="line">    InvokeRepeating(<span class="string">"Heal"</span>, <span class="number">2</span>f, <span class="number">2</span>f);</div><div class="line">&#125;</div><div class="line"> </div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Heal</span>(<span class="params"></span>)</span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">this</span>.health = Mathf.Clamp(health + <span class="number">1</span>f, <span class="number">0</span>f, <span class="number">100</span>f);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="When-to-use-a-coroutine"><a href="#When-to-use-a-coroutine" class="headerlink" title="When to use a coroutine"></a>When to use a coroutine</h2><p>A coroutine can be useful when you need something that would otherwise be in an Update call and you don’t want to make Update too complicated.</p>
+<p>Be aware that having Update and multiple coroutines all changing the same variables is the source of hard to spot errors.</p>
+<p>For example you might want to rotate an object to a new angle over time.  This could be a use for a coroutine.  In the following example calling RotateBy rotates the object to a new angle over a period of time.</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">OnMouseUp</span>(<span class="params"></span>)</span></div><div class="line">&#123;</div><div class="line">     RotateBy(<span class="keyword">new</span> Vector3(<span class="number">0</span>f,<span class="number">90</span>f,<span class="number">0</span>f),<span class="number">2</span>f);</div><div class="line">&#125;</div><div class="line"> </div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">RotateBy</span>(<span class="params">Vector3 angle, <span class="keyword">float</span> time</span>)</span></div><div class="line">&#123;</div><div class="line">     Quaternion currentRotation = transform.rotation;</div><div class="line">     Vector3 targetAngle = currentRotation.eulerAngles + angle;</div><div class="line">     Quaternion targetRotation = Quaternion.Euler(targetAngle);</div><div class="line">     <span class="keyword">float</span> t = <span class="number">0</span>f;</div><div class="line">     <span class="keyword">while</span>(t &lt; <span class="number">1</span>)</div><div class="line">     &#123;</div><div class="line">          transform.rotation = Quaternion.Slerp(currentRotation, targetRotation, t);</div><div class="line">          t += Time.deltaTime / time;</div><div class="line">          <span class="keyword">yield</span> <span class="literal">null</span>;</div><div class="line">     &#125;  </div><div class="line">     <span class="keyword">this</span>.transform.rotation = targetRotation;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>In Javascript you make a function a coroutine simply by adding a yield to it. Never do this in Update as its the one place this doesn’t work.</p>
+<h2 id="原文链接"><a href="#原文链接" class="headerlink" title="原文链接"></a>原文链接</h2><ul>
+<li><a href="https://unitygem.wordpress.com/coroutine-usage-invoke-delay/" target="_blank" rel="external">Coroutine usage – Delay</a></li>
+</ul>
+<h2 id="Coroutines"><a href="#Coroutines" class="headerlink" title="Coroutines"></a>Coroutines</h2><p>How to create coroutines and use them to achieve complex behaviors.</p>
+<p><a href="https://unity3d.com/learn/tutorials/topics/scripting/coroutines?playlist=17117" target="_blank" rel="external">https://unity3d.com/learn/tutorials/topics/scripting/coroutines?playlist=17117</a></p>
+<p><a href="https://youtu.be/bM3CXzj5xM4" target="_blank" rel="external">https://youtu.be/bM3CXzj5xM4</a></p>
+<p>4:15</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">using</span> UnityEngine;</div><div class="line"><span class="keyword">using</span> System.Collections;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">CoroutinesExample</span> : <span class="title">MonoBehaviour</span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">float</span> smoothing = <span class="number">1</span>f;</div><div class="line">    <span class="keyword">public</span> Transform target;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Start</span> (<span class="params"></span>)</span></div><div class="line">    &#123;</div><div class="line">        StartCoroutine(MyCoroutine(target));</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="function">IEnumerator <span class="title">MyCoroutine</span> (<span class="params">Transform target</span>)</span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">while</span>(Vector3.Distance(transform.position, target.position) &gt; <span class="number">0.05</span>f)</div><div class="line">        &#123;</div><div class="line">            transform.position = Vector3.Lerp(transform.position, target.position, smoothing * Time.deltaTime);</div><div class="line"></div><div class="line">            <span class="keyword">yield</span> <span class="keyword">return</span> <span class="literal">null</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        print(<span class="string">"Reached the target."</span>);</div><div class="line"></div><div class="line">        <span class="function"><span class="keyword">yield</span> return new <span class="title">WaitForSeconds</span>(<span class="params"><span class="number">3</span>f</span>)</span>;</div><div class="line"></div><div class="line">        print(<span class="string">"MyCoroutine is now finished."</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">using</span> UnityEngine;</div><div class="line"><span class="keyword">using</span> System.Collections;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">PropertiesAndCoroutines</span> : <span class="title">MonoBehaviour</span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">float</span> smoothing = <span class="number">7</span>f;</div><div class="line">    <span class="keyword">public</span> Vector3 Target</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">get</span> &#123; <span class="keyword">return</span> target; &#125;</div><div class="line">        <span class="keyword">set</span></div><div class="line">        &#123;</div><div class="line">            target = <span class="keyword">value</span>;</div><div class="line"></div><div class="line">            StopCoroutine(<span class="string">"Movement"</span>);</div><div class="line">            StartCoroutine(<span class="string">"Movement"</span>, target);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="keyword">private</span> Vector3 target;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="function">IEnumerator <span class="title">Movement</span> (<span class="params">Vector3 target</span>)</span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">while</span>(Vector3.Distance(transform.position, target) &gt; <span class="number">0.05</span>f)</div><div class="line">        &#123;</div><div class="line">            transform.position = Vector3.Lerp(transform.position, target, smoothing * Time.deltaTime);</div><div class="line"></div><div class="line">            <span class="keyword">yield</span> <span class="keyword">return</span> <span class="literal">null</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">using</span> UnityEngine;</div><div class="line"><span class="keyword">using</span> System.Collections;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">ClickSetPosition</span> : <span class="title">MonoBehaviour</span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">public</span> PropertiesAndCoroutines coroutineScript;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">OnMouseDown</span> (<span class="params"></span>)</span></div><div class="line">    &#123;</div><div class="line">        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);</div><div class="line">        RaycastHit hit;</div><div class="line"></div><div class="line">        Physics.Raycast(ray, <span class="keyword">out</span> hit);</div><div class="line"></div><div class="line">        <span class="keyword">if</span>(hit.collider.gameObject == gameObject)</div><div class="line">        &#123;</div><div class="line">            Vector3 newTarget = hit.point + <span class="keyword">new</span> Vector3(<span class="number">0</span>, <span class="number">0.5</span>f, <span class="number">0</span>);</div><div class="line">            coroutineScript.Target = newTarget;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://tospan.me/2014/04/15/Unity/Scripting-14-Coroutine/" data-id="cizhoreov004z1gvwgbzmerll" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Scripting/">Scripting</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Unity/">Unity</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2014/04/20/Unity/Scripting-15-Delegate-And-Events/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          C# 委托(Delegate)和事件(Event)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2014/04/11/Unity/Scripting-13-Attributes/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">C# 属性(Attribute)</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Algorithms/">Algorithms</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Game-Development/">Game Development</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Game-Programming-Patterns/">Game Programming Patterns</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Unity/">Unity</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Unity-Tutorials/">Unity Tutorials</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/default/">default</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Algorithms/">Algorithms</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Basics/">Basics</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C#</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Data-Structure/">Data Structure</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Games/">Games</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Geometry/">Geometry</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linear-Algebra/">Linear Algebra</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Math/">Math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mathematics/">Mathematics</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Numerical-Analysis/">Numerical Analysis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Patterns/">Patterns</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scripting/">Scripting</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Unity/">Unity</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/default/">default</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Algorithms/" style="font-size: 17.5px;">Algorithms</a> <a href="/tags/Basics/" style="font-size: 12.5px;">Basics</a> <a href="/tags/C/" style="font-size: 12.5px;">C#</a> <a href="/tags/Data-Structure/" style="font-size: 16.25px;">Data Structure</a> <a href="/tags/Games/" style="font-size: 10px;">Games</a> <a href="/tags/Geometry/" style="font-size: 11.25px;">Geometry</a> <a href="/tags/Linear-Algebra/" style="font-size: 13.75px;">Linear Algebra</a> <a href="/tags/Math/" style="font-size: 12.5px;">Math</a> <a href="/tags/Mathematics/" style="font-size: 12.5px;">Mathematics</a> <a href="/tags/Numerical-Analysis/" style="font-size: 10px;">Numerical Analysis</a> <a href="/tags/Patterns/" style="font-size: 15px;">Patterns</a> <a href="/tags/Scripting/" style="font-size: 18.75px;">Scripting</a> <a href="/tags/Unity/" style="font-size: 20px;">Unity</a> <a href="/tags/default/" style="font-size: 11.25px;">default</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">May 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">April 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/03/">March 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/02/">February 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">January 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/12/">December 2012</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/02/23/Unity-Multiplayer-And-Networking/">Unity Multiplayer And Networking</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/23/Unity-Physics/">Unity Physics</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/10/Game-Development/">游戏开发</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/08/Unity/Scripting-Quick-Benchmark/">Unity 简单基准测试</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/07/Unity/Patterns-FSM/">游戏编程设计模式:有限状态机(FSM)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 To Span<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>

@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <title>Unity Physics | 吐司片的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="To have convincing physical behaviour, an object in a game must accelerate correctly and be affected by collisions, gravity and other forces. Unity’s built-in physics engines provide components that">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Unity Physics">
+<meta property="og:url" content="http://tospan.me/2017/02/23/Unity-Physics/index.html">
+<meta property="og:site_name" content="吐司片的博客">
+<meta property="og:description" content="To have convincing physical behaviour, an object in a game must accelerate correctly and be affected by collisions, gravity and other forces. Unity’s built-in physics engines provide components that">
+<meta property="og:image" content="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/PhysicsIntroPic.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/Inspector-BoxCollider.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/Inspector-CapsuleCollider.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/CapsuleColliderDiagram.svg">
+<meta property="og:image" content="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/Inspector-CharacterController.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/CharacterControllerWindow.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/Inspector-CharacterJoint.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/CharacterJointWindow.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/ConfigurableJointProps.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/XZLimit.svg">
+<meta property="og:image" content="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/CJointBounciness.svg">
+<meta property="og:image" content="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/CJointSpring.svg">
+<meta property="og:image" content="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/Inspector-ConstantForce.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/Inspector-FixedJoint.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/Inspector-HingeJoint.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/Inspector-MeshCollider.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/Inspector-Rigidbody.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/RigidbodyandCollider.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/CompoundCollider.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/Inspector-SphereCollider.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/Inspector-SpringJoint.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/Inspector-Cloth.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/Inspector-Cloth2.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/Inspector-WheelCollider2.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/Inspector-WheelCollider.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/WheelsSetup.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/WheelColliderGizmo.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/WheelGeometries.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/WheelFrictionCurve.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/Inspector-TerrainCollider.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/Inspector-PhysicMaterial.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/RagdollWizard.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/WheelColliderTutorial.png">
+<meta property="og:image" content="http://tospan.me/../uploads/Main/WheelColliderSettings.png">
+<meta property="og:updated_time" content="2017-02-22T23:52:54.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Unity Physics">
+<meta name="twitter:description" content="To have convincing physical behaviour, an object in a game must accelerate correctly and be affected by collisions, gravity and other forces. Unity’s built-in physics engines provide components that">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/PhysicsIntroPic.jpg">
+  
+    <link rel="alternate" href="/atom.xml" title="吐司片的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+</head>
+
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">吐司片的博客</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Work hard, play hard.</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://tospan.me"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Unity-Physics" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/02/23/Unity-Physics/" class="article-date">
+  <time datetime="2017-02-22T23:52:54.000Z" itemprop="datePublished">2017-02-23</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Unity/">Unity</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Unity Physics
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/PhysicsIntroPic.jpg" alt=""></p>
+<p>To have convincing physical behaviour, an object in a game must accelerate correctly and be affected by collisions, gravity and other forces. Unity’s built-in physics engines provide components that handle the physical simulation for you. With just a few parameter settings, you can create objects that behave passively in a realistic way (ie, they will be moved by collisions and falls but will not start moving by themselves). By controlling the physics from scripts, you can give an object the dynamics of a vehicle, a machine, or even a piece of fabric. This section gives an overview of the main physics components in Unity, with links for further reading.</p>
+<p>Note: there are actually two separate physics engines in Unity: one for 3D physics, and one for 2D physics. The main concepts are identical between the two engines (except for the extra dimension in 3D), but they are implemented using different components. For example, there is Rigidbody component for 3D physics and an analogous Rigidbody 2D for 2D physics.</p>
+<p>Related tutorials: <a href="https://unity3d.com/learn/tutorials/topics/physics" target="_blank" rel="external">Physics</a>; <a href="http://unity3d.com/learn/tutorials/modules/intermediate/physics/physics-best-practices?playlist=30089" target="_blank" rel="external">Physics Best Practices</a></p>
+<p>See the <a href="https://support.unity3d.com/hc/en-us/sections/201851913-Physics" target="_blank" rel="external">Knowledge Base Physics section</a> for troubleshooting, tips and tricks.</p>
+<a id="more"></a>
+<!-- TOC -->
+<ul>
+<li><a href="#physics-overview">Physics overview</a><ul>
+<li><a href="#rigidbody-overview">Rigidbody overview</a><ul>
+<li><a href="#sleeping">Sleeping</a></li>
+</ul>
+</li>
+<li><a href="#colliders">Colliders</a><ul>
+<li><a href="#physics-materials">Physics materials</a></li>
+<li><a href="#triggers">Triggers</a></li>
+<li><a href="#script-actions-taken-on-collision">Script actions taken on collision</a></li>
+<li><a href="#collider-interactions">Collider interactions</a><ul>
+<li><a href="#static-collider">Static Collider</a></li>
+<li><a href="#rigidbody-collider">Rigidbody Collider</a></li>
+<li><a href="#kinematic-rigidbody-collider">Kinematic Rigidbody Collider</a></li>
+</ul>
+</li>
+<li><a href="#collision-action-matrix">Collision action matrix</a></li>
+</ul>
+</li>
+<li><a href="#joints">Joints</a></li>
+<li><a href="#character-controllers">Character Controllers</a></li>
+</ul>
+</li>
+<li><a href="#3d-physics-reference">3D Physics Reference</a><ul>
+<li><a href="#box-collider">Box Collider</a><ul>
+<li><a href="#properties">Properties</a></li>
+<li><a href="#details">Details</a></li>
+</ul>
+</li>
+<li><a href="#capsule-collider">Capsule Collider</a><ul>
+<li><a href="#properties-1">Properties</a></li>
+<li><a href="#details-1">Details</a></li>
+</ul>
+</li>
+<li><a href="#character-controller">Character Controller</a><ul>
+<li><a href="#details-2">Details</a></li>
+<li><a href="#fine-tuning-your-character">Fine-tuning your character</a></li>
+<li><a href="#dont-get-stuck">Don’t get stuck</a></li>
+<li><a href="#hints">Hints</a></li>
+</ul>
+</li>
+<li><a href="#character-joint">Character Joint</a><ul>
+<li><a href="#properties-2">Properties</a></li>
+<li><a href="#details-3">Details</a><ul>
+<li><a href="#breaking-joints">Breaking joints</a></li>
+</ul>
+</li>
+<li><a href="#hints-1">Hints</a></li>
+</ul>
+</li>
+<li><a href="#configurable-joint">Configurable Joint</a><ul>
+<li><a href="#properties-3">Properties</a></li>
+<li><a href="#details-4">Details</a><ul>
+<li><a href="#constraining-movement">Constraining Movement</a></li>
+<li><a href="#bounciness-and-springs">Bounciness and Springs</a></li>
+</ul>
+</li>
+<li><a href="#drive-forces">Drive forces</a><ul>
+<li><a href="#slerp-drive">Slerp Drive</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#constant-force">Constant Force</a><ul>
+<li><a href="#properties-4">Properties</a></li>
+<li><a href="#hints-2">Hints</a></li>
+</ul>
+</li>
+<li><a href="#fixed-joint">Fixed Joint</a><ul>
+<li><a href="#properties-5">Properties</a></li>
+<li><a href="#details-5">Details</a></li>
+<li><a href="#breaking-joints-1">Breaking joints</a></li>
+<li><a href="#hints-3">Hints</a></li>
+</ul>
+</li>
+<li><a href="#hinge-joint">Hinge Joint</a><ul>
+<li><a href="#properties-6">Properties</a></li>
+<li><a href="#details-6">Details</a><ul>
+<li><a href="#chains">Chains</a></li>
+</ul>
+</li>
+<li><a href="#hints-4">Hints</a></li>
+</ul>
+</li>
+<li><a href="#mesh-collider">Mesh Collider</a><ul>
+<li><a href="#properties-7">Properties</a></li>
+<li><a href="#details-7">Details</a></li>
+</ul>
+</li>
+<li><a href="#rigidbody">Rigidbody</a><ul>
+<li><a href="#properties-8">Properties</a></li>
+<li><a href="#details-8">Details</a><ul>
+<li><a href="#parenting">Parenting</a></li>
+<li><a href="#scripting">Scripting</a></li>
+<li><a href="#animation">Animation</a></li>
+<li><a href="#colliders-1">Colliders</a></li>
+<li><a href="#continuous-collision-detection">Continuous Collision Detection</a></li>
+</ul>
+</li>
+<li><a href="#use-the-right-size">Use the right size</a></li>
+<li><a href="#hints-5">Hints</a></li>
+</ul>
+</li>
+<li><a href="#sphere-collider">Sphere Collider</a><ul>
+<li><a href="#properties-9">Properties</a></li>
+<li><a href="#details-9">Details</a></li>
+</ul>
+</li>
+<li><a href="#spring-joint">Spring Joint</a><ul>
+<li><a href="#properties-10">Properties</a></li>
+<li><a href="#details-10">Details</a></li>
+</ul>
+</li>
+<li><a href="#cloth">Cloth</a><ul>
+<li><a href="#properties-11">Properties</a><ul>
+<li><a href="#edit-constraints-tool">Edit Constraints Tool</a></li>
+<li><a href="#collisions">Collisions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#wheel-collider">Wheel Collider</a><ul>
+<li><a href="#properties-12">Properties</a></li>
+<li><a href="#details-11">Details</a><ul>
+<li><a href="#wheel-collider-setup">Wheel collider setup</a></li>
+<li><a href="#collision-geometry">Collision geometry</a></li>
+<li><a href="#wheel-friction-curves">Wheel Friction Curves</a></li>
+</ul>
+</li>
+<li><a href="#hints-6">Hints</a></li>
+</ul>
+</li>
+<li><a href="#terrain-collider">Terrain Collider</a><ul>
+<li><a href="#properties-13">Properties</a></li>
+<li><a href="#details-12">Details</a></li>
+</ul>
+</li>
+<li><a href="#physic-material">Physic Material</a><ul>
+<li><a href="#properties-14">Properties</a></li>
+<li><a href="#details-13">Details</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#physics-howtos">Physics HOWTOs</a><ul>
+<li><a href="#ragdoll-wizard">Ragdoll Wizard</a><ul>
+<li><a href="#creating-the-character">Creating the Character</a></li>
+<li><a href="#using-the-wizard">Using the Wizard</a></li>
+<li><a href="#note">Note</a></li>
+</ul>
+</li>
+<li><a href="#joint-and-ragdoll-stability">Joint and Ragdoll stability</a></li>
+</ul>
+</li>
+<li><a href="#wheelcollider-tutorial">WheelCollider Tutorial</a></li>
+</ul>
+<!-- /TOC -->
+<h2 id="Physics-overview"><a href="#Physics-overview" class="headerlink" title="Physics overview"></a>Physics overview</h2><p>These pages briefly describe the main physics components available in Unity, and give details of their usage and links for further reading.</p>
+<h3 id="Rigidbody-overview"><a href="#Rigidbody-overview" class="headerlink" title="Rigidbody overview"></a>Rigidbody overview</h3><p>A Rigidbody is the main component that enables physical behaviour for a GameObject. With a Rigidbody attached, the object will immediately respond to gravity. If one or more Collider components are also added, the GameObject is moved by incoming collisions.</p>
+<p>Since a Rigidbody component takes over the movement of the GameObject it is attached to, you shouldn’t try to move it from a script by changing the Transform properties such as position and rotation. Instead, you should apply <strong>forces</strong> to push the GameObject and let the physics engine calculate the results.</p>
+<p>There are some cases where you might want a GameObject to have a Rigidbody without having its motion controlled by the physics engine. For example, you may want to control your character directly from script code but still allow it to be detected by triggers (see Triggers below). This kind of non-physical motion produced from a script is known as kinematic motion. The Rigidbody component has a property called <strong>Is Kinematic</strong> which removes it from the control of the physics engine and allow it to be moved kinematically from a script. It is possible to change the value of Is Kinematic from a script to allow physics to be switched on and off for an object, but this comes with a performance overhead and should be used sparingly.</p>
+<p>See the Rigidbody and Rigidbody 2D reference pages for further details about the settings and scripting options for these components.</p>
+<h4 id="Sleeping"><a href="#Sleeping" class="headerlink" title="Sleeping"></a>Sleeping</h4><p>When a Rigidbody is moving slower than a defined minimum linear or rotational speed, the physics engine assumes it has come to a halt. When this happens, the GameObject does not move again until it receives a collision or force, and so it is set to “sleeping” mode. This optimisation means that no processor time is spent updating the Rigidbody until the next time it is “awoken” (that is, set in motion again).</p>
+<p>For most purposes, the sleeping and waking of a Rigidbody component happens transparently. However, a GameObject might fail to wake up if a Static Collider (that is, one without a Rigidbody) is moved into it or away from it by modifying the Transform position. This might result, say, in the Rigidbody GameObject hanging in the air when the floor has been moved out from beneath it. In cases like this, the GameObject can be woken explicitly using the WakeUp function. See the Rigidbody and Rigidbody 2D component pages for more information about sleeping.</p>
+<h3 id="Colliders"><a href="#Colliders" class="headerlink" title="Colliders"></a>Colliders</h3><p>Collider components define the shape of an object for the purposes of physical collisions. A collider, which is invisible, need not be the exact same shape as the object’s mesh and in fact, a rough approximation is often more efficient and indistinguishable in gameplay.</p>
+<p>The simplest (and least processor-intensive) colliders are the so-called primitive collider types. In 3D, these are the Box Collider, Sphere Collider and Capsule Collider. In 2D, you can use the Box Collider 2D and Circle Collider 2D. Any number of these can be added to a single object to create compound colliders.</p>
+<p>With careful positioning and sizing, compound colliders can often approximate the shape of an object quite well while keeping a low processor overhead. Further flexibility can be gained by having additional colliders on child objects (eg, boxes can be rotated relative to the local axes of the parent object). When creating a compound collider like this, there should only be one Rigidbody component, placed on the root object in the hierarchy.</p>
+<p>Note, that primitive colliders will not work correctly with shear transforms - that means that if you use a combination of rotations and non-uniform scales in the tranform hierarchy so that the resulting shape would no longer match a primitive shape, the primitive collider will not be able to represent it correctly.</p>
+<p>There are some cases, however, where even compound colliders are not accurate enough. In 3D, you can use Mesh Colliders to match the shape of the object’s mesh exactly. In 2D, the Polygon Collider 2D will generally not match the shape of the sprite graphic perfectly but you can refine the shape to any level of detail you like. These colliders are much more processor-intensive than primitive types, however, so use them sparingly to maintain good performance. Also, a mesh collider will normally be unable to collide with another mesh collider (ie, nothing will happen when they make contact). You can get around this in some cases by marking the mesh collider as Convex in the inspector. This will generate the collider shape as a “convex hull” which is like the original mesh but with any undercuts filled in. The benefit of this is that a convex mesh collider can collide with other mesh colliders so you may be able to use this feature when you have a moving character with a suitable shape. However, a good general rule is to use mesh colliders for scene geometry and approximate the shape of moving objects using compound primitive colliders.</p>
+<p>Colliders can be added to an object without a Rigidbody component to create floors, walls and other motionless elements of a scene. These are referred to as static colliders. In general, you should not reposition static colliders by changing the Transform position since this will impact heavily on the performance of the physics engine. Colliders on an object that does have a Rigidbody are known as dynamic colliders. Static colliders can interact with dynamic colliders but since they don’t have a Rigidbody, they will not move in response to collisions.</p>
+<p>The reference pages for the various collider types linked above have further information about their properties and uses.</p>
+<h4 id="Physics-materials"><a href="#Physics-materials" class="headerlink" title="Physics materials"></a>Physics materials</h4><p>When colliders interact, their surfaces need to simulate the properties of the material they are supposed to represent. For example, a sheet of ice will be slippery while a rubber ball will offer a lot of friction and be very bouncy. Although the shape of colliders is not deformed during collisions, their friction and bounce can be configured using Physics Materials. Getting the parameters just right can involve a bit of trial and error but an ice material, for example will have zero (or very low) friction and a rubber material with have high friction and near-perfect bounciness. See the reference pages for Physic Material and Physics Material 2D for further details on the available parameters. Note that for historical reasons, the 3D asset is actually called Physic Material (without the S) but the 2D equivalent is called Physics Material 2D (with the S).</p>
+<h4 id="Triggers"><a href="#Triggers" class="headerlink" title="Triggers"></a>Triggers</h4><p>The scripting system can detect when collisions occur and initiate actions using the OnCollisionEnter function. However, you can also use the physics engine simply to detect when one collider enters the space of another without creating a collision. A collider configured as a Trigger (using the Is Trigger property) does not behave as a solid object and will simply allow other colliders to pass through. When a collider enters its space, a trigger will call the OnTriggerEnter function on the trigger object’s scripts.</p>
+<h4 id="Script-actions-taken-on-collision"><a href="#Script-actions-taken-on-collision" class="headerlink" title="Script actions taken on collision"></a>Script actions taken on collision</h4><p>When collisions occur, the physics engine calls functions with specific names on any scripts attached to the objects involved. You can place any code you like in these functions to respond to the collision event. For example, you might play a crash sound effect when a car bumps into an obstacle.</p>
+<p>On the first physics update where the collision is detected, the OnCollisionEnter function is called. During updates where contact is maintained, OnCollisionStay is called and finally, OnCollisionExit indicates that contact has been broken. Trigger colliders call the analogous OnTriggerEnter, OnTriggerStay and OnTriggerExit functions. Note that for 2D physics, there are equivalent functions with 2D appended to the name, eg, OnCollisionEnter2D. Full details of these functions and code samples can be found on the Script Reference page for the MonoBehaviour class.</p>
+<p>With normal, non-trigger collisions, there is an additional detail that at least one of the objects involved must have a non-kinematic Rigidbody (ie, Is Kinematic must be switched off). If both objects are kinematic Rigidbodies then OnCollisionEnter, etc, will not be called. With trigger collisions, this restriction doesn’t apply and so both kinematic and non-kinematic Rigidbodies will prompt a call to OnTriggerEnter when they enter a trigger collider.</p>
+<h4 id="Collider-interactions"><a href="#Collider-interactions" class="headerlink" title="Collider interactions"></a>Collider interactions</h4><p>Colliders interact with each other differently depending on how their Rigidbody components are configured. The three important configurations are the Static Collider (ie, no Rigidbody is attached at all), the Rigidbody Collider and the Kinematic Rigidbody Collider.</p>
+<h5 id="Static-Collider"><a href="#Static-Collider" class="headerlink" title="Static Collider"></a>Static Collider</h5><p>This is a GameObject that has a Collider but no Rigidbody. Static colliders are used for level geometry which always stays at the same place and never moves around. Incoming rigidbody objects will collide with the static collider but will not move it.</p>
+<p>The physics engine assumes that static colliders never move or change and can make useful optimizations based on this assumption. Consequently, static colliders should not be disabled/enabled, moved or scaled during gameplay. If you do change a static collider then this will result in extra internal recomputation by the physics engine which causes a major drop in performance. Worse still, the changes can sometimes leave the collider in an undefined state that produces erroneous physics calculations. For example a raycast against an altered Static Collider could fail to detect it, or detect it at a random position in space. Furthermore, Rigidbodies that are hit by a moving static collider will not necessarily be “awoken” and the static collider will not apply any friction. For these reasons, only colliders that are Rigidbodies should be altered. If you want a collider object that is not affected by incoming rigidbodies but can still be moved from a script then you should attach a Kinematic Rigidbody component to it rather than no Rigidbody at all.</p>
+<h5 id="Rigidbody-Collider"><a href="#Rigidbody-Collider" class="headerlink" title="Rigidbody Collider"></a>Rigidbody Collider</h5><p>This is a GameObject with a Collider and a normal, non-kinematic Rigidbody attached. Rigidbody colliders are fully simulated by the physics engine and can react to collisions and forces applied from a script. They can collide with other objects (including static colliders) and are the most commonly used Collider configuration in games that use physics.</p>
+<h5 id="Kinematic-Rigidbody-Collider"><a href="#Kinematic-Rigidbody-Collider" class="headerlink" title="Kinematic Rigidbody Collider"></a>Kinematic Rigidbody Collider</h5><p>This is a GameObject with a Collider and a kinematic Rigidbody attached (ie, the IsKinematic property of the Rigidbody is enabled). You can move a kinematic rigidbody object from a script by modifying its Transform Component but it will not respond to collisions and forces like a non-kinematic rigidbody. Kinematic rigidbodies should be used for colliders that can be moved or disabled/enabled occasionally but that should otherwise behave like static colliders. An example of this is a sliding door that should normally act as an immovable physical obstacle but can be opened when necessary. Unlike a static collider, a moving kinematic rigidbody will apply friction to other objects and will “wake up” other rigidbodies when they make contact.</p>
+<p>Even when immobile, kinematic rigidbody colliders have different behavior to static colliders. For example, if the collider is set to as a trigger then you also need to add a rigidbody to it in order to receive trigger events in your script. If you don’t want the trigger to fall under gravity or otherwise be affected by physics then you can set the IsKinematic property on its rigidbody.</p>
+<p>A Rigidbody component can be switched between normal and kinematic behavior at any time using the IsKinematic property.</p>
+<p>A common example of this is the “ragdoll” effect where a character normally moves under animation but is thrown physically by an explosion or a heavy collision. The character’s limbs can each be given their own Rigidbody component with IsKinematic enabled by default. The limbs will move normallly by animation until IsKinematic is switched off for all of them and they immediately behave as physics objects. At this point, a collision or explosion force will send the character flying with its limbs thrown in a convincing way.</p>
+<h4 id="Collision-action-matrix"><a href="#Collision-action-matrix" class="headerlink" title="Collision action matrix"></a>Collision action matrix</h4><p>When two objects collide, a number of different script events can occur depending on the configurations of the colliding objects’ rigidbodies. The charts below give details of which event functions are called based on the components that are attached to the objects. Some of the combinations only cause one of the two objects to be affected by the collision, but the general rule is that physics will not be applied to an object that doesn’t have a Rigidbody component attached.</p>
+<p><strong>Collision detection occurs and messages are sent upon collision</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Static Collider</th>
+<th>Rigidbody Collider</th>
+<th>Kinematic Rigidbody Collider</th>
+<th>Static Trigger Collider</th>
+<th>Rigidbody Trigger Collider</th>
+<th>Kinematic Rigidbody Trigger Collider</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Static Collider</td>
+<td></td>
+<td>Y</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Rigidbody Collider</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Kinematic Rigidbody Collider</td>
+<td></td>
+<td>Y</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Static Trigger Collider</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Rigidbody Trigger Collider</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Kinematic Rigidbody Trigger Collider</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Trigger messages are sent upon collision</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Static Collider</th>
+<th>Rigidbody Collider</th>
+<th>Kinematic Rigidbody Collider</th>
+<th>Static Trigger Collider</th>
+<th>Rigidbody Trigger Collider</th>
+<th>Kinematic Rigidbody Trigger Collider</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Static Collider</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>Y</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>Rigidbody Collider</td>
+<td></td>
+<td></td>
+<td></td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>Kinematic Rigidbody Collider</td>
+<td></td>
+<td></td>
+<td></td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>Static Trigger Collider</td>
+<td></td>
+<td>Y</td>
+<td>Y</td>
+<td></td>
+<td>Y</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>Rigidbody Trigger Collider</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>Kinematic Rigidbody Trigger Collider</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+</tr>
+</tbody>
+</table>
+<h3 id="Joints"><a href="#Joints" class="headerlink" title="Joints"></a>Joints</h3><p>You can attach one rigidbody object to another or to a fixed point in space using a Joint component. Generally, you want a joint to allow at least some freedom of motion and so Unity provides different Joint components that enforce different restrictions.</p>
+<p>For example, a Hinge Joint allows rotation around a specific point and axis while a Spring Joint keeps the objects apart but lets the distance between them stretch slightly.</p>
+<p>2D joint components have 2D at the end of the name, eg, Hinge Joint 2D. See Joints 2D for a summary of the 2D joints and useful background information.</p>
+<p>Joints also have other options that can enabled for specific effects. For example, you can set a joint to break when the force applied to it exceeds a certain threshold. Some joints also allow a drive force to occur between the connected objects to set them in motion automatically.</p>
+<p>See each joint reference page for the Joint classes and for further information about their properties.</p>
+<h3 id="Character-Controllers"><a href="#Character-Controllers" class="headerlink" title="Character Controllers"></a>Character Controllers</h3><p>The character in a first- or third-person game will often need some collision-based physics so that it doesn’t fall through the floor or walk through walls. Usually, though, the character’s acceleration and movement will not be physically realistic, so it may be able to accelerate, brake and change direction almost instantly without being affected by momentum.</p>
+<p>In 3D physics, this type of behaviour can be created using a Character Controller. This component gives the character a simple, capsule-shaped collider that is always upright. The controller has its own special functions to set the object’s speed and direction but unlike true colliders, a rigidbody is not needed and the momentum effects are not realistic.</p>
+<p>A character controller cannot walk through static colliders in a scene, and so will follow floors and be obstructed by walls. It can push rigidbody objects aside while moving but will not be accelerated by incoming collisions. This means that you can use the standard 3D colliders to create a scene around which the controller will walk but you are not limited by realistic physical behaviour on the character itself.</p>
+<p>You can find out more about character controllers on the <a href="file:///Applications/Unity/Documentation/en/Manual/class-CharacterController.html" target="_blank" rel="external">reference</a> page.</p>
+<hr>
+<h2 id="3D-Physics-Reference"><a href="#3D-Physics-Reference" class="headerlink" title="3D Physics Reference"></a>3D Physics Reference</h2><p>This section gives details of the components used with 3D physics. See <a href="file:///Applications/Unity/Documentation/en/Manual/Physics2DReference.html" target="_blank" rel="external">Physics 2D Reference</a> for the equivalent 2D components.</p>
+<h3 id="Box-Collider"><a href="#Box-Collider" class="headerlink" title="Box Collider"></a>Box Collider</h3><p>The <strong>Box Collider</strong> is a basic cube-shaped collision primitive.</p>
+<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/Inspector-BoxCollider.png" alt=""></p>
+<h4 id="Properties"><a href="#Properties" class="headerlink" title="Properties"></a>Properties</h4><p>Property:    Function:<br>Is Trigger    If enabled, this Collider is used for triggering events, and is ignored by the physics engine.<br>Material    Reference to the Physics Material that determines how this Collider interacts with others.<br>Center    The position of the Collider in the object’s local space.<br>Size    The size of the Collider in the X, Y, Z directions.</p>
+<h4 id="Details"><a href="#Details" class="headerlink" title="Details"></a>Details</h4><p>Box colliders are obviously useful for anything roughly box-shaped, such as a crate or a chest. However, you can use a thin box as a floor, wall or ramp. The box shape is also a useful element in a compound collider.</p>
+<hr>
+<h3 id="Capsule-Collider"><a href="#Capsule-Collider" class="headerlink" title="Capsule Collider"></a>Capsule Collider</h3><p>The Capsule Collider is made of two half-spheres joined together by a cylinder. It is the same shape as the Capsule primitive.</p>
+<h4 id="Properties-1"><a href="#Properties-1" class="headerlink" title="Properties"></a>Properties</h4><p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/Inspector-CapsuleCollider.png" alt=""></p>
+<p>Property:    Function:<br>Is Trigger    If enabled, this Collider is used for triggering events, and is ignored by the physics engine.<br>Material    Reference to the Physics Material that determines how this Collider interacts with others.<br>Center    The position of the Collider in the object’s local space.<br>Radius    The radius of the Collider’s local width.<br>Height    The total height of the Collider.<br>Direction    The axis of the capsule’s lengthwise orientation in the object’s local space.</p>
+<h4 id="Details-1"><a href="#Details-1" class="headerlink" title="Details"></a>Details</h4><p>You can adjust the Capsule Collider’s Radius and Height independently of each other. It is used in the Character Controller and works well for poles, or can be combined with other Colliders for unusual shapes.</p>
+<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/CapsuleColliderDiagram.svg" alt="A standard Capsule Collider"></p>
+<hr>
+<h3 id="Character-Controller"><a href="#Character-Controller" class="headerlink" title="Character Controller"></a>Character Controller</h3><p>The Character Controller is mainly used for third-person or first-person player control that does not make use of Rigidbody physics.</p>
+<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/Inspector-CharacterController.png" alt=""></p>
+<p>Properties</p>
+<p>Property:    Function:<br>Slope Limit    Limits the collider to only climb slopes that are less steep (in degrees) than the indicated value.<br>Step Offset    The character will step up a stair only if it is closer to the ground than the indicated value. This should not be greater than the Character Controller’s height or it will generate an error.<br>Skin width    Two colliders can penetrate each other as deep as their Skin Width. Larger Skin Widths reduce jitter. Low Skin Width can cause the character to get stuck. A good setting is to make this value 10% of the Radius.<br>Min Move Distance    If the character tries to move below the indicated value, it will not move at all. This can be used to reduce jitter. In most situations this value should be left at 0.<br>Center    This will offset the Capsule Collider in world space, and won’t affect how the Character pivots.<br>Radius    Length of the Capsule Collider’s radius. This is essentially the width of the collider.<br>Height    The Character’s Capsule Collider height. Changing this will scale the collider along the Y axis in both positive and negative directions.</p>
+<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/CharacterControllerWindow.png" alt="The Character Controller"></p>
+<h4 id="Details-2"><a href="#Details-2" class="headerlink" title="Details"></a>Details</h4><p>The traditional Doom-style first person controls are not physically realistic. The character runs 90 miles per hour, comes to a halt immediately and turns on a dime. Because it is so unrealistic, use of Rigidbodies and physics to create this behavior is impractical and will feel wrong. The solution is the specialized Character Controller. It is simply a capsule shaped Collider which can be told to move in some direction from a script. The Controller will then carry out the movement but be constrained by collisions. It will slide along walls, walk up stairs (if they are lower than the Step Offset) and walk on slopes within the Slope Limit.</p>
+<p>The Controller does not react to forces on its own and it does not automatically push Rigidbodies away.</p>
+<p>If you want to push Rigidbodies or objects with the Character Controller, you can apply forces to any object that it collides with via the OnControllerColliderHit() function through scripting.</p>
+<p>On the other hand, if you want your player character to be affected by physics then you might be better off using a Rigidbody instead of the Character Controller.</p>
+<h4 id="Fine-tuning-your-character"><a href="#Fine-tuning-your-character" class="headerlink" title="Fine-tuning your character"></a>Fine-tuning your character</h4><p>You can modify the Height and Radius to fit your Character’s mesh. It is recommended to always use around 2 meters for a human-like character. You can also modify the Center of the capsule in case your pivot point is not at the exact center of the Character.</p>
+<p>Step Offset can affect this too, make sure that this value is between 0.1 and 0.4 for a 2 meter sized human.</p>
+<p>Slope Limit should not be too small. Often using a value of 90 degrees works best. The Character Controller will not be able to climb up walls due to the capsule shape.</p>
+<h4 id="Don’t-get-stuck"><a href="#Don’t-get-stuck" class="headerlink" title="Don’t get stuck"></a>Don’t get stuck</h4><p>The Skin Width is one of the most critical properties to get right when tuning your Character Controller. If your character gets stuck it is most likely because your Skin Width is too small. The Skin Width will let objects slightly penetrate the Controller but it removes jitter and prevents it from getting stuck.</p>
+<p>It’s good practice to keep your Skin Width at least greater than 0.01 and more than 10% of the Radius.</p>
+<p>We recommend keeping Min Move Distance at 0.</p>
+<p>See the Character Controller script reference here</p>
+<p>You can download an example project showing pre-setup animated and moving character controllers from the Resources area on our website.</p>
+<h4 id="Hints"><a href="#Hints" class="headerlink" title="Hints"></a>Hints</h4><ul>
+<li>Try adjusting your Skin Width if you find your character getting stuck frequently.</li>
+<li>The Character Controller can affect objects using physics if you write your own scripts.</li>
+<li>The Character Controller can not be affected by objects through physics.</li>
+<li>Note that changing Character Controller properties in the inspector will recreate the controller in the scene, so any existing Trigger contacts will get lost, and you will not get any OnTriggerEntered messages until the controller is moved again.</li>
+</ul>
+<hr>
+<h3 id="Character-Joint"><a href="#Character-Joint" class="headerlink" title="Character Joint"></a>Character Joint</h3><p><strong>Character Joints</strong> are mainly used for Ragdoll effects. They are an extended ball-socket joint which allows you to limit the joint on each axis.</p>
+<p>If you just want to set up a ragdoll read about Ragdoll Wizard.</p>
+<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/Inspector-CharacterJoint.png" alt=""></p>
+<h4 id="Properties-2"><a href="#Properties-2" class="headerlink" title="Properties"></a>Properties</h4><p>Property:    Function:<br>Connected Body    Optional reference to the Rigidbody that the joint is dependent upon. If not set, the joint connects to the world.<br>Anchor    The point in the GameObject’s local space where the joint rotates around.<br>Axis    The twist axes. Visualized with the orange gizmo cone.<br>Auto Configure Connected Anchor    If this is enabled, then the Connected Anchor position will be calculated automatically to match the global position of the anchor property. This is the default behavior. If this is disabled, you can configure the position of the connected anchor manually.<br>Connected Anchor    Manual configuration of the connected anchor position.<br>Swing Axis    The swing axis. Visualized with the green gizmo cone.<br>Low Twist Limit    The lower limit of the joint. See below.<br>High Twist Limit    The higher limit of the joint. See below.<br>Swing 1 Limit    Limits the rotation around one element of the defined Swing Axis (visualized with the green axis on the gizmo). See below.<br>Swing 2 Limit    Limits movement around one element of the defined Swing Axis. See below.<br>Break Force    The force that needs to be applied for this joint to break.<br>Break Torque    The torque that needs to be applied for this joint to break.<br>Enable Collision    When checked, this enables collisions between bodies connected with a joint.<br>Enable Preprocessing    Disabling preprocessing helps to stabilize impossible-to-fulfil configurations.</p>
+<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/CharacterJointWindow.png" alt="The Character Joint on a Ragdoll"></p>
+<h4 id="Details-3"><a href="#Details-3" class="headerlink" title="Details"></a>Details</h4><p>Character joints give you a lot of possibilities for constraining motion like with a universal joint.</p>
+<p>The twist axis (visualized with the orange access on the gizmo) gives you most control over the limits as you can specify a lower and upper limit in degrees (the limit angle is measured relative to the starting position). A value of –30 in Low Twist Limit-&gt;Limit and 60 in High Twist Limit-&gt;Limit limits the rotation around the twist axis (orange gizmo) between –30 and 60 degrees.</p>
+<p>The Swing 1 Limit limits the rotation around the swing axis (visualized with the green axis on the gizmo). The limit angle is symmetric. Thus a value of 30 will limit the rotation between –30 and 30.</p>
+<p>The Swing 2 Limit axis isn’t visualized on the gizmo but the axis is orthogonal to the two other axes (that is the twist axis visualised in orange on the gizmo and the Swing 1 Limit visualised in green on the gizmo). The angle is symmetric, thus a value of 40 will limit the rotation around that axis between –40 and 40 degrees.</p>
+<p>For each of the limits the following values can be set:</p>
+<p>Property:    Function:<br>Bounciness    A value of 0 will not bounce. A value of 1 will bounce without any loss of energy.<br>Spring    The spring force used to keep the two objects together.<br>Damper    The damper force used to dampen the spring force.<br>Contact Distance    Within the contact distance from the limit contacts will persist in order to avoid jitter.</p>
+<h5 id="Breaking-joints"><a href="#Breaking-joints" class="headerlink" title="Breaking joints"></a>Breaking joints</h5><p>You can use the Break Force and Break Torque properties to set limits for the joint’s strength. If these are less than infinity, and a force/torque greater than these limits are applied to the object, its Fixed Joint will be destroyed and will no longer be confined by its restraints.</p>
+<h4 id="Hints-1"><a href="#Hints-1" class="headerlink" title="Hints"></a>Hints</h4><ul>
+<li>You do not need to assign a Connected Body to your joint for it to work.</li>
+<li>Character Joints require your object to have a Rigidbody attached.</li>
+<li>For Character Joints made with the Ragdoll wizard, take a note that the setup is made such that the joint’s Twist axis corresponds with the limb’s largest swing axis, the joint’s Swing 1 axis corresponds with limb’s smaller swing axis and joint’s Swing 2 is for twisting the limb. This naming scheme is for legacy reasons.</li>
+</ul>
+<hr>
+<h3 id="Configurable-Joint"><a href="#Configurable-Joint" class="headerlink" title="Configurable Joint"></a>Configurable Joint</h3><p>Configurable Joints are extremely customisable since they incorporate all the functionality of the other joint types. You can use them to create anything from adapted versions of the existing joints to highly specialised joints of your own design.</p>
+<h4 id="Properties-3"><a href="#Properties-3" class="headerlink" title="Properties"></a>Properties</h4><p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/ConfigurableJointProps.png" alt=""></p>
+<p>Property:    Function:<br>Connected Body    The other Rigidbody object to which the joint is connected. You can set this to None to indicate that the joint is attached to a fixed position in space rather than another Rigidbody.<br>Anchor    The point where the center of the joint is defined. All physics-based simulation will use this point as the center in calculations<br>Axis    The local axis that will define the object’s natural rotation based on physics simulation<br>Auto Configure Connected Anchor    If this is enabled, then the Connected Anchor position will be calculated automatically to match the global position of the anchor property. This is the default behavior. If this is disabled, you can configure the position of the connected anchor manually.<br>Connected Anchor    Manual configuration of the connected anchor position.<br>Secondary Axis    Together, Axis and Secondary Axis define the local coordinate system of the joint. The third axis is set to be orthogonal to the other two.<br>X, Y, Z Motion    Allow movement along the X, Y or Z axes to be Free, completely Locked, or Limited according to the limit properties described below.<br>Angular X, Y, Z Motion    Allow rotation around the X, Y or Z axes to be Free, completely Locked, or Limited according to the limit properties described below.<br>Linear Limit Spring    A spring force applied to pull the object back when it goes past the limit position.<br>        Spring    The spring force. If this value is set to zero then the limit will be impassable; a value other than zero will make the limit elastic.<br>        Damper    The reduction of the spring force in proportion to the speed of the joint’s movement. Setting a value above zero allows the joint to “dampen” oscillations which would otherwise carry on indefinitely.<br>Linear Limit    Limit on the joint’s linear movement (ie, movement over distance rather than rotation), specified as a distance from the joint’s origin.<br>        Limit    The distance in world units from the origin to the limit.<br>        Bounciness    Bounce force applied to the object to push it back when it reaches the limit distance.<br>        Contact Distance    The minimum distance tolerance (between the joint position and the limit) at which the limit will be enforced. A high tolerance makes the limit less likely to be violated when the object is moving fast. However, this will also require the limit to be taken into account by the physics simulation more often and this will tend to reduce performance slightly.<br>Angular X Limit Spring    A spring torque applied to rotate the object back when it goes past the limit angle of the joint.<br>        Spring    The spring torque. If this value is set to zero then the limit will be impassable; a value other than zero will make the limit elastic.<br>        Damper    The reduction of the spring torque in proportion to the speed of the joint’s rotation. Setting a value above zero allows the joint to “dampen” oscillations which would otherwise carry on indefinitely.<br>Low Angular X Limit    Lower limit on the joint’s rotation around the X axis, specified as a angle from the joint’s original rotation.<br>        Limit    The limit angle.<br>        Bounciness    Bounce torque applied to the object when its rotation reaches the limit angle.<br>        Contact Distance    The minimum angular tolerance (between the joint angle and the limit) at which the limit will be enforced. A high tolerance makes the limit less likely to be violated when the object is moving fast. However, this will also require the limit to be taken into account by the physics simulation more often and this will tend to reduce performance slightly.<br>High Angular XLimit    This is similar to the Low Angular X Limit property described above but it determines the upper angular limit of the joint’s rotation rather than the lower limit.<br>Angular YZ Limit Spring    This is similar to the Angular X Limit Spring described above but applies to rotation around both the Y and Z axes.<br>Angular Y Limit    Analogous to the Angular X Limit properties described above but applies to the Y axis and regards both the upper and lower angular limits as being the same.<br>Angular Z Limit    Analogous to the Angular X Limit properties described above but applies to the Z axis and regards both the upper and lower angular limits as being the same.<br>Target Position    The target position that the joint’s drive force should move it to.<br>Target Velocity    The desired velocity with which the joint should move to the Target Position under the drive force.<br>XDrive    The drive force that moves the joint linearly along its local X axis.<br>        Mode    The mode determines whether the joint should move to reach a specified Position, a specified Velocity or both.<br>        Position Spring    The spring force that moves the joint towards its target position. This is only used when the drive mode is set to Position or Position and Velocity.<br>        Position Damper    The reduction of the spring force in proportion to the speed of the joint’s movement. Setting a value above zero allows the joint to “dampen” oscillations which would otherwise carry on indefinitely. This is only used when the drive mode is set to Position or Position and Velocity.<br>        Maximum Force    The force used to accelerate the joint toward its target velocity. This is only used when the drive mode is set to Velocity or Position and Velocity.<br>YDrive    This is analogous to the X Drive described above but applies to the joint’s Y axis.<br>ZDrive    This is analogous to the X Drive described above but applies to the joint’s Z axis.<br>Target Rotation    The orientation that the joint’s rotational drive should rotate towards, specified as a quaternion.<br>Target Angular Velocity    The angular velocity that the joint’s rotational drive should aim to achieve. This is specified as a vector whose length specifies the rotational speed and whose direction defines the axis of rotation.<br>Rotation Drive Mode    The way in which the drive force will be applied to the object to rotate it to the target orientation. If the mode is set to X and YZ, the torque will be applied around these axes as specified by the Angular X/YZ Drive properties described below. If Slerp mode is used then the Slerp Drive properties will determine the drive torque.<br>Angular X Drive    This specifies how the joint will be rotated by the drive torque around its local X axis. It is used only if the Rotation Drive Mode property described above is set to X &amp; YZ.<br>        Mode    The mode determines whether the joint should move to reach a specified angular Position, a specified angular Velocity or both.<br>        Position Spring    The spring torque that rotates the joint towards its target position. This is only used when the drive mode is set to Position or Position and Velocity.<br>        Position Damper    The reduction of the spring torque in proportion to the speed of the joint’s movement. Setting a value above zero allows the joint to “dampen” oscillations which would otherwise carry on indefinitely. This is only used when the drive mode is set to Position or Position and Velocity.<br>        Maximum Force    The torque used to accelerate the joint toward its target velocity. This is only used when the drive mode is set to Velocity or Position and Velocity.<br>Angular YZDrive    This is analogous to the Angular X Drive described above but applies to both the joint’s Y and Z axes.<br>Slerp Drive    This specifies how the joint will be rotated by the drive torque around all local axes. It is used only if the Rotation Drive Mode property described above is set to Slerp.<br>        Mode    The mode determines whether the joint should move to reach a specified angular Position, a specified angular Velocity or both.<br>        Position Spring    The spring torque that rotates the joint towards its target position. This is only used when the drive mode is set to Position or Position and Velocity.<br>        Position Damper    The reduction of the spring torque in proportion to the speed of the joint’s movement. Setting a value above zero allows the joint to “dampen” oscillations which would otherwise carry on indefinitely. This is only used when the drive mode is set to Position or Position and Velocity.<br>        Maximum Force    The torque used to accelerate the joint toward its target velocity. This is only used when the drive mode is set to Velocity or Position and Velocity.<br>Projection Mode    This defines how the joint will be snapped back to its constraints when it unexpectedly moves beyond them (due to the physics engine being unable to reconcile the current combination of forces within the simulation). The options are None and Position and Rotation.<br>Projection Distance    The distance the joint must move beyond its constraints before the physics engine will attempt to snap it back to an acceptable position.<br>Projection Angle    The angle the joint must rotate beyond its constraints before the physics engine will attempt to snap it back to an acceptable position.<br>Configured in World Space    Should the values set by the various target and drive properties be calculated in world space instead of the object’s local space?<br>Swap Bodies    If enabled, this will make the joint behave as though the component were attached to the connected Rigidbody (ie, the other end of the joint).<br>Break Force    If the joint is pushed beyond its constraints by a force larger than this value then the joint will be permanently “broken” and deleted.<br>Break Torque    If the joint is rotated beyond its constraints by a torque larger than this value then the joint will be permanently “broken” and deleted.<br>Enable Collision    Should the object with the joint be able to collide with the connected object (as opposed to just passing through each other)?<br>Enable Preprocessing    If preprocessing is disabled then certain “impossible” configurations of the joint will be kept more stable rather than drifting wildly out of control.</p>
+<h4 id="Details-4"><a href="#Details-4" class="headerlink" title="Details"></a>Details</h4><p>Like the other joints, the Configurable Joint allows you to restrict the movement of an object but also to drive it to a target velocity or position using forces. However, there are many configuration options available and they can be quite subtle when used in combination; you may need to experiment with different options to get the joint to behave exactly the way you want.</p>
+<h5 id="Constraining-Movement"><a href="#Constraining-Movement" class="headerlink" title="Constraining Movement"></a>Constraining Movement</h5><p>You can constrain both translational movement and rotation on each axis independently using the X, Y, Z Motion and X, Y, Z Rotation properties. If Configured In World Space is enabled then movements will be constrained to the world axes rather than the object’s local axes. Each of these properties can be set to Locked, Limited or Free:</p>
+<ul>
+<li>A Locked axis will allow no movement at all. For example, an object locked in the world Y axis cannot move up or down.</li>
+<li>A Limited axis allows free movement between predefined limits, as explained below. For example, a gun turret might be given a restricted arc of fire by limiting its Y rotation to a specific angular range.</li>
+<li>A Free axis allows any movement.<br>You can limit translational movement using the Linear Limit property, which defines the maximum distance the joint can move from its point of origin. (measured along each axis separately). For example, you could constrain the puck for an air hockey table by locking the joint in the Y axis (in world space), leaving it free in the Z axis and setting the limit for the X axis to fit the width of the table; the puck would then be constrained to stay within the playing area.</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/XZLimit.svg" alt=""></p>
+<p>You can also limit rotation using the Angular Limit properties. Unlike the linear limit, these allow you to specify different limit values for each axis. Additionally, you can also define separate upper and lower limits on the angle of rotation for the X axis (the other two axes use the same angle either side of the original rotation). For example, you could construct a “teeter table” using a flat plane with a joint constrained to allow slight tilting in the X and Z directions while leaving the Y rotation locked.</p>
+<h5 id="Bounciness-and-Springs"><a href="#Bounciness-and-Springs" class="headerlink" title="Bounciness and Springs"></a>Bounciness and Springs</h5><p>By default, a joint simply stops moving when it runs into its limit. However, an inelastic collision like this is rare in the real world and so it is useful to add some feeling of bounce to a constrained joint. You can use the Bounciness property of the linear and angular limits to make the constrained object bounce back after it hits its limit. Most collisions will look more natural with a small amount of bounciness but you can also set this property higher to simulate unusually bouncy boundaries like, say, the cushions of a pool table.</p>
+<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/CJointBounciness.svg" alt="Bouncy joint does not cross the limit"><br>The joint limits can be softened further using the spring properties: Linear Limit Spring for translation and Angular X/YZ Limit Spring for rotation. If you set the Spring property to a value above zero, the joint will not abruptly stop moving when it hits a limit but will be drawn back to the limit position by a spring force (the strength of the force is determined by the Spring value). By default, the spring is perfectly elastic and will tend to catapult the joint back in the direction opposite to the collision. However, you can use the Damper property to reduce the elasticity and return the joint to the limit more gently. For example, you might use a spring joint to create a lever that can be pulled to the left or right but then springs back to an upright position. If the springs are perfectly elastic then the lever will tend to oscillate back and forth around the centre point after it is released. However, if you add enough damping then the spring will rapidly settle down to the neutral position.</p>
+<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/CJointSpring.svg" alt="Spring joint crosses the limit but is pulled back to it"></p>
+<h4 id="Drive-forces"><a href="#Drive-forces" class="headerlink" title="Drive forces"></a>Drive forces</h4><p>Not only can a joint react to the movements of the attached object, but it can also actively apply drive forces to set the object in motion. Some joints simple need to keep the object moving at a constant speed as with, say, a rotary motor turning a fan blade. You can set your desired velocity for such joints using the Target Velocity and Target Angluar Velocity properties. You might also require joints that move their object towards a particular position in space (or a particular orientation); you can set these using the Target Position and Target Rotation properties. For example, you could implement a forklift by mounting the forks on a configurable joint and then setting the target height to raise them from a script.</p>
+<p>With the target set, the X, Y, Z Drive and Angular X/YZ Drive (or alternatively Slerp Drive) properties then specify the force used to push the joint toward it. The Drives’ Mode property selects whether the joint should seek a target position, velocity or both. The Position Spring and Position Damper work in the same way as for the joint limits when seeking a target position. In velocity mode, the spring force is dependent on the “distance” between the current velocity and the target velocity; the damper helps the velocity to settle at the chosen value rather than oscillating endlessly around it. The Maximum Force property is a final refinement that prevents the force applied by the spring from exceeding a limit value regardless of how far the joint is from its target. This prevents the circumstance where a joint stretched far from its target rapidly snaps the object back in an uncontrolled way.</p>
+<p>Note that with all the drive forces (except for Slerp Drive, described below), the force is applied separately in each axis. So, for example, you could implement a spacecraft that has a high forward flying speed but a relatively low speed in sideways steering motion.</p>
+<h5 id="Slerp-Drive"><a href="#Slerp-Drive" class="headerlink" title="Slerp Drive"></a>Slerp Drive</h5><p>While the other drive modes apply forces in separate axes, Slerp Drive uses the Quaternion’s spherical interpolation or “slerp” functionality to reorient the joint. Rather than isolating individual axes, the slerp process essentially finds the minimum total rotation that will take the object from the current orientation to the target and applies it on all axes as necessary. Slerp drive is slightly easier to configure and fine for most purposes but does not allow you to specify different drive forces for the X and Y/Z axes.</p>
+<p>To enable Slerp drive, you should change the Rotation Drive Mode property from X and YZ to Slerp. Note that the modes are mutually exclusive; the joint will use either the Angular X/YZ Drive values or the Slerp Drive values but not both together.</p>
+<hr>
+<h3 id="Constant-Force"><a href="#Constant-Force" class="headerlink" title="Constant Force"></a>Constant Force</h3><p>Constant Force is a quick utility for adding constant forces to a Rigidbody. This works great for one shot objects like rockets, if you don’t want it to start with a large velocity but instead accelerate.</p>
+<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/Inspector-ConstantForce.png" alt=""></p>
+<h4 id="Properties-4"><a href="#Properties-4" class="headerlink" title="Properties"></a>Properties</h4><p>Property:    Function:<br>Force    The vector of a force to be applied in world space.<br>Relative Force    The vector of a force to be applied in the object’s local space.<br>Torque    The vector of a torque, applied in world space. The object will begin spinning around this vector. The longer the vector is, the faster the rotation.<br>Relative Torque    The vector of a torque, applied in local space. The object will begin spinning around this vector. The longer the vector is, the faster the rotation.<br>Details</p>
+<p>To make a rocket that accelerates forward set the Relative Force to be along the positive z-axis. Then use the Rigidbody’s Drag property to make it not exceed some maximum velocity (the higher the drag the lower the maximum velocity will be). In the Rigidbody, also make sure to turn off gravity so that the rocket will always stay on its path.</p>
+<h4 id="Hints-2"><a href="#Hints-2" class="headerlink" title="Hints"></a>Hints</h4><ul>
+<li>To make an object flow upwards, add a Constant Force with the Force property having a positive Y value.</li>
+<li>To make an object fly forwards, add a Constant Force with the Relative Force property having a positive Z value.</li>
+</ul>
+<hr>
+<h3 id="Fixed-Joint"><a href="#Fixed-Joint" class="headerlink" title="Fixed Joint"></a>Fixed Joint</h3><p>Fixed Joints restricts an object’s movement to be dependent upon another object. This is somewhat similar to Parenting but is implemented through physics rather than Transform hierarchy. The best scenarios for using them are when you have objects that you want to easily break apart from each other, or connect two object’s movement without parenting.</p>
+<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/Inspector-FixedJoint.png" alt=""></p>
+<h4 id="Properties-5"><a href="#Properties-5" class="headerlink" title="Properties"></a>Properties</h4><p>Property:    Function:<br>Connected Body    Optional reference to the Rigidbody that the joint is dependent upon. If not set, the joint connects to the world.<br>Break Force    The force that needs to be applied for this joint to break.<br>Break Torque    The torque that needs to be applied for this joint to break.<br>Enable Collision    When checked, this enables collisions between bodies connected with a joint.<br>Enable Preprocessing    Disabling preprocessing helps to stabilize impossible-to-fulfil configurations.</p>
+<h4 id="Details-5"><a href="#Details-5" class="headerlink" title="Details"></a>Details</h4><p>There may be scenarios in your game where you want objects to stick together permanently or temporarily. Fixed Joints may be a good Component to use for these scenarios, since you will not have to script a change in your object’s hierarchy to achieve the desired effect. The trade-off is that you must use Rigidbodies for any objects that use a Fixed Joint.</p>
+<p>For example, if you want to use a “sticky grenade”, you can write a script that will detect collision with another Rigidbody (like an enemy), and then create a Fixed Joint that will attach itself to that Rigidbody. Then as the enemy moves around, the joint will keep the grenade stuck to them.</p>
+<h4 id="Breaking-joints-1"><a href="#Breaking-joints-1" class="headerlink" title="Breaking joints"></a>Breaking joints</h4><p>You can use the Break Force and Break Torque properties to set limits for the joint’s strength. If these are less than infinity, and a force/torque greater than these limits are applied to the object, its Fixed Joint will be destroyed and will no longer be confined by its restraints.</p>
+<h4 id="Hints-3"><a href="#Hints-3" class="headerlink" title="Hints"></a>Hints</h4><p>You do not need to assign a Connected Body to your joint for it to work.<br>Fixed Joints require a Rigidbody.</p>
+<hr>
+<h3 id="Hinge-Joint"><a href="#Hinge-Joint" class="headerlink" title="Hinge Joint"></a>Hinge Joint</h3><p>The Hinge Joint groups together two Rigidbodies, constraining them to move like they are connected by a hinge. It is perfect for doors, but can also be used to model chains, pendulums, etc.</p>
+<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/Inspector-HingeJoint.png" alt=""></p>
+<h4 id="Properties-6"><a href="#Properties-6" class="headerlink" title="Properties"></a>Properties</h4><p>Property:    Function:<br>Connected Body    Optional reference to the Rigidbody that the joint is dependent upon. If not set, the joint connects to the world.<br>Anchor    The position of the axis around which the body swings. The position is defined in local space.<br>Axis    The direction of the axis around which the body swings. The direction is defined in local space.<br>Auto Configure Connected Anchor    If this is enabled, then the Connected Anchor position will be calculated automatically to match the global position of the anchor property. This is the default behavior. If this is disabled, you can configure the position of the connected anchor manually.<br>Connected Anchor    Manual configuration of the connected anchor position.<br>Use Spring    Spring makes the Rigidbody reach for a specific angle compared to its connected body.<br>Spring    Properties of the Spring that are used if Use Spring is enabled.<br>        Spring    The force the object asserts to move into the position.<br>        Damper    The higher this value, the more the object will slow down.<br>        Target Position    Target angle of the spring. The spring pulls towards this angle measured in degrees.<br>Use Motor    The motor makes the object spin around.<br>Motor    Properties of the Motor that are used if Use Motor is enabled.<br>        Target Velocity    The speed the object tries to attain.<br>        Force    The force applied in order to attain the speed.<br>        Free Spin    If enabled, the motor is never used to brake the spinning, only accelerate it.<br>Use Limits    If enabled, the angle of the hinge will be restricted within the Min &amp; Max values.<br>Limits <strong> |Properties of the Limits that are used if Use Limits</strong> is enabled.<br>        Min    The lowest angle the rotation can go.<br>        Max    The highest angle the rotation can go.<br>        Bounciness    How much the object bounces when it hits the minimum or maximum stop limit.<br>        Contact Distance    Within the contact distance from the limit contacts will persist in order to avoid jitter.<br>Break Force    The force that needs to be applied for this joint to break.<br>Break Torque    The torque that needs to be applied for this joint to break.<br>Enable Collision    When checked, this enables collisions between bodies connected with a joint.<br>Enable Preprocessing    Disabling preprocessing helps to stabilize impossible-to-fulfil configurations.</p>
+<h4 id="Details-6"><a href="#Details-6" class="headerlink" title="Details"></a>Details</h4><p>A single Hinge Joint should be applied to a GameObject. The hinge will rotate at the point specified by the Anchor property, moving around the specified Axis property. You do not need to assign a GameObject to the joint’s Connected Body property. You should only assign a GameObject to the Connected Body property if you want the joint’s Transform to be dependent on the attached object’s Transform.</p>
+<p>Think about how the hinge of a door works. The Axis in this case is up, positive along the Y axis. The Anchor is placed somewhere at the intersection between door and wall. You would not need to assign the wall to the Connected Body, because the joint will be connected to the world by default.</p>
+<p>Now think about a doggy door hinge. The doggy door’s Axis would be sideways, positive along the relative X axis. The main door should be assigned as the Connected Body, so the doggy door’s hinge is dependent on the main door’s Rigidbody.</p>
+<h5 id="Chains"><a href="#Chains" class="headerlink" title="Chains"></a>Chains</h5><p>Multiple Hinge Joints can also be strung together to create a chain. Add a joint to each link in the chain, and attach the next link as the Connected Body.</p>
+<h4 id="Hints-4"><a href="#Hints-4" class="headerlink" title="Hints"></a>Hints</h4><ul>
+<li>You do not need to assign a Connected Body to your joint for it to work.</li>
+<li>Use Break Force in order to make dynamic damage systems. This is really cool as it allows the player to break a door off its hinge by blasting it with a rocket launcher or running into it with a car.</li>
+<li>The Spring, Motor, and Limits properties allow you to fine-tune your joint’s behaviors.</li>
+<li>Use of Spring, Motor are intended to be mutually exclusive. Using both at the same time leads to unpredictable results.</li>
+</ul>
+<hr>
+<h3 id="Mesh-Collider"><a href="#Mesh-Collider" class="headerlink" title="Mesh Collider"></a>Mesh Collider</h3><p>The Mesh Collider takes a Mesh Asset and builds its Collider based on that mesh. It is far more accurate for collision detection than using primitives for complicated meshes. Mesh Colliders that are marked as Convex can collide with other Mesh Colliders.</p>
+<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/Inspector-MeshCollider.png" alt=""></p>
+<h4 id="Properties-7"><a href="#Properties-7" class="headerlink" title="Properties"></a>Properties</h4><p>Property:    Function:<br>Is Trigger    If enabled, this Collider is used for triggering events, and is ignored by the physics engine.<br>Material    Reference to the Physics Material that determines how this Collider interacts with others.<br>Mesh    Reference to the Mesh to use for collisions.<br>Convex    If enabled, this Mesh Collider will collide with other Mesh Colliders. Convex Mesh Colliders are limited to 255 triangles.</p>
+<h4 id="Details-7"><a href="#Details-7" class="headerlink" title="Details"></a>Details</h4><p>The Mesh Collider builds its collision representation from the Mesh attached to the GameObject, and reads the properties of the attached Transform to set its position and scale correctly. The benefit of this is that the shape of the collider can be exactly the same as the shape of the visible mesh for the object, resulting in more precise and authentic collisions. However, this precision comes with a higher processing overhead than collisions involving primitive colliders (sphere, box, capsule) and so it is best to use Mesh Colliders sparingly.</p>
+<p>Collision meshes use backface culling. If an object collides with a mesh that will be backface culled graphically it will also not collide with it physically.</p>
+<p>There are some limitations when using the Mesh Collider. Non-convex Mesh Colliders are only supported on GameObjects without a rigidbody. If you want to use a Mesh Collider on a rigidbody, it needs to be marked as Convex.</p>
+<p>Note that versions of Unity before 5.0 had a Smooth Sphere Collisions property for the Mesh Collider in order to improve interactions between meshes and spheres. This property is now obsolete since the smooth interaction is standard behaviour for the physics engine and there is no particular advantage in switching it off.</p>
+<hr>
+<h3 id="Rigidbody"><a href="#Rigidbody" class="headerlink" title="Rigidbody"></a>Rigidbody</h3><p>Rigidbodies enable your GameObjects to act under the control of physics. The Rigidbody can receive forces and torque to make your objects move in a realistic way. Any GameObject must contain a Rigidbody to be influenced by gravity, act under added forces via scripting, or interact with other objects through the NVIDIA PhysX physics engine.</p>
+<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/Inspector-Rigidbody.png" alt=""></p>
+<h4 id="Properties-8"><a href="#Properties-8" class="headerlink" title="Properties"></a>Properties</h4><p>Property:    Function:<br>Mass    The mass of the object (in kilograms by default).<br>Drag    How much air resistance affects the object when moving from forces. 0 means no air resistance, and infinity makes the object stop moving immediately.<br>Angular Drag    How much air resistance affects the object when rotating from torque. 0 means no air resistance. Note that you cannot make the object stop rotating just by setting its Angular Drag to infinity.<br>Use Gravity    If enabled, the object is affected by gravity.<br>Is Kinematic    If enabled, the object will not be driven by the physics engine, and can only be manipulated by its Transform. This is useful for moving platforms or if you want to animate a Rigidbody that has a HingeJoint attached.<br>Interpolate    Try one of the options only if you are seeing jerkiness in your Rigidbody’s movement.</p>
+<ul>
+<li>None    No Interpolation is applied.</li>
+<li>Interpolate    Transform is smoothed based on the Transform of the previous frame.</li>
+<li>Extrapolate    Transform is smoothed based on the estimated Transform of the next frame.<br>Collision Detection    Used to prevent fast moving objects from passing through other objects without detecting collisions.</li>
+<li>Discrete    Use Discreet collision detection against all other colliders in the scene. Other colliders will use Discreet collision detection when testing for collision against it. Used for normal collisions (This is the default value).</li>
+<li>Continuous    Use Discrete collision detection against dynamic colliders (with a rigidbody) and continuous collision detection against static MeshColliders (without a rigidbody). Rigidbodies set to Continuous Dynamic will use continuous collision detection when testing for collision against this rigidbody. Other rigidbodies will use Discreet Collision detection. Used for objects which the Continuous Dynamic detection needs to collide with. (This has a big impact on physics performance, leave it set to Discrete, if you don’t have issues with collisions of fast objects)</li>
+<li>Continuous Dynamic    Use continuous collision detection against objects set to Continuous and Continuous Dynamic Collision. It will also use continuous collision detection against static MeshColliders (without a rigidbody). For all other colliders it uses discreet collision detection. Used for fast moving objects.<br>Constraints    Restrictions on the Rigidbody’s motion:-</li>
+<li>Freeze Position    Stops the Rigidbody moving in the world X, Y and Z axes selectively.</li>
+<li>Freeze Rotation    Stops the Rigidbody rotating around the local X, Y and Z axes selectively.</li>
+</ul>
+<h4 id="Details-8"><a href="#Details-8" class="headerlink" title="Details"></a>Details</h4><p>Rigidbodies allow your GameObjects to act under control of the physics engine. This opens the gateway to realistic collisions, varied types of joints, and other very cool behaviors. Manipulating your GameObjects by adding forces to a Rigidbody creates a very different feel and look than adjusting the Transform Component directly. Generally, you shouldn’t manipulate the Rigidbody and the Transform of the same GameObject - only one or the other.</p>
+<p>The biggest difference between manipulating the Transform versus the Rigidbody is the use of forces. Rigidbodies can receive forces and torque, but Transforms cannot. Transforms can be translated and rotated, but this is not the same as using physics. You’ll notice the distinct difference when you try it for yourself. Adding forces/torque to the Rigidbody will actually change the object’s position and rotation of the Transform component. This is why you should only be using one or the other. Changing the Transform while using physics could cause problems with collisions and other calculations.</p>
+<p>Rigidbodies must be explicitly added to your GameObject before they will be affected by the physics engine. You can add a Rigidbody to your selected object from Components-&gt;Physics-&gt;Rigidbody in the menu. Now your object is physics-ready; it will fall under gravity and can receive forces via scripting, but you may need to add a Collider or a Joint to get it to behave exactly how you want.</p>
+<h5 id="Parenting"><a href="#Parenting" class="headerlink" title="Parenting"></a>Parenting</h5><p>When an object is under physics control, it moves semi-independently of the way its transform parents move. If you move any parents, they will pull the Rigidbody child along with them. However, the Rigidbodies will still fall down due to gravity and react to collision events.</p>
+<h5 id="Scripting"><a href="#Scripting" class="headerlink" title="Scripting"></a>Scripting</h5><p>To control your Rigidbodies, you will primarily use scripts to add forces or torque. You do this by calling AddForce() and AddTorque() on the object’s Rigidbody. Remember that you shouldn’t be directly altering the object’s Transform when you are using physics.</p>
+<h5 id="Animation"><a href="#Animation" class="headerlink" title="Animation"></a>Animation</h5><p>For some situations, mainly creating ragdoll effects, it is neccessary to switch control of the object between animations and physics. For this purpose Rigidbodies can be marked isKinematic. While the Rigidbody is marked isKinematic, it will not be affected by collisions, forces, or any other part of the physics system. This means that you will have to control the object by manipulating the Transform component directly. Kinematic Rigidbodies will affect other objects, but they themselves will not be affected by physics. For example, Joints which are attached to Kinematic objects will constrain any other Rigidbodies attached to them and Kinematic Rigidbodies will affect other Rigidbodies through collisions.</p>
+<h5 id="Colliders-1"><a href="#Colliders-1" class="headerlink" title="Colliders"></a>Colliders</h5><p>Colliders are another kind of component that must be added alongside the Rigidbody in order to allow collisions to occur. If two Rigidbodies bump into each other, the physics engine will not calculate a collision unless both objects also have a Collider attached. Collider-less Rigidbodies will simply pass through each other during physics simulation.</p>
+<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/RigidbodyandCollider.png" alt="Colliders define the physical boundaries of a Rigidbody"><br>Add a Collider with the Component-&gt;Physics menu. View the Component Reference page of any individual Collider for more specific information:</p>
+<ul>
+<li><a href="">Box Collider</a> - primitive shape of a cube</li>
+<li><a href="">Sphere Collider</a> - primitive shape of a sphere</li>
+<li><a href="">Capsule Collider</a> - primitive shape of a capsule</li>
+<li><a href="">Mesh Collider</a> - creates a collider from the object’s mesh, cannot collide with another Mesh Collider</li>
+<li><a href="">Wheel Collider</a> - specifically for creating cars or other moving vehicles</li>
+<li><a href="">Terrain Collider</a> - handles collision with Unity’s terrain system<br>Compound Colliders</li>
+</ul>
+<p>Compound Colliders are combinations of primitive Colliders, collectively acting as a single Collider. They come in handy when you have a model that would be too complex or costly in terms of performance to simulate exactly, and want to simulate the collision of the shape in an optimal way using simple approximations. To create a Compound Collider, create child objects of your colliding object, then add a Collider component to each child object. This allows you to position, rotate, and scale each Collider easily and independently of one another. You can build your compound collider out of a number of primitive colliders and/or convex mesh colliders.</p>
+<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/CompoundCollider.png" alt="A real-world Compound Collider setup"><br>In the above picture, the Gun Model GameObject has a Rigidbody attached, and multiple primitive Colliders as child GameObjects. When the Rigidbody parent is moved around by forces, the child Colliders move along with it. The primitive Colliders will collide with the environment’s Mesh Collider, and the parent Rigidbody will alter the way it moves based on forces being applied to it and how its child Colliders interact with other Colliders in the Scene.</p>
+<p>Mesh Colliders can’t normally collide with each other. If a Mesh Collider is marked as Convex, then it can collide with another Mesh Collider. The typical solution is to use primitive Colliders for any objects that move, and Mesh Colliders for static background objects.</p>
+<h5 id="Continuous-Collision-Detection"><a href="#Continuous-Collision-Detection" class="headerlink" title="Continuous Collision Detection"></a>Continuous Collision Detection</h5><p>Continuous collision detection is a feature to prevent fast-moving colliders from passing each other. This may happen when using normal (Discrete) collision detection, when an object is one side of a collider in one frame, and already passed the collider in the next frame. To solve this, you can enable continuous collision detection on the rigidbody of the fast-moving object. Set the collision detection mode to Continuous to prevent the rigidbody from passing through any static (ie, non-rigidbody) MeshColliders. Set it to Continuous Dynamic to also prevent the rigidbody from passing through any other supported rigidbodies with collision detection mode set to Continuous or Continuous Dynamic. Continuous collision detection is supported for Box-, Sphere- and CapsuleColliders. Note that continuous collision detection is intended as a safety net to catch collisions in cases where objects would otherwise pass through each other, but will not deliver physically accurate collision results, so you might still consider decreasing the fixed Time step value in the TimeManager inspector to make the simulation more precise, if you run into problems with fast moving objects.</p>
+<h4 id="Use-the-right-size"><a href="#Use-the-right-size" class="headerlink" title="Use the right size"></a>Use the right size</h4><p>The size of the your GameObject’s mesh is much more important than the mass of the Rigidbody. If you find that your Rigidbody is not behaving exactly how you expect - it moves slowly, floats, or doesn’t collide correctly - consider adjusting the scale of your mesh asset. Unity’s default unit scale is 1 unit = 1 meter, so the scale of your imported mesh is maintained, and applied to physics calculations. For example, a crumbling skyscraper is going to fall apart very differently than a tower made of toy blocks, so objects of different sizes should be modeled to accurate scale.</p>
+<p>If you are modeling a human make sure the model is around 2 meters tall in Unity. To check if your object has the right size compare it to the default cube. You can create a cube using GameObject &gt; 3D Object &gt; Cube. The cube’s height will be exactly 1 meter, so your human should be twice as tall.</p>
+<p>If you aren’t able to adjust the mesh itself, you can change the uniform scale of a particular mesh asset by selecting it in Project View and choosing Assets-&gt;Import Settings… from the menu. Here, you can change the scale and re-import your mesh.</p>
+<p>If your game requires that your GameObject needs to be instantiated at different scales, it is okay to adjust the values of your Transform’s scale axes. The downside is that the physics simulation must do more work at the time the object is instantiated, and could cause a performance drop in your game. This isn’t a terrible loss, but it is not as efficient as finalizing your scale with the other two options. Also keep in mind that non-uniform scales can create undesirable behaviors when Parenting is used. For these reasons it is always optimal to create your object at the correct scale in your modeling application.</p>
+<h4 id="Hints-5"><a href="#Hints-5" class="headerlink" title="Hints"></a>Hints</h4><ul>
+<li>The relative Mass of two Rigidbodies determines how they react when they collide with each other.</li>
+<li>Making one Rigidbody have greater Mass than another does not make it fall faster in free fall. Use Drag for that.</li>
+<li>A low Drag value makes an object seem heavy. A high one makes it seem light. Typical values for Drag are between .001 (solid block of metal) and 10 (feather).</li>
+<li>If you are directly manipulating the Transform component of your object but still want physics, attach a Rigidbody and make it Kinematic.</li>
+<li>If you are moving a GameObject through its Transform component but you want to receive Collision/Trigger messages, you must attach a Rigidbody to the object that is moving.</li>
+<li>You cannot make an object stop rotating just by setting its Angular Drag to infinity.</li>
+</ul>
+<hr>
+<h3 id="Sphere-Collider"><a href="#Sphere-Collider" class="headerlink" title="Sphere Collider"></a>Sphere Collider</h3><p>The Sphere Collider is a basic sphere-shaped collision primitive.</p>
+<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/Inspector-SphereCollider.png" alt=""></p>
+<h4 id="Properties-9"><a href="#Properties-9" class="headerlink" title="Properties"></a>Properties</h4><p>Property:    Function:<br>Is Trigger    If enabled, this Collider is used for triggering events, and is ignored by the physics engine.<br>Material    Reference to the Physics Material that determines how this Collider interacts with others.<br>Center    The position of the Collider in the object’s local space.<br>Radius    The size of the Collider.</p>
+<h4 id="Details-9"><a href="#Details-9" class="headerlink" title="Details"></a>Details</h4><p>The collider can be resized via the Radius property but cannot be scaled along the three axes independently (ie, you can’t flatten the sphere into an ellipse). As well as the obvious use for spherical objects like tennis balls, etc, the sphere also works well for falling boulders and other objects that need to roll and tumble.</p>
+<hr>
+<h3 id="Spring-Joint"><a href="#Spring-Joint" class="headerlink" title="Spring Joint"></a>Spring Joint</h3><p>The Spring Joint joins two Rigidbodies together but allows the distance between them to change as though they were connected by a spring.</p>
+<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/Inspector-SpringJoint.png" alt=""></p>
+<h4 id="Properties-10"><a href="#Properties-10" class="headerlink" title="Properties"></a>Properties</h4><p>Property:    Function:<br>Connected Body    The Rigidbody object that the object with the spring joint is connected to. If no object is assigned then the spring will be connected to a fixed point in space.<br>Anchor    The point in the object’s local space at which the joint is attached.<br>Auto Configure Connected Anchor    Should Unity calculate the position of the connected anchor point automatically?<br>Connected Anchor    The point in the connected object’s local space at which the joint is attached.<br>Spring    Strength of the spring.<br>Damper    Amount that the spring is reduced when active.<br>Min Distance    Lower limit of the distance range over which the spring will not apply any force.<br>Max Distance    Upper limit of the distance range over which the spring will not apply any force.<br>Tolerance    Changes error tolerance. Allows the spring to have a different rest length.<br>Break Force    The force that needs to be applied for this joint to break.<br>Break Torque    The torque that needs to be applied for this joint to break.<br>Enable Collision    Should the two connected objects register collisions with each other?<br>Enable Preprocessing    Disabling preprocessing helps to stabilize impossible-to-fulfil configurations.</p>
+<h4 id="Details-10"><a href="#Details-10" class="headerlink" title="Details"></a>Details</h4><p>The spring acts like a piece of elastic that tries to pull the two anchor points together to the exact same position. The strength of the pull is proportional to the current distance between the points with the force per unit of distance set by the Spring property. To prevent the spring from oscillating endlessly you can set a Damper value that reduces the spring force in proportion to the relative speed between the two objects. The higher the value, the more quickly the oscillation will die down.</p>
+<p>You can set the anchor points manually but if you enable Auto Configure Connected Anchor, Unity will set the connected anchor so as to maintain the initial distance between them (ie, the distance you set in the scene view while positioning the objects).</p>
+<p>The Min Distance and Max Distance values allow you to set a distance range over which the spring will not apply any force. You could use this, for example, to allow the objects a small amount of independent movement but then pull them together when the distance between them gets too great.</p>
+<hr>
+<h3 id="Cloth"><a href="#Cloth" class="headerlink" title="Cloth"></a>Cloth</h3><p>The Cloth component provides a physics-based solution for the simulation of fabrics and works in conjunction with the Skinned Mesh Renderer. While it has been specifically designed for character clothing it is still possible to use arbitrary, non-skinned meshes.</p>
+<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/Inspector-Cloth.png" alt=""></p>
+<h4 id="Properties-11"><a href="#Properties-11" class="headerlink" title="Properties"></a>Properties</h4><p>Property:    Function:<br>Stretching Stiffness    Stretching stiffness of the cloth.<br>Bending Stiffness    Bending stiffness of the cloth.<br>Use Tethers    Apply constraints that help to prevent the moving cloth particles from going too far away from the fixed ones. This helps to reduce excess stretchiness.<br>Use Gravity    Should gravitational acceleration be applied to the cloth?<br>Damping    Motion damping coefficient.<br>External Acceleration    A constant, external acceleration applied to the cloth.<br>Random Acceleration    A random, external acceleration applied to the cloth.<br>World Velocity Scale    How much world-space movement of the character will affect cloth vertices.<br>World Acceleration Scale    How much world-space acceleration of the character will affect cloth vertices.<br>Friction    The friction of the cloth when colliding with the character.<br>Collision Mass Scale    How much to increase mass of colliding particles.<br>Use Continuous Collision    Enable continuous collision to improve collision stability.<br>Use Virtual Particles    Add one virtual particle per triangle to improve collision stability.<br>Solver Frequency    Number of solver iterations per second.<br>Sleep Threshold    Cloth’s sleep threshold.<br>Capsule Colliders    An array of CapsuleColliders which this Cloth instance should collide with.<br>Sphere Colliders    An array of ClothSphereColliderPairs which this Cloth instance should collide with.<br>Details</p>
+<p>Cloth does not react to all colliders in a scene, nor does it apply forces back to the world. When it has been added the Cloth component will not react to or influence any other bodies at all. Thus Cloth and the world do not recognise or see each other until you manually add colliders from the world to the Cloth component. Even after that, the simulation is still one-way: cloth reacts to those bodies but doesn’t apply forces back.</p>
+<p>Additionally, you can only use three types of colliders with cloth: a sphere, a capsule, and conical capsule colliders, constructed using two sphere colliders. These restrictions all exist to help boost performance.</p>
+<h5 id="Edit-Constraints-Tool"><a href="#Edit-Constraints-Tool" class="headerlink" title="Edit Constraints Tool"></a>Edit Constraints Tool</h5><p>Selecting Edit Constraints will enter the editor into a mode to edit the constraints applied to each of the vertices in the cloth mesh. All vertices will be coloured based on the current Visualization mode to display the difference between their respective values.</p>
+<p>Property:    Function:<br>Visualization    Changes the visual appearance of the tool in the Scene view between Max Distance and Surface Penetration Values. A toggle for Manipulate Backfaces is also available.<br>Max Distance    The maximum distance a cloth particle can travel from its vertex position.<br>Surface Penetration    How deep the cloth particle can penetrate the mesh.</p>
+<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/Inspector-Cloth2.png" alt="The Cloth Constraints Tool being used on a Skinned Mesh Renderer."></p>
+<p>There are two modes that can be used for changing the values for each vertex, in Select mode a group of vertices can be selected using the mouse cursor to either draw a selection box or else by individually clicking on vertices one at a time. Once any number of cloth vertices have been selected they can then have either Max Distance or Surface Penetration constraints enabled and a value assigned.</p>
+<p>Paint mode allows you to directly adjust each individual vertex by clicking on it, again with options to adjust the Max Distance, Surface Penetration, or both. As before a value can be assigned and the visual representation in the scene view will be updated.</p>
+<h5 id="Collisions"><a href="#Collisions" class="headerlink" title="Collisions"></a>Collisions</h5><p>Cloth is unable to simply collide with arbitrary world geometry, and now will only interact with the colliders specified in either the Capsule Colliders or Sphere Colliders arrays.</p>
+<p>The sphere colliders array can contain either a single valid SphereCollider instance (with the second one being null), or a pair. In the former cases the ClothSphereColliderPair just represents a single sphere collider for the cloth to collide against. In the latter case, it represents a conic capsule shape defined by the two spheres, and the cone connecting the two. Conic capsule shapes are useful for modelling limbs of a character.</p>
+<hr>
+<h3 id="Wheel-Collider"><a href="#Wheel-Collider" class="headerlink" title="Wheel Collider"></a>Wheel Collider</h3><p>The Wheel Collider is a special collider for grounded vehicles. It has built-in collision detection, wheel physics, and a slip-based tire friction model. It can be used for objects other than wheels, but it is specifically designed for vehicles with wheels.</p>
+<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/Inspector-WheelCollider2.png" alt=""></p>
+<h4 id="Properties-12"><a href="#Properties-12" class="headerlink" title="Properties"></a>Properties</h4><p>Property:    Function:<br>Mass    The Mass of the wheel.<br>Radius    Radius of the wheel.<br>Wheel Damping Rate    This is a value of damping applied to a wheel.<br>Suspension Distance    Maximum extension distance of wheel suspension, measured in local space. Suspension always extends downwards through the local Y-axis.<br>Force App Point Distance    This parameter defines the point where the wheel forces will applied. This is expected to be in metres from the base of the wheel at rest position along the suspension travel direction. When forceAppPointDistance = 0 the forces will be applied at the wheel base at rest. A better vehicle would have forces applied slightly below the vehicle centre of mass.<br>Center    Center of the wheel in object local space.<br>Suspension Spring    The suspension attempts to reach a Target Position by adding spring and damping forces.<br>        Spring    Spring force attempts to reach the Target Position. A larger value makes the suspension reach the Target Position faster.<br>        Damper    Dampens the suspension velocity. A larger value makes the Suspension Spring move slower.<br>        Target Position    The suspension’s rest distance along Suspension Distance. 1 maps to fully extended suspension, and 0 maps to fully compressed suspension. Default value is 0.5, which matches the behavior of a regular car’s suspension.<br>Forward/Sideways Friction    Properties of tire friction when the wheel is rolling forward and sideways. See the Wheel Friction Curves section below.</p>
+<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/Inspector-WheelCollider.png" alt="The Wheel Collider Component. Car model courtesy of ATI Technologies Inc."></p>
+<h4 id="Details-11"><a href="#Details-11" class="headerlink" title="Details"></a>Details</h4><p>The wheel’s collision detection is performed by casting a ray from Center downwards through the local Y-axis. The wheel has a Radius and can extend downwards according to the Suspension Distance. The vehicle is controlled from scripting using different properties: motorTorque, brakeTorque and steerAngle. See the Wheel Collider scripting reference for more information.</p>
+<p>The Wheel Collider computes friction separately from the rest of physics engine, using a slip-based friction model. This allows for more realistic behaviour but also causes Wheel Colliders to ignore standard Physic Material settings.</p>
+<h5 id="Wheel-collider-setup"><a href="#Wheel-collider-setup" class="headerlink" title="Wheel collider setup"></a>Wheel collider setup</h5><p>You do not turn or roll WheelCollider objects to control the car - the objects that have the WheelCollider attached should always be fixed relative to the car itself. However, you might want to turn and roll the graphical wheel representations. The best way to do this is to setup separate objects for Wheel Colliders and visible wheels:</p>
+<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/WheelsSetup.png" alt="Wheel Colliders are separate from visible Wheel Models"><br>Note that the gizmo graphic for the WheelCollider’s position is not updated in playmode:</p>
+<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/WheelColliderGizmo.png" alt="Position of WheelCollider Gizmo in runtime using a suspension distance of 0.15"></p>
+<h5 id="Collision-geometry"><a href="#Collision-geometry" class="headerlink" title="Collision geometry"></a>Collision geometry</h5><p>Because cars can achieve large velocities, getting race track collision geometry right is very important. Specifically, the collision mesh should not have small bumps or dents that make up the visible models (e.g. fence poles). Usually a collision mesh for the race track is made separately from the visible mesh, making the collision mesh as smooth as possible. It also should not have thin objects - if you have a thin track border, make it wider in a collision mesh (or completely remove the other side if the car can never go there).</p>
+<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/WheelGeometries.png" alt="Visible geometry (left) is much more complex than collision geometry (right)"></p>
+<h5 id="Wheel-Friction-Curves"><a href="#Wheel-Friction-Curves" class="headerlink" title="Wheel Friction Curves"></a>Wheel Friction Curves</h5><p>Tire friction can be described by the Wheel Friction Curve shown below. There are separate curves for the wheel’s forward (rolling) direction and sideways direction. In both directions it is first determined how much the tire is slipping (based on the speed difference between the tire’s rubber and the road). Then this slip value is used to find out tire force exerted on the contact point.</p>
+<p>The curve takes a measure of tire slip as an input and gives a force as output. The curve is approximated by a two-piece spline. The first section goes from (0 , 0) to (ExtremumSlip , ExtremumValue), at which point the curve’s tangent is zero. The second section goes from (ExtremumSlip , ExtremumValue) to (AsymptoteSlip , AsymptoteValue), where curve’s tangent is again zero:</p>
+<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/WheelFrictionCurve.png" alt="Typical shape of a wheel friction curve"><br>The property of real tires is that for low slip they can exert high forces, since the rubber compensates for the slip by stretching. Later when the slip gets really high, the forces are reduced as the tire starts to slide or spin. Thus, tire friction curves have a shape like in the image above.</p>
+<p>Property:    Function:<br>Extremum Slip/Value    Curve’s extremum point.<br>Asymptote Slip/Value    Curve’s asymptote point.<br>Stiffness    Multiplier for the Extremum Value and Asymptote Value (default is 1). Changes the stiffness of the friction. Setting this to zero will completely disable all friction from the wheel. Usually you modify stiffness at runtime to simulate various ground materials from scripting.</p>
+<h4 id="Hints-6"><a href="#Hints-6" class="headerlink" title="Hints"></a>Hints</h4><ul>
+<li>You might want to decrease physics timestep length in Time Manager to get more stable car physics, especially if it’s a racing car that can achieve high velocities.</li>
+<li>To keep a car from flipping over too easily you can lower its Rigidbody center of mass a bit from script, and apply “down pressure” force that depends on car velocity.</li>
+</ul>
+<hr>
+<h3 id="Terrain-Collider"><a href="#Terrain-Collider" class="headerlink" title="Terrain Collider"></a>Terrain Collider</h3><p>The Terrain Collider implements a collision surface with the same shape as the Terrain object it is attached to.</p>
+<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/Inspector-TerrainCollider.png" alt=""></p>
+<h4 id="Properties-13"><a href="#Properties-13" class="headerlink" title="Properties"></a>Properties</h4><p>Property:    Function:<br>Material    Reference to the Physics Material that determines how this Collider interacts with others.<br>Terrain Data    The terrain data.<br>Enable Tree Colliders    When selected Tree Colliders will be enabled.</p>
+<h4 id="Details-12"><a href="#Details-12" class="headerlink" title="Details"></a>Details</h4><p>You should note that versions of Unity before 5.0 had a Smooth Sphere Collisions property for the Terrain Collider in order to improve interactions between terrains and spheres. This property is now obsolete since the smooth interaction is standard behaviour for the physics engine and there is no particular advantage in switching it off.</p>
+<hr>
+<h3 id="Physic-Material"><a href="#Physic-Material" class="headerlink" title="Physic Material"></a>Physic Material</h3><p>The Physic Material is used to adjust friction and bouncing effects of colliding objects.</p>
+<p>To create a Physic Material select Assets &gt; Create &gt; Physic Material from the menu bar. Then drag the Physic Material from the Project View onto a Collider in the scene.</p>
+<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/Inspector-PhysicMaterial.png" alt=""></p>
+<h4 id="Properties-14"><a href="#Properties-14" class="headerlink" title="Properties"></a>Properties</h4><p>Property:    Function:<br>Dynamic Friction    The friction used when already moving. Usually a value from 0 to 1. A value of zero feels like ice, a value of 1 will make it come to rest very quickly unless a lot of force or gravity pushes the object.<br>Static Friction    The friction used when an object is laying still on a surface. Usually a value from 0 to 1. A value of zero feels like ice, a value of 1 will make it very hard to get the object moving.<br>Bounciness    How bouncy is the surface? A value of 0 will not bounce. A value of 1 will bounce without any loss of energy.<br>Friction Combine    How the friction of two colliding objects is combined.</p>
+<ul>
+<li>Average    The two friction values are averaged.</li>
+<li>Minimum    The smallest of the two values is used.</li>
+<li>Maximum    The largest of the two values is used.</li>
+<li>Multiply    The friction values are multiplied with each other.<br>Bounce Combine    How the bounciness of two colliding objects is combined. It has the same modes as Friction Combine Mode</li>
+</ul>
+<h4 id="Details-13"><a href="#Details-13" class="headerlink" title="Details"></a>Details</h4><p>Friction is the quantity which prevents surfaces from sliding off each other. This value is critical when trying to stack objects. Friction comes in two forms, dynamic and static. Static friction is used when the object is lying still. It will prevent the object from starting to move. If a large enough force is applied to the object it will start moving. At this point Dynamic Friction will come into play. Dynamic Friction will now attempt to slow down the object while in contact with another.</p>
+<p>When two bodies are in contact, bounciness and friction modes are applied individually to each agent. So, when body A has a friction combine mode of Average and body B has mode Multiply, then A is going to behave according to average parameters and B according to multiplied parameters.</p>
+<p>Please note that the friction model used by the Nvidia PhysX engine is tuned for performance and stability of simulation, and does not necessarily present a close approximation of real-world physics. In particular, contact surfaces which are larger than a single point (such as two boxes resting on each other) will be calculated as having two contact points, and will have friction forces twice as big as they would in real world physics. You may want to multiply your friction coefficients by 0.5 to get more realistic results in such a case.</p>
+<hr>
+<h2 id="Physics-HOWTOs"><a href="#Physics-HOWTOs" class="headerlink" title="Physics HOWTOs"></a>Physics HOWTOs</h2><p>This section contains a list of common physics-related tasks in Unity, and how to carry them out.</p>
+<h3 id="Ragdoll-Wizard"><a href="#Ragdoll-Wizard" class="headerlink" title="Ragdoll Wizard"></a>Ragdoll Wizard</h3><p>Unity has a simple wizard that lets you quickly create your own ragdoll. You simply have to drag the different limbs on the respective properties in the wizard. Then select create and Unity will automatically generate all Colliders, Rigidbodies and Joints that make up the Ragdoll for you.</p>
+<h4 id="Creating-the-Character"><a href="#Creating-the-Character" class="headerlink" title="Creating the Character"></a>Creating the Character</h4><p>Ragdolls make use of Skinned Meshes, that is a character mesh rigged up with bones in the 3D modeling application. For this reason, you must build ragdoll characters in a 3D package like Maya or Cinema4D.</p>
+<p>When you’ve created your character and rigged it, save the asset normally in your Project Folder. When you switch to Unity, you’ll see the character asset file. Select that file and the Import Settings dialog will appear inside the inspector. Make sure that Mesh Colliders is not enabled.</p>
+<h4 id="Using-the-Wizard"><a href="#Using-the-Wizard" class="headerlink" title="Using the Wizard"></a>Using the Wizard</h4><p>It’s not possible to make the actual source asset into a ragdoll. This would require modifying the source asset file, and is therefore impossible. You will make an instance of the character asset into a ragdoll, which can then be saved as a Prefab for re-use.</p>
+<p>Create an instance of the character by dragging it from the Project View to the Hierarchy View. Expand its Transform Hierarchy by clicking the small arrow to the left of the instance’s name in the Hierarchy. Now you are ready to start assigning your ragdoll parts.</p>
+<p>Open the Ragdoll Wizard by choosing GameObject &gt; 3D Object &gt; Ragdoll… from the menu bar. You will now see the Wizard itself.</p>
+<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/RagdollWizard.png" alt="The Ragdoll Wizard"></p>
+<p>Assigning parts to the wizard should be self-explanatory. Drag the different Transforms of your character instance to the appropriate property on the wizard. This should be especially easy if you created the character asset yourself.</p>
+<p>When you are done, click the Create Button. Now when you enter Play Mode, you will see your character go limp as a ragdoll.</p>
+<p>The final step is to save the setup ragdoll as a Prefab. Choose Assets -&gt; Create -&gt; Prefab from the menu bar. You will see a New Prefab appear in the Project View. Rename it to “Ragdoll Prefab”. Drag the ragdoll character instance from the Hierarchy on top of the “Ragdoll Prefab”. You now have a completely set-up, re-usable ragdoll character to use as much as you like in your game.</p>
+<h4 id="Note"><a href="#Note" class="headerlink" title="Note"></a>Note</h4><p>For Character Joints made with the Ragdoll wizard, take a note that the setup is made such that the joint’s Twist axis corresponds with the limb’s largest swing axis, the joint’s Swing 1 axis corresponds with limb’s smaller swing axis and joint’s Swing 2 is for twisting the limb. This naming scheme is for legacy reasons.</p>
+<hr>
+<h3 id="Joint-and-Ragdoll-stability"><a href="#Joint-and-Ragdoll-stability" class="headerlink" title="Joint and Ragdoll stability"></a>Joint and Ragdoll stability</h3><p>This page provides tips for improving Joint and Ragdoll stability.</p>
+<ul>
+<li>Avoid small Joint angles of Angular Y Limit and Angular Z Limit. Depending on your setup, the minimum angles should be around 5 to 15 degrees in order to be stable. Instead of using a small angle, try setting the angle to zero. This locks the axis and provide a stable simulation.</li>
+<li>Uncheck the Joint’s Enable Preprocessing property. Disabling preprocessing can help prevent Joints from separating or moving erratically if they are forced into situations where there is no possible way to satisfy the Joint constraints. This can occur if Rigidbody components connected by Joints are pulled apart by static collision geometry (for example, spawning a Ragdoll partially inside a wall).</li>
+<li>Under extreme circumstances (such as spawning partially inside a wall or pushed with a large force), the joint solver is unable to keep the Rigidbody components of a Ragdoll together. This can result in stretching. To handle this, enable projection on the Joints using either ConfigurableJoint.projectionMode or CharacterJoint.enableProjection.</li>
+<li>If Rigidbody components connected with Joints are jittering, open the Physics Manager (Edit &gt; Project Settings &gt; Physics) and try increasing the Default Solver Iterations value to between 10 and 20.</li>
+<li>If Rigidbody components connected with Joints are not accurately responding to bounces, open the Physics Manager (Edit &gt; Project Settings &gt; Physics) and try increasing the Default Solver Velocity Iterations value to between 10 and 20.</li>
+<li>Never use direct Transform access with Kinematic Rigidbody components connected by Joints to other Rigidbody components. Doing so skips the step where PhysX computes internal velocities of corresponding Rigidbody components, making the solver provide unwanted results. A common example of bad practice is using direct Transform access in 2D projects to flip characters, by altering Transform.TransformDirection on the root boon of the rig. This behaves much better if you use Rigidbody2D.MovePosition and Rigidbody2D.MoveRotation instead.</li>
+<li>Avoid large differences in the masses between Rigidbody components connected by Joints. It’s okay to have one Rigidbody with twice as much mass as another, but when one mass is ten times larger than the other, the simulation can become jittery.</li>
+<li>Try to avoid scaling different from 1 in the Transform containing Rigidbody or the Joint. The scaling might not be robust in all cases.</li>
+<li>If Rigidbody components are overlapping when inserted into the world, and you cannot avoid the overlap, try lowering the Rigidbody.maxDepenetrationVelocity to make the Rigidbody components exit each other more smoothly.</li>
+</ul>
+<h2 id="WheelCollider-Tutorial"><a href="#WheelCollider-Tutorial" class="headerlink" title="WheelCollider Tutorial"></a>WheelCollider Tutorial</h2><p>The new WheelCollider is powered by the PhysX3 Vehicles SDK that is basically a completely new vehicle simulation library when compared to PhysX2.</p>
+<p>Let’s go through the process of creating a basic functioning car in Unity 5.0.</p>
+<ul>
+<li><p>Start by selecting GameObject -&gt; 3D Object -&gt; Plane. This is the ground the car is going to drive on. Make sure the ground has zero transform (Transform -&gt; Reset) for simplicity. Scale it by putting something like 100 in Transform scale components.</p>
+</li>
+<li><p>Create a basic car skeleton:</p>
+<ol>
+<li>First, add a GameObject as the car root object: GameObject -&gt; Create Empty. Change the name to car_root.</li>
+<li>Add a Physics 3D Rigidbody component to car_root. The default mass of 1 kg is way too light for the default suspension settings. Change it to 1500 kg.</li>
+<li>Now create the car body collider: GameObject -&gt; 3D Object -&gt; Cube. Parent the box under car_root. Reset the transform to make it perfectly aligned in local space. Since our car is going to be oriented along the Z axis, scale the box along the Z axis by setting z scaling to 3.</li>
+<li>Add the wheels root. Select car_root and GameObject -&gt; Create Empty Child. Change the name to wheels. Reset the transform on it. This node is not mandatory, but it is for tuning convenience later.</li>
+<li>Create the first wheel: select the wheels object, GameObject -&gt; Create Empty Child, and name it frontLeft. Reset the transform on it. Set the position to (–1, 0, 1). Add Physics component -&gt; wheel collider to the wheel.</li>
+<li>Duplicate the frontLeft object (Cmd-D or Control-D). Change the x position to 1. Change the name to frontRight.</li>
+<li>Select both the frontLeft and frontRight objects. Duplicate them. Change the z position of both objects to –1. Change the names to rearLeft and rearRight respectively.</li>
+<li>Finally, select the car_root object and using the transform manipulators, raise it slightly above the ground.</li>
+</ol>
+</li>
+<li><p>Now you should be able to see something like this:</p>
+</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/tospan/tospan.github.io/source/source/_images/unity/WheelColliderTutorial.png" alt=""></p>
+<ul>
+<li>To make this car actually drivable we need to write a controller for it. Let’s dive into some scripting:</li>
+</ul>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">using</span> UnityEngine;</div><div class="line"><span class="keyword">using</span> System.Collections;</div><div class="line"><span class="keyword">using</span> System.Collections.Generic;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">SimpleCarController</span> : <span class="title">MonoBehaviour</span> &#123;</div><div class="line">    <span class="keyword">public</span> List&lt;AxleInfo&gt; axleInfos; <span class="comment">// the information about each individual axle</span></div><div class="line">    <span class="keyword">public</span> <span class="keyword">float</span> maxMotorTorque; <span class="comment">// maximum torque the motor can apply to wheel</span></div><div class="line">    <span class="keyword">public</span> <span class="keyword">float</span> maxSteeringAngle; <span class="comment">// maximum steer angle the wheel can have</span></div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">FixedUpdate</span>(<span class="params"></span>)</span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">float</span> motor = maxMotorTorque * Input.GetAxis(<span class="string">"Vertical"</span>);</div><div class="line">        <span class="keyword">float</span> steering = maxSteeringAngle * Input.GetAxis(<span class="string">"Horizontal"</span>);</div><div class="line">        </div><div class="line">        <span class="keyword">foreach</span> (AxleInfo axleInfo <span class="keyword">in</span> axleInfos) &#123;</div><div class="line">            <span class="keyword">if</span> (axleInfo.steering) &#123;</div><div class="line">                axleInfo.leftWheel.steerAngle = steering;</div><div class="line">                axleInfo.rightWheel.steerAngle = steering;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">if</span> (axleInfo.motor) &#123;</div><div class="line">                axleInfo.leftWheel.motorTorque = motor;</div><div class="line">                axleInfo.rightWheel.motorTorque = motor;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">[System.Serializable]</div><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">AxleInfo</span> &#123;</div><div class="line">    <span class="keyword">public</span> WheelCollider leftWheel;</div><div class="line">    <span class="keyword">public</span> WheelCollider rightWheel;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">bool</span> motor; <span class="comment">// is this wheel attached to motor?</span></div><div class="line">    <span class="keyword">public</span> <span class="keyword">bool</span> steering; <span class="comment">// does this wheel apply steer angle?</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Just drop this snippet on the <code>car_root</code> object, tune the script parameters as shown below and kick off to play mode. Play around with the settings, Those shown below seem to work reasonably well:</p>
+<p><img src="../uploads/Main/WheelColliderSettings.png" alt=""> </p>
+<p>You can have up to 20 wheels on a single vehicle instance with each of them applying steering, motor or braking torque.</p>
+<ul>
+<li><p>Now we will move on to visual wheels. As can see, WheelCollider doesn’t apply the simulated wheel position and rotation back to WheelCollider’s transform. So adding visual wheel requires some tricks.</p>
+<ol>
+<li>We need some wheel geometry here. we can make a simple wheel shape out of a cylinder.</li>
+<li>Now there could be several approaches to adding visual wheels: making it so that we have to assign visual wheels manually in script properties or writing some logic to find the corresponding visual wheel automatically. We’ll follow the second approach.</li>
+<li>Attach the visual wheels to wheel collider objects.</li>
+<li>Now change the controller script:</li>
+</ol>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">using</span> UnityEngine;</div><div class="line"><span class="keyword">using</span> System.Collections;</div><div class="line"><span class="keyword">using</span> System.Collections.Generic;</div><div class="line"></div><div class="line">[System.Serializable]</div><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">AxleInfo</span> &#123;</div><div class="line">    <span class="keyword">public</span> WheelCollider leftWheel;</div><div class="line">    <span class="keyword">public</span> WheelCollider rightWheel;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">bool</span> motor;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">bool</span> steering;</div><div class="line">&#125;</div><div class="line"> </div><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">SimpleCarController</span> : <span class="title">MonoBehaviour</span> &#123;</div><div class="line">    <span class="keyword">public</span> List&lt;AxleInfo&gt; axleInfos; </div><div class="line">    <span class="keyword">public</span> <span class="keyword">float</span> maxMotorTorque;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">float</span> maxSteeringAngle;</div><div class="line"> </div><div class="line">    <span class="comment">// finds the corresponding visual wheel</span></div><div class="line">    <span class="comment">// correctly applies the transform</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">ApplyLocalPositionToVisuals</span>(<span class="params">WheelCollider collider</span>)</span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">if</span> (collider.transform.childCount == <span class="number">0</span>) &#123;</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        &#125;</div><div class="line"> </div><div class="line">        Transform visualWheel = collider.transform.GetChild(<span class="number">0</span>);</div><div class="line"> </div><div class="line">        Vector3 position;</div><div class="line">        Quaternion rotation;</div><div class="line">        collider.GetWorldPose(<span class="keyword">out</span> position, <span class="keyword">out</span> rotation);</div><div class="line"> </div><div class="line">        visualWheel.transform.position = position;</div><div class="line">        visualWheel.transform.rotation = rotation;</div><div class="line">    &#125;</div><div class="line"> </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">FixedUpdate</span>(<span class="params"></span>)</span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">float</span> motor = maxMotorTorque * Input.GetAxis(<span class="string">"Vertical"</span>);</div><div class="line">        <span class="keyword">float</span> steering = maxSteeringAngle * Input.GetAxis(<span class="string">"Horizontal"</span>);</div><div class="line"> </div><div class="line">        <span class="keyword">foreach</span> (AxleInfo axleInfo <span class="keyword">in</span> axleInfos) &#123;</div><div class="line">            <span class="keyword">if</span> (axleInfo.steering) &#123;</div><div class="line">                axleInfo.leftWheel.steerAngle = steering;</div><div class="line">                axleInfo.rightWheel.steerAngle = steering;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">if</span> (axleInfo.motor) &#123;</div><div class="line">                axleInfo.leftWheel.motorTorque = motor;</div><div class="line">                axleInfo.rightWheel.motorTorque = motor;</div><div class="line">            &#125;</div><div class="line">            ApplyLocalPositionToVisuals(axleInfo.leftWheel);</div><div class="line">            ApplyLocalPositionToVisuals(axleInfo.rightWheel);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>One important parameter of WheelCollider component is forceAppPointDistance. This is the distance from the base of the resting wheel to the point where the wheel forces are applied at. The default value is 0, which means to apply the forces at the base of the resting wheel, but actually, it is wise to have this point located somewhere slightly below the car’s centre of mass.</p>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://tospan.me/2017/02/23/Unity-Physics/" data-id="cizhorely00111gvw9kvsp8ct" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/default/">default</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/02/23/Unity-Multiplayer-And-Networking/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Unity Multiplayer And Networking
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/02/10/Game-Development/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">游戏开发</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Algorithms/">Algorithms</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Game-Development/">Game Development</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Game-Programming-Patterns/">Game Programming Patterns</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Unity/">Unity</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Unity-Tutorials/">Unity Tutorials</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/default/">default</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Algorithms/">Algorithms</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Basics/">Basics</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C#</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Data-Structure/">Data Structure</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Games/">Games</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Geometry/">Geometry</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linear-Algebra/">Linear Algebra</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Math/">Math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mathematics/">Mathematics</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Numerical-Analysis/">Numerical Analysis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Patterns/">Patterns</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scripting/">Scripting</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Unity/">Unity</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/default/">default</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Algorithms/" style="font-size: 17.5px;">Algorithms</a> <a href="/tags/Basics/" style="font-size: 12.5px;">Basics</a> <a href="/tags/C/" style="font-size: 12.5px;">C#</a> <a href="/tags/Data-Structure/" style="font-size: 16.25px;">Data Structure</a> <a href="/tags/Games/" style="font-size: 10px;">Games</a> <a href="/tags/Geometry/" style="font-size: 11.25px;">Geometry</a> <a href="/tags/Linear-Algebra/" style="font-size: 13.75px;">Linear Algebra</a> <a href="/tags/Math/" style="font-size: 12.5px;">Math</a> <a href="/tags/Mathematics/" style="font-size: 12.5px;">Mathematics</a> <a href="/tags/Numerical-Analysis/" style="font-size: 10px;">Numerical Analysis</a> <a href="/tags/Patterns/" style="font-size: 15px;">Patterns</a> <a href="/tags/Scripting/" style="font-size: 18.75px;">Scripting</a> <a href="/tags/Unity/" style="font-size: 20px;">Unity</a> <a href="/tags/default/" style="font-size: 11.25px;">default</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">May 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">April 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/03/">March 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/02/">February 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">January 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/12/">December 2012</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/02/23/Unity-Multiplayer-And-Networking/">Unity Multiplayer And Networking</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/23/Unity-Physics/">Unity Physics</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/10/Game-Development/">游戏开发</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/08/Unity/Scripting-Quick-Benchmark/">Unity 简单基准测试</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/07/Unity/Patterns-FSM/">游戏编程设计模式:有限状态机(FSM)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 To Span<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>

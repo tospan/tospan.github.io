@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <title>Unity教程:Space Shooter | 吐司片的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Introduction1. Introduction to Space ShooterAn introduction to the Space Shooter project, showing the final game and describing what will be covered in this project.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Unity教程:Space Shooter">
+<meta property="og:url" content="http://tospan.me/2017/02/01/Unity/Tutorials-Space-Shooter-Tutorial/index.html">
+<meta property="og:site_name" content="吐司片的博客">
+<meta property="og:description" content="Introduction1. Introduction to Space ShooterAn introduction to the Space Shooter project, showing the final game and describing what will be covered in this project.">
+<meta property="og:updated_time" content="2017-02-05T07:29:58.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Unity教程:Space Shooter">
+<meta name="twitter:description" content="Introduction1. Introduction to Space ShooterAn introduction to the Space Shooter project, showing the final game and describing what will be covered in this project.">
+  
+    <link rel="alternate" href="/atom.xml" title="吐司片的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+</head>
+
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">吐司片的博客</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Work hard, play hard.</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://tospan.me"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Unity/Tutorials-Space-Shooter-Tutorial" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/02/01/Unity/Tutorials-Space-Shooter-Tutorial/" class="article-date">
+  <time datetime="2017-02-01T07:29:58.000Z" itemprop="datePublished">2017-02-01</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Unity-Tutorials/">Unity Tutorials</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Unity教程:Space Shooter
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><h3 id="1-Introduction-to-Space-Shooter"><a href="#1-Introduction-to-Space-Shooter" class="headerlink" title="1. Introduction to Space Shooter"></a><a href="https://unity3d.com/learn/tutorials/projects/space-shooter/introduction?playlist=17147" target="_blank" rel="external">1. Introduction to Space Shooter</a></h3><p>An introduction to the Space Shooter project, showing the final game and describing what will be covered in this project.</p>
+<a id="more"></a>
+<h2 id="1-Game-setup-Player-and-Camera"><a href="#1-Game-setup-Player-and-Camera" class="headerlink" title="1. Game setup, Player and Camera"></a>1. Game setup, Player and Camera</h2><h3 id="1-Setting-up-the-project"><a href="#1-Setting-up-the-project" class="headerlink" title="1. Setting up the project"></a><a href="https://unity3d.com/learn/tutorials/projects/space-shooter/setting-up-the-project?playlist=17147" target="_blank" rel="external">1. Setting up the project</a></h3><p>Creating a new project, importing assets, setting the build target and other project related details.</p>
+<p>创建新项目，命名为 <code>SpaceShooter</code>，然后从<code>AssetStore</code>中导入资源：<a href="https://www.assetstore.unity3d.com/en/#!/content/13866?_ga=1.139739514.838993178.1480250241" target="_blank" rel="external">Space Shooter</a></p>
+<p>游戏默认是全屏设置，通过Edit -&gt; Project Settings -&gt; Player，默认是<code>PC, Mac &amp; Linux Standalone</code></p>
+<p>取消 <code>Default Is Full Screen</code> 选项，然后设置 <code>Default Screen Width</code> 为 <code>600</code>， <code>Default Screen Height</code>为<code>900</code></p>
+<h3 id="2-The-player-GameObject"><a href="#2-The-player-GameObject" class="headerlink" title="2. The player GameObject"></a><a href="https://unity3d.com/learn/tutorials/projects/space-shooter/the-player-gameobject?playlist=17147" target="_blank" rel="external">2. The player GameObject</a></h3><p>先设置角色。</p>
+<p>有模型直接把模型拖进场景，位置重置，一个模型游戏对象需要最基本的组件：</p>
+<ul>
+<li>Mesh Filter</li>
+<li>Mesh Render<ul>
+<li>Materials</li>
+</ul>
+</li>
+</ul>
+<p>游戏过程中我们是需要控制我们的角色的，这里我们使用Rigidbody，直接添加组件就可以了，由于角色在太空中，所以就不用启用重力选项了。</p>
+<p>Rigidbody的主要功能是什么呢？</p>
+<p>接下来还需要检测碰撞，这主要用于处理两种情况：</p>
+<ul>
+<li>角色与其他对象碰撞了</li>
+<li>角色与其他对象重叠了</li>
+</ul>
+<p>这主要就和物体的外形(Volume)有关，有些时候要求不严谨，我们可以使用一些常用的的Collider，例如Box，Sphere，或Capsule Collider，抑或是它们的组合，如果实在不行，我们可以考虑使用Mesh Collider，默认它是基于模型的结构来创建各个面的，这个时候就会就会很复杂（为什么会复杂呢？）这个时候就该考虑做一个简化模型来作为Mesh Collider。</p>
+<blockquote>
+<p>在Unity 5中一个物体可以有多个Collider，而不是之前只允许有一个Collider，所以要根据实际情况来处理。另外，Mesh Collider必须启用Convex才有用。</p>
+</blockquote>
+<p>最后，我们给角色添加了引擎。</p>
+<h3 id="3-Camera-and-lighting"><a href="#3-Camera-and-lighting" class="headerlink" title="3. Camera and lighting"></a><a href="https://unity3d.com/learn/tutorials/projects/space-shooter-tutorial/camera-and-lighting?playlist=17147" target="_blank" rel="external">3. Camera and lighting</a></h3><h4 id="设置相机"><a href="#设置相机" class="headerlink" title="设置相机"></a>设置相机</h4><p>这是个j街机游戏，所以Skybox没有价值，直接设置<code>Clear Flags</code>为 <code>Solid Color</code>，然后将背景色设置为全黑色。另外，Projection改为Orthographic（正交视图），而非透视</p>
+<h4 id="设置光源"><a href="#设置光源" class="headerlink" title="设置光源"></a>设置光源</h4><p>添加背景，新的Unity中默认每个场景都有skybox，可以通过Window/Lighting窗口找到Skybox。</p>
+<p>Lighting选项卡是针对全局设置的，Camera是局部设置，例如在没有设置Skybox的情况下，我们将Clear Flags设置为Skybox，默认还是Solid Color</p>
+<p>Unity 5之后，每个新建的场景都有Skybox和Directional Light。</p>
+<p>如果发现即使没有了直射光，我们依旧可以看到我们的角色，主要原因在于存在环境光(Ambient Light)，新版本的Unity，默认的Ambient Source是Skybox，那么我们需要在Lighting窗口的Scene 选项卡，找到Skybox然后删除即可，由于没有Skybox，它就会出现Ambient Color，这下就和老版本的Unity一样（通过Edit -&gt; RenderSettings -&gt; Ambient Light）</p>
+<p>Ambient Light是来自于非固定光源，而是场景中物体表面光源，默认值是(51,51,51,255)，虽然我们可以调节它，但是由于不是直接光源，会导致结果不可控，还是直接设置为(0,0,0,255)吧。</p>
+<p>这样一来我们的角色就全黑了！！！</p>
+<p>我们需要添加main light, Fill light, Rim Light，至于为什么要这三种光……并不是很明白。</p>
+<h3 id="4-Adding-a-background"><a href="#4-Adding-a-background" class="headerlink" title="4. Adding a background"></a><a href="https://unity3d.com/learn/tutorials/projects/space-shooter/adding-a-background?playlist=17147" target="_blank" rel="external">4. Adding a background</a></h3><p>现在我们的游戏场景就是一片漆黑，很无趣！</p>
+<p>需要给游戏添加点背景，Create -&gt; 3D -&gt; Quad（四边形），鉴于我们只是使用它来作为背景，那么没有必要使用Mesh Collider，可以直接移除。</p>
+<p>然后我们给它加上贴图，直接将贴图拖拽到Quad上面就可以了，实际上背后的流程是Unity会为创建一个Material，然后使用该贴图。并使用默认标准的Shader。</p>
+<p>然后就是调节大小了，问题是使用标准的Shader我们的背景色会很灰暗，尽管我们可以使用光（放于不同层的光，可以避免光之间互相影响）。其实只要调节下Shader就可以了，使用Unlit/Texture，对于Shader完全不理解啊……</p>
+<p>基本的舞台和主角都好了，接下来该准备Gameplay了！</p>
+<h3 id="5-Moving-the-player"><a href="#5-Moving-the-player" class="headerlink" title="5. Moving the player"></a><a href="https://unity3d.com/earn/tutorials/projects/space-shooter/moving-the-player?playlist=17147" target="_blank" rel="external">5. Moving the player</a></h3><p>首先是能控制我们的飞机哇！</p>
+<p>我们可以直接控制它的速度来完成，这个需要它的Rigidbody来完成（我可以直接设置position啊！为什么一定要使用Rigidbody呢？？？？！）。 另外在Unity 5之后，不能再使用快捷方式，例如直接获取rigidbody了，必须使用GetComponent后操作。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">private</span> Rigidbody rb;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">Start</span><span class="params">()</span></span>&#123;</div><div class="line">    rb = getComponent&lt;Rigidbody&gt;();</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">FixedUpdate</span><span class="params">()</span></span>&#123;</div><div class="line">    <span class="keyword">float</span> moveHorizontal = Input.GetAxis(<span class="string">"Horizontal"</span>);</div><div class="line">    <span class="keyword">float</span> moveVertical = Input.GetAxis(<span class="string">"Vertical"</span>);</div><div class="line"></div><div class="line">    rg.velocity = <span class="keyword">new</span> Vector3(moveHorizontal, <span class="number">0.0f</span>, moveVertical);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>就这样，我们就可以通过方向键来控制我们的灰机移动了，问题是：moveHorizontal属于0~1，moveVertical属于 0~1，rigidbody.velocity到底是什么呢？</p>
+<h4 id="设置移动范围"><a href="#设置移动范围" class="headerlink" title="设置移动范围"></a>设置移动范围</h4><p>如果上面的移动速度太慢，我们可以设置一个速度值乘以向量。另外又有一个问题，一不小心我们的飞机就会飞到外面去了。这个时候我们就需要个飞机的活动范围设置界限。</p>
+<p>对于y轴方向，没有什么好说的，我们根本不会改变它，对于x和y方向则不然。我们需要规定position的x，y的最大最小值。这时候可以使用Mathf.Clamp(value, min, max)。当然我们可以直接使用</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">float</span> xMin, xMax, zMin, zMax;</div><div class="line"></div><div class="line">rg.position = <span class="keyword">new</span> Vector3(</div><div class="line">    Mathf.Clamp(rg.position.x, xMin, xMax),</div><div class="line">    <span class="number">0.0f</span>,</div><div class="line">    Mathf.Clamp(rg.position.z, zMin, zMax)</div><div class="line">);</div></pre></td></tr></table></figure>
+<p>但这里的问题是，会直接在Inspector面板上占用4行的空间，不太好，我们可以创建一个类。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> Boundary&#123;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">float</span> xMin, xMax, zMin, zMax;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">public</span> PlayerController: MonoBehavior&#123;</div><div class="line">    <span class="keyword">public</span> Boundary boundary;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">FixedUpdate</span><span class="params">()</span></span>&#123;</div><div class="line">        ... ...</div><div class="line">        rg.position = <span class="keyword">new</span> Vector3(</div><div class="line">            Mathf.Clamp(rg.position.x, boundary.xMin, boundary.xMax),</div><div class="line">            <span class="number">0.0f</span>,</div><div class="line">            Mathf.Clamp(rg.position.z, boundary.zMin, boundary.zMax)</div><div class="line">        );</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这样虽好，但我们无法直接在Inspector上设置了，需要进行序列化，给Boundary类加上修饰 <code>[System.Serializable]</code> ，这样我们就可以直接在Inspector上进行编辑了，也可以折叠，是不是很吊？！</p>
+<h4 id="让飞机倾斜！"><a href="#让飞机倾斜！" class="headerlink" title="让飞机倾斜！"></a>让飞机倾斜！</h4><p>当飞机左右飞行的时候，如果能够稍微倾斜一点则更加有趣一点。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">float</span> tilt;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">FixedUpdate</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    rg.rotation = Quaternion.Euler(<span class="number">0.0f</span>, <span class="number">0.0f</span>, rg.velocity.x * -tilt);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>对，我们只要旋转z方向就可以了。 rotation是什么？需要好好理解！！！！！！！！</p>
+<h3 id="6-Creating-shots"><a href="#6-Creating-shots" class="headerlink" title="6. Creating shots"></a><a href="https://unity3d.com/learn/tutorials/projects/space-shooter-tutorial/creating-shots?playlist=17147" target="_blank" rel="external">6. Creating shots</a></h3><h3 id="7-Shooting-shots"><a href="#7-Shooting-shots" class="headerlink" title="7. Shooting shots"></a><a href="https://unity3d.com/learn/tutorials/projects/space-shooter/shooting-shots?playlist=17147" target="_blank" rel="external">7. Shooting shots</a></h3><h2 id="2-Boundaries-Hazards-and-Enemies"><a href="#2-Boundaries-Hazards-and-Enemies" class="headerlink" title="2. Boundaries, Hazards and Enemies"></a>2. Boundaries, Hazards and Enemies</h2><h3 id="1-Boundary"><a href="#1-Boundary" class="headerlink" title="1. Boundary"></a><a href="https://unity3d.com/learn/tutorials/projects/space-shooter-tutorial/boundary?playlist=17147" target="_blank" rel="external">1. Boundary</a></h3><p>接着上一节，如果我们持续射击，那么我们的场景中会增加很多子弹它们会一直沿着Z轴方向飞去。肯定会影响性能的。</p>
+<p>直接的想法就是当这些子弹飞出我们的游戏场景的时候，我们就直接销毁它们。（当然还有其他方式，就是子弹池，避免不断实例化新的GameObject）。</p>
+<p>那么怎么怎么判断它们是否在场景中呢？这就需要Collider了，关于Collider是如何工作的，可以看看 a brief of 2D game Development.</p>
+<p>我们需要使用Collider的trigger功能。</p>
+<p>Collider有两个事件：OnTriggerEnter, OnTriggerExit。</p>
+<p>其实我们都可以拿来用，比如，OnTriggerEnter，我们将场景四周围绕Box Collider，用于检测。但这里更简单的是：OnTriggerExit</p>
+<p>创建一个Box，让它和我们的场景一样大（主要只宽高）然后，启用Is Trigger</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">OnTriggerExit</span><span class="params">(Collider other)</span></span>&#123;</div><div class="line">    Destroy(other.gameObject);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="2-Creating-hazards"><a href="#2-Creating-hazards" class="headerlink" title="2. Creating hazards"></a><a href="https://unity3d.com/learn/tutorials/projects/space-shooter-tutorial/creating-hazards?playlist=17147" target="_blank" rel="external">2. Creating hazards</a></h3><p>现在设置基本齐全了，我们该考虑怎么让我们的角色接受点挑战了！</p>
+<p>首先来点陨石。</p>
+<p>先创建一个空的父对象，然后将陨石模型拖到下面，重置所有Transform参数。</p>
+<p>给父对象添加Rigidbody，由于在太空中，不需要重力。<br>同时还需要添加一个Collider，这里我们使用Capsule Collider，可以使用Inspector面板上的编辑器来修改Collider的大小。</p>
+<p>这样我们的一个陨石基本就完成了。</p>
+<p>可是很丑陋啊……</p>
+<p>让它自己旋转吧！</p>
+<p>创建脚本 RandomRotator.cs</p>
+<p>直接获取Rigidbody，然后设置它的AngularVelocity，什么是AngularVelocity，就是RigidBody的旋转速度，另外Unity自带很多随机值库<code>Random</code>，这里我们使用<code>Random.insideUnitSphere</code>(Returns a random point inside a sphere with radius 1 (Read Only)) 然后乘以一个标量值tumble。运行，就可以看到我们的陨石随机转动了。问题是转动一会儿就停止了……</p>
+<p>这是由于Rigidbody中有两个参数模拟摩擦力的，例如空气阻力，它们是Drag和Angular Drag，从名字上看一个是方向上的阻力，一个是旋转时候的阻力，默认Angular Drag的值是0.5，我们设置为0就好了。</p>
+<p>现在我们直接用我们的子弹射击陨石，然而并没有什么用途。</p>
+<p>其实所有的Collider默认有两个用途：</p>
+<ol>
+<li>碰撞检测；</li>
+<li>Trigger</li>
+</ol>
+<p>若果我们启用了Is Trigger，那么它就只有 Trigger的功能了，但是Trigger只会触发事件，我们还需要完成事件的具体处理功能才可以实现想要的功能。例如子弹与陨石触碰后，子弹和陨石都销毁，当然陨石碰到了我们的飞机，它们也都销毁，所以创建一个脚本：</p>
+<p>DestroyByContact.cs</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">OnTriggerEnter</span><span class="params">(Collider other)</span></span>&#123;</div><div class="line">    <span class="keyword">if</span>(other.tag == <span class="string">"Bounday"</span>)&#123;</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    Destroy(other.gameObject);</div><div class="line">    Destroy(gameObject);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这里有两个点需要强调：</p>
+<ol>
+<li>为什么需要排除Boundary，其实因为陨石和子弹都在Boundary之内，那么游戏一旦启动，Boundary就会与陨石触发OnTriggerEnter的事件，那么就会导致我们的Boundary和陨石都消逝了。</li>
+<li>Destroy的顺序问题，它们不应该是同时销毁的么？其实Destroy方法只会标记特定的gameObject会被销毁而不会立即执行，所有的操作会在当前帧都处理完成后执行。</li>
+</ol>
+<p>这下再试试，就会发现，duang，子弹和陨石消逝了！</p>
+<h3 id="3-Explosions"><a href="#3-Explosions" class="headerlink" title="3. Explosions"></a><a href="https://unity3d.com/learn/tutorials/projects/space-shooter-tutorial/explosions?playlist=17147" target="_blank" rel="external">3. Explosions</a></h3><p>陨石被销毁怎么能没有爆炸呢？？！</p>
+<p>这个其实很简单（只要不是你自己创建爆炸效果就好）</p>
+<p>在DestroyByContact.cs脚本中添加如下代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> GameObject explosion;</div><div class="line"><span class="keyword">public</span> GameObject playerExplosion;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">OnTriggerEnter</span><span class="params">()</span></span>&#123;</div><div class="line">    <span class="keyword">if</span> (other.tag == <span class="string">"Boundary"</span>) &#123;</div><div class="line">        <span class="keyword">return</span>;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    Instantiate (explosion, transform.position, transform.rotation);</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (other.tag == <span class="string">"Player"</span>) &#123;</div><div class="line">        Instantiate (explosion, other.transform.position, other.transform.rotation);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    Destroy (other.gameObject);</div><div class="line">    Destroy (gameObject);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>然后直接在Inspector面板将explosion的效果直接拖进去就可以了啊！</p>
+<p>另外，我们还需要陨石是可以移动的，这就需要给陨石添加Mover.cs脚本了。让后设置speed为-5，那么它就会向我们的飞船飞过来了！</p>
+<h3 id="4-Game-Controller"><a href="#4-Game-Controller" class="headerlink" title="4. Game Controller"></a><a href="https://unity3d.com/learn/tutorials/projects/space-shooter-tutorial/game-controller?playlist=17147" target="_blank" rel="external">4. Game Controller</a></h3><p>到目前来看，游戏需要的角色基本上场了。现在就需要游戏规则了。这个时候就是需要GameController的时候。</p>
+<p>我们创建一个空对象，命名为GameController，并设置它的Tag为GameController，并添加一个脚本为GameController。</p>
+<p>我们用它做什么？当然是生成各种陨石啦！</p>
+<p>不过这里主要的问题就是在那里生成陨石呢？</p>
+<p>教程的作者厉害的地方在于倒推。</p>
+<p>他很清楚自己需要什么东西（这也许就是经验），然后拆分为对应的代码，再倒推到具体的参数来源及其组合方式（比如组合使用随机数，默认值，数学函数等等）。</p>
+<h3 id="5-Spawning-waves"><a href="#5-Spawning-waves" class="headerlink" title="5. Spawning waves"></a><a href="https://unity3d.com/learn/tutorials/projects/space-shooter/spawning-waves?playlist=17147" target="_blank" rel="external">5. Spawning waves</a></h3><p>这是重要课程！！！！！！！非常重要之非常重要！！！！！</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> GameObject hazard;</div><div class="line"><span class="keyword">public</span> Vector3 SpawnValue;</div><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> hazardCount;</div><div class="line"><span class="keyword">public</span> <span class="keyword">float</span> spawnWait;</div><div class="line"><span class="keyword">public</span> <span class="keyword">float</span> startWait;</div><div class="line"><span class="keyword">public</span> <span class="keyword">float</span> waveWait;</div><div class="line"></div><div class="line"><span class="comment">// Use this for initialization</span></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">Start</span> <span class="params">()</span> </span>&#123;</div><div class="line">    StartCoroutine(SpawnWaves ());</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function">IEnumerator <span class="title">SpawnWaves</span><span class="params">()</span></span>&#123;</div><div class="line">    <span class="function">yield <span class="keyword">return</span> <span class="keyword">new</span> <span class="title">WaitForSeconds</span> <span class="params">(startWait)</span></span>;</div><div class="line"></div><div class="line">    <span class="keyword">while</span>(<span class="literal">true</span>)&#123;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i&lt;hazardCount; i++) &#123;</div><div class="line">            Vector3 spawnPosition = <span class="keyword">new</span> Vector3 (Random.Range(-SpawnValue.x, SpawnValue.x) ,SpawnValue.y, SpawnValue.z);</div><div class="line">            Quaternion spawnRotation = Quaternion.identity;</div><div class="line">            Instantiate (hazard, spawnPosition, spawnRotation);</div><div class="line">            <span class="function">yield <span class="keyword">return</span> <span class="keyword">new</span> <span class="title">WaitForSeconds</span> <span class="params">(spawnWait)</span></span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="function">yield <span class="keyword">return</span> <span class="keyword">new</span> <span class="title">WaitForSeconds</span> <span class="params">(waveWait)</span></span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="3-Scoring-Finishing-and-building-the-game"><a href="#3-Scoring-Finishing-and-building-the-game" class="headerlink" title="3. Scoring, Finishing and building the game"></a>3. Scoring, Finishing and building the game</h2><h3 id="1-Audio"><a href="#1-Audio" class="headerlink" title="1. Audio"></a><a href="https://unity3d.com/learn/tutorials/projects/space-shooter-tutorial/audio?playlist=17147" target="_blank" rel="external">1. Audio</a></h3><p>没有声音是一件很枯燥的事情啊！</p>
+<p>三种Audio组件：</p>
+<ul>
+<li>Audio Clips       容器：用于承载各种音频</li>
+<li>Audio Source      播放器： 用于播放各种音频</li>
+<li>Audio Listener</li>
+</ul>
+<p>这里的流程是，先导入声音，然后调节，这里我们省去了这个流程。对于声音来说，最重要的就是，声音添加到哪里，然后什时候播放，音量是多少？是否循环，是否支持立体声？</p>
+<h3 id="2-Counting-points-and-displaying-the-score"><a href="#2-Counting-points-and-displaying-the-score" class="headerlink" title="2. Counting points and displaying the score"></a><a href="https://unity3d.com/learn/tutorials/projects/space-shooter-tutorial/counting-points-and-displaying-score?playlist=17147" target="_blank" rel="external">2. Counting points and displaying the score</a></h3><p>现在我们的游戏基本已经可以了嘛！需要计分系统了呢！</p>
+<p>这个可以分成几个步骤</p>
+<h4 id="添加GUIText用于显示分数"><a href="#添加GUIText用于显示分数" class="headerlink" title="添加GUIText用于显示分数"></a>添加GUIText用于显示分数</h4><h4 id="在GameController提供更新分数的方法"><a href="#在GameController提供更新分数的方法" class="headerlink" title="在GameController提供更新分数的方法"></a>在GameController提供更新分数的方法</h4><h4 id="在陨石中获取GameController并在销毁的时候更新分数"><a href="#在陨石中获取GameController并在销毁的时候更新分数" class="headerlink" title="在陨石中获取GameController并在销毁的时候更新分数"></a>在陨石中获取GameController并在销毁的时候更新分数</h4><h3 id="3-Ending-the-game"><a href="#3-Ending-the-game" class="headerlink" title="3. Ending the game"></a><a href="https://unity3d.com/learn/tutorials/projects/space-shooter-tutorial/ending-game?playlist=17147" target="_blank" rel="external">3. Ending the game</a></h3><p>重新加载场景时，原来的Application LoadLevel不能用了，现在必须使用SceneManager，这就需要我们先添加命名空间：UnityEngine.SceneManagement</p>
+<p> SceneManagement.SceneManager.GetActiveScene().name</p>
+<h3 id="4-Building-the-game"><a href="#4-Building-the-game" class="headerlink" title="4. Building the game"></a><a href="https://unity3d.com/learn/tutorials/projects/space-shooter-tutorial/building-game?playlist=17147" target="_blank" rel="external">4. Building the game</a></h3><h2 id="4-Extending-Space-Shooter"><a href="#4-Extending-Space-Shooter" class="headerlink" title="4. Extending Space Shooter"></a>4. Extending Space Shooter</h2><h3 id="1-Extending-Space-Shooter-Enemies-More-Hazards-Scrolling-BG…"><a href="#1-Extending-Space-Shooter-Enemies-More-Hazards-Scrolling-BG…" class="headerlink" title="1. Extending Space Shooter: Enemies, More Hazards, Scrolling BG…"></a><a href="https://unity3d.com/learn/tutorials/projects/space-shooter-tutorial/extending-space-shooter-enemies-more-hazards?playlist=17147" target="_blank" rel="external">1. Extending Space Shooter: Enemies, More Hazards, Scrolling BG…</a></h3><h3 id="2-Mobile-Development-Converting-Space-Shooter-to-Mobile"><a href="#2-Mobile-Development-Converting-Space-Shooter-to-Mobile" class="headerlink" title="2. Mobile Development: Converting Space Shooter to Mobile"></a><a href="https://unity3d.com/learn/tutorials/topics/mobile-touch/mobile-development-converting-space-shooter-mobile?playlist=17147" target="_blank" rel="external">2. Mobile Development: Converting Space Shooter to Mobile</a></h3>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://tospan.me/2017/02/01/Unity/Tutorials-Space-Shooter-Tutorial/" data-id="cizhoreq1007i1gvw4hotd2sp" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Patterns/">Patterns</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Unity/">Unity</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/02/02/Unity/Tutorials-2D-UFO-Tutorial/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Unity教程:2D UFO
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/01/31/Unity/Tutorials-Roll-a-Ball/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Unity教程:Roll a Ball</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Algorithms/">Algorithms</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Game-Development/">Game Development</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Game-Programming-Patterns/">Game Programming Patterns</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Unity/">Unity</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Unity-Tutorials/">Unity Tutorials</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/default/">default</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Algorithms/">Algorithms</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Basics/">Basics</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C#</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Data-Structure/">Data Structure</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Games/">Games</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Geometry/">Geometry</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linear-Algebra/">Linear Algebra</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Math/">Math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mathematics/">Mathematics</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Numerical-Analysis/">Numerical Analysis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Patterns/">Patterns</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scripting/">Scripting</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Unity/">Unity</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/default/">default</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Algorithms/" style="font-size: 17.5px;">Algorithms</a> <a href="/tags/Basics/" style="font-size: 12.5px;">Basics</a> <a href="/tags/C/" style="font-size: 12.5px;">C#</a> <a href="/tags/Data-Structure/" style="font-size: 16.25px;">Data Structure</a> <a href="/tags/Games/" style="font-size: 10px;">Games</a> <a href="/tags/Geometry/" style="font-size: 11.25px;">Geometry</a> <a href="/tags/Linear-Algebra/" style="font-size: 13.75px;">Linear Algebra</a> <a href="/tags/Math/" style="font-size: 12.5px;">Math</a> <a href="/tags/Mathematics/" style="font-size: 12.5px;">Mathematics</a> <a href="/tags/Numerical-Analysis/" style="font-size: 10px;">Numerical Analysis</a> <a href="/tags/Patterns/" style="font-size: 15px;">Patterns</a> <a href="/tags/Scripting/" style="font-size: 18.75px;">Scripting</a> <a href="/tags/Unity/" style="font-size: 20px;">Unity</a> <a href="/tags/default/" style="font-size: 11.25px;">default</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">May 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">April 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/03/">March 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/02/">February 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">January 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/12/">December 2012</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/02/23/Unity-Multiplayer-And-Networking/">Unity Multiplayer And Networking</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/23/Unity-Physics/">Unity Physics</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/10/Game-Development/">游戏开发</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/08/Unity/Scripting-Quick-Benchmark/">Unity 简单基准测试</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/07/Unity/Patterns-FSM/">游戏编程设计模式:有限状态机(FSM)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 To Span<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>

@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <title>C#算法与数据结构（三）：简单的搜索算法 | 吐司片的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="概述： 搜索是非常基础的编程操作，本文将介绍如何在一个(数值)数组中进行搜索特定的内容的算法。它们是顺序查找(数组中内容未排序)和二分查找(数组中内容已排序)。
+
+
+按序搜索(Sequential Searching)
+让按序搜索更快一点：子组织数据
+
+
+二分搜索(Binary Search)
+递归二分搜索算法
+
+
+总结
+参考">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C#算法与数据结构（三）：简单的搜索算法">
+<meta property="og:url" content="http://tospan.me/2016/08/04/Algorithms_Basics/03-Basic-Searching-Algorithms/index.html">
+<meta property="og:site_name" content="吐司片的博客">
+<meta property="og:description" content="概述： 搜索是非常基础的编程操作，本文将介绍如何在一个(数值)数组中进行搜索特定的内容的算法。它们是顺序查找(数组中内容未排序)和二分查找(数组中内容已排序)。
+
+
+按序搜索(Sequential Searching)
+让按序搜索更快一点：子组织数据
+
+
+二分搜索(Binary Search)
+递归二分搜索算法
+
+
+总结
+参考">
+<meta property="og:updated_time" content="2017-02-17T10:30:00.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C#算法与数据结构（三）：简单的搜索算法">
+<meta name="twitter:description" content="概述： 搜索是非常基础的编程操作，本文将介绍如何在一个(数值)数组中进行搜索特定的内容的算法。它们是顺序查找(数组中内容未排序)和二分查找(数组中内容已排序)。
+
+
+按序搜索(Sequential Searching)
+让按序搜索更快一点：子组织数据
+
+
+二分搜索(Binary Search)
+递归二分搜索算法
+
+
+总结
+参考">
+  
+    <link rel="alternate" href="/atom.xml" title="吐司片的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+</head>
+
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">吐司片的博客</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Work hard, play hard.</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://tospan.me"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Algorithms_Basics/03-Basic-Searching-Algorithms" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/08/04/Algorithms_Basics/03-Basic-Searching-Algorithms/" class="article-date">
+  <time datetime="2016-08-04T00:32:41.000Z" itemprop="datePublished">2016-08-04</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Algorithms/">Algorithms</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      C#算法与数据结构（三）：简单的搜索算法
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>概述：</strong> 搜索是非常基础的编程操作，本文将介绍如何在一个(数值)数组中进行搜索特定的内容的算法。它们是顺序查找(数组中内容未排序)和二分查找(数组中内容已排序)。</p>
+<!-- TOC -->
+<ul>
+<li><a href="#按序搜索sequential-searching">按序搜索(Sequential Searching)</a><ul>
+<li><a href="#让按序搜索更快一点子组织数据">让按序搜索更快一点：子组织数据</a></li>
+</ul>
+</li>
+<li><a href="#二分搜索binary-search">二分搜索(Binary Search)</a><ul>
+<li><a href="#递归二分搜索算法">递归二分搜索算法</a></li>
+</ul>
+</li>
+<li><a href="#总结">总结</a></li>
+<li><a href="#参考">参考</a></li>
+</ul>
+<!-- /TOC -->
+<a id="more"></a>
+<h2 id="按序搜索-Sequential-Searching"><a href="#按序搜索-Sequential-Searching" class="headerlink" title="按序搜索(Sequential Searching)"></a>按序搜索(Sequential Searching)</h2><p>最常见的搜索方式就是从记录集的开始处按序遍历每条记录，直到找到所要的记录或者是到达数据集的末尾。<br>这就是所谓的顺序查找。 顺序查找(也被称为线性查找)是非常容易实现的。从数组的起始处开始，把每个访问到的数组元素依次和所<br>要查找的数值进行比较。如果找到匹配的数据项，就结束查找操作。如果遍历到数组的末尾仍没有产生匹配，那么 就说明此数值不在数组内。</p>
+<p>顺序搜索方法代码如下:</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">bool</span> <span class="title">SeqSearch</span>(<span class="params"><span class="keyword">int</span>[] arr, <span class="keyword">int</span> sValue</span>) </span>&#123;</div><div class="line"><span class="keyword">for</span> (<span class="keyword">int</span> index = <span class="number">0</span>; index &lt; arr.Length<span class="number">-1</span>; index++)</div><div class="line">      <span class="keyword">if</span> (arr[index] == sValue)</div><div class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果发现匹配，那么函数会立刻返回 <code>true</code> 并且退出。如果到达数组的末尾，函数还没有返回<code>true</code>，那么要搜索的的数值就不在数组内，而函数则会返回 <code>false</code>。</p>
+<p>当然，用户也可以这样写按序搜索函数。这样当找到要查找的数值时，函数就会返回此数值的在数组中的索引，当没有找到要数值时，函数就会返回-1。首先来看一看新函数:</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">SeqSearch</span>(<span class="params"><span class="keyword">int</span>[] arr, <span class="keyword">int</span> sValue</span>)</span></div><div class="line">&#123;</div><div class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> index = <span class="number">0</span>; index &lt; arr.Length <span class="number">-1</span> ; index++)</div><div class="line">    <span class="keyword">if</span> (arr[index] == sValue)</div><div class="line">      <span class="keyword">return</span> index; </div><div class="line">  </div><div class="line">  <span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="让按序搜索更快一点：子组织数据"><a href="#让按序搜索更快一点：子组织数据" class="headerlink" title="让按序搜索更快一点：子组织数据"></a>让按序搜索更快一点：子组织数据</h3><p>从上面的方法我们可以知道，如果搜索的元素位于数组的开始处位置附近，那么返回结果的速度就快。</p>
+<p>如果需要频繁搜索，为了提升搜索效率，我们可以在找到数据项后把它移动到数组开始处，从而减少搜索时遍历数组的次数以提高效率。最终的结果就是所有最频繁查找的数据项都会被放置在数据集合的开始部分。</p>
+<p>之所以叫自组织的原因，是数组中的数据位置不是由程序员在程序运行之前设定的，而是程序运行过程中程序自己组织的。</p>
+<p>那么怎么移动呢？</p>
+<p>可以根据帕累托的2/8定律，从我们这个角度上讲，对数组的80%的搜索操作都是为了找到其中20%的数据，那么就可以将数组长度 $L * 20%$ 作为分界线。</p>
+<p>如果找到的数据的索引值$I &gt; L * 20% $，那我们就该数据的位置与它前一个值的位置进行交换。</p>
+<p>示例代码如下：</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">SeqSearch</span>(<span class="params"><span class="keyword">int</span> sValue</span>) </span></div><div class="line">&#123;</div><div class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> index = <span class="number">0</span>; i &lt; arr.Length<span class="number">-1</span>; i++)</div><div class="line">  &#123;</div><div class="line">    <span class="keyword">if</span> (arr[index] == sValue &amp;&amp; index &gt; (arr.Length * <span class="number">0.2</span>)) </div><div class="line">    &#123;</div><div class="line">        swap(index, index<span class="number">-1</span>);</div><div class="line">        <span class="keyword">return</span> index; </div><div class="line">    &#125; <span class="function"><span class="keyword">else</span> <span class="title">if</span> (<span class="params">arr[index] == sValue</span>)</span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">return</span> index;      </div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">swap</span>(<span class="params"><span class="keyword">ref</span> <span class="keyword">int</span> item1, <span class="keyword">ref</span> <span class="keyword">int</span> item2</span>) </span>&#123; </div><div class="line">  <span class="keyword">int</span> temp = arr[item1];</div><div class="line">  arr[item1] = arr[item2];</div><div class="line">  arr[item2] = temp;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>以上的算法适用于对无序且长度变化较少的数据集进行搜索。接下来的将讨论一种只处理有序数据但比任何已提到的顺序查找算法都要更加高效的查找算法，即二分查找。</p>
+<h2 id="二分搜索-Binary-Search"><a href="#二分搜索-Binary-Search" class="headerlink" title="二分搜索(Binary Search)"></a>二分搜索(Binary Search)</h2><p>二分查找法对于已经排序的数据集的查找效率非常高。</p>
+<p>其核心思想可以通过这个例子说明：请假设你正试图猜测由朋友选定的一个在 1 至 100 之间的数字。对于每次你所做的猜测，朋友都会告诉你是猜对了，还是猜大了，或是猜小了。最好的策略是第一次猜 50。如果猜大了，那么就 应该再猜 25。如果猜 50 猜小了，则应该再猜 75。在每次猜测的时候，你都应该根据调整的数的较小或较大范围(这 依赖于你猜测的数是偏大还是偏小)选择一个新的中间点作为下次要猜测的数。只要遵循这个策略，你最终一定会猜出正确的数。</p>
+<p>要实现运用该策略可以按照如下的步骤：</p>
+<ol>
+<li>首先需要把数据按顺序(最好是升序方式)存储到数组内(当然，其他数据结构也可行)。</li>
+<li>找到该数组或列表的边界。</li>
+</ol>
+<p>在查找 的开始，这就意味着是数组的上限和下限。然后，通过把上限和下限相加后除以 2 的操作就可以计算出数组的中间 点。接着把存储在中间点上的数组元素与要查找的数值进行比较。如果两者相同，那么就表示找到了该数值，同时 查找算法也就此结束。如果要查找的数值小于中间点的值，那么就通过从中间点减去一的操作计算出新的上限。否 则，若是要查找的数值大于中间点的值，那么就把中间点加一求出新的下限。此算法反复执行直到下限和上限相等 时终止，这也就意味着已经对数组全部查找完了。如果发生这种情况，那么就返回-1，这表示数组中不存在要查找 的数值。<br>这里把算法作为 C#语言函数进行了编写:</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">binSearch</span>(<span class="params"><span class="keyword">int</span> <span class="keyword">value</span></span>) </span></div><div class="line">&#123;</div><div class="line">  <span class="keyword">int</span> upperBound, lowerBound, mid; </div><div class="line">  upperBound = arr.Length<span class="number">-1</span>; </div><div class="line">  lowerBound = <span class="number">0</span>;</div><div class="line">  <span class="keyword">while</span>(lowerBound &lt;= upperBound) </div><div class="line">  &#123;</div><div class="line">    mid = (upperBound + lowerBound) / <span class="number">2</span>;</div><div class="line">    <span class="keyword">if</span> (arr[mid] == <span class="keyword">value</span>)</div><div class="line">        <span class="keyword">return</span> mid;</div><div class="line">    <span class="function"><span class="keyword">else</span> <span class="title">if</span> (<span class="params"><span class="keyword">value</span> &lt; arr[mid]</span>)</span></div><div class="line">        upperBound = mid - <span class="number">1</span>;</div><div class="line">    <span class="keyword">else</span></div><div class="line">      lowerBound = mid + <span class="number">1</span>; </div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Here’s a program that uses the binary search method to search an array:<br><figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="keyword">string</span>[] args</span>)</span></div><div class="line">&#123; </div><div class="line">  Random random = <span class="keyword">new</span> Random(); </div><div class="line">  CArray mynums = <span class="keyword">new</span> CArray(<span class="number">9</span>); </div><div class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= <span class="number">9</span>; i++)</div><div class="line">      mynums.Insert(random.next(<span class="number">100</span>));</div><div class="line">  mynums.SortArr();</div><div class="line">  mynums.showArray();</div><div class="line">  <span class="keyword">int</span> position = mynums.binSearch(<span class="number">77</span>, <span class="number">0</span>, <span class="number">0</span>);</div><div class="line">  <span class="keyword">if</span> (position &gt;= <span class="number">-1</span>)</div><div class="line">  &#123; </div><div class="line">    Console.WriteLine(<span class="string">"found item"</span>); mynums.showArray();</div><div class="line">  &#125; </div><div class="line">  <span class="keyword">else</span>&#123;</div><div class="line">    Console.WriteLine(<span class="string">"Not in the array"</span>);    </div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  Console.Read();</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="递归二分搜索算法"><a href="#递归二分搜索算法" class="headerlink" title="递归二分搜索算法"></a>递归二分搜索算法</h3><p>Although the version of the binary search algorithm developed in the previ- ous section is correct, it’s not really a natural solution to the problem. The binary search algorithm is really a recursive algorithm because, by constantly subdividing the array until we find the item we’re looking for (or run out of room in the array), each subdivision is expressing the problem as a smaller version of the original problem. Viewing the problem this ways leads us to discover a recursive algorithm for performing a binary search.<br>In order for a recursive binary search algorithm to work, we have to make some changes to the code. Let’s take a look at the code first and then we’ll discuss the changes we’ve made:</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">RbinSearch</span>(<span class="params"><span class="keyword">int</span> <span class="keyword">value</span>, <span class="keyword">int</span> lower, <span class="keyword">int</span> upper</span>) </span></div><div class="line">&#123; </div><div class="line">  <span class="keyword">if</span> (lower &gt; upper)</div><div class="line">    <span class="keyword">return</span> <span class="number">-1</span>; </div><div class="line">  <span class="keyword">else</span></div><div class="line">  &#123;</div><div class="line">      <span class="keyword">int</span> mid;</div><div class="line">      mid = (<span class="keyword">int</span>)(upper+lower) / <span class="number">2</span>;</div><div class="line">      <span class="keyword">if</span> (<span class="keyword">value</span> &lt; arr[mid])</div><div class="line">        RbinSearch(<span class="keyword">value</span>, lower, mid<span class="number">-1</span>);</div><div class="line">      <span class="function"><span class="keyword">else</span> <span class="title">if</span> (<span class="params"><span class="keyword">value</span> = arr[mid]</span>)</span></div><div class="line">        return mid;</div><div class="line">      <span class="function"><span class="keyword">else</span></span></div><div class="line">        <span class="title">RbinSearch</span>(<span class="params"><span class="keyword">value</span>, mid+<span class="number">1</span>, upper</span>)</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>The main problem with the recursive binary search algorithm, as compared to the iterative algorithm, is its efficiency. When a 1,000-element array is sorted using both algorithms, the recursive algorithm is consistently 10 times slower than the iterative algorithm:</p>
+<p>Of course, recursive algorithms are often chosen for other reasons than effi- ciency, but you should keep in mind that anytime you implement a recursive algorithm, you should also look for an iterative solution so that you can compare the efficiency of the two algorithms.<br>Finally, before we leave the subject of binary search, we should mention that the Array class has a built-in binary search method. It takes two arguments,</p>
+<p>an array name and an item to search for, and it returns the position of the item in the array, or -1 if the item can’t be found.<br>To demonstrate how the method works, we’ve written yet another binary search method for our demonstration class. Here’s the code:</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">Bsearh</span>(<span class="params"><span class="keyword">int</span> <span class="keyword">value</span></span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> Array.BinarySearch(arr, <span class="keyword">value</span>)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>When the built-in binary search method is compared with our custom- built method, it consistently performs 10 times faster than the custom-built method, which should not be surprising. A built-in data structure or algorithm should always be chosen over one that is custom-built, if the two can be used in exactly the same ways.</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>对数据集中的某个元素进行查找是常见的操作，最简单的方法就是从数组或列表的开始处遍历数组直到找到想要的元素或到数组的结尾，这种搜索方法使用与数据量比较少，且未排序的数据集。</p>
+<p>如果该数据集排过序，二分查找法则是比较好的算法。二叉查找会持续划分数据集合直到找到所要查找的数据项为止。大家可以采用迭代方式或递归方式编写二分查找算法。C#语言的 <code>Array</code> 类包括有内置的二叉查找方法。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p>更多有关数据集合中概率分布的知识请参阅 Knuth 的书 (1998, pp. 399–401)。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://tospan.me/2016/08/04/Algorithms_Basics/03-Basic-Searching-Algorithms/" data-id="cizhorem500161gvwkkt5nxmx" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Algorithms/">Algorithms</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Data-Structure/">Data Structure</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/08/05/Algorithms_Basics/04-The-Queue-Stack-and-HashTable/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          C#算法与数据结构（四）：队列、栈和散列表
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/08/03/Algorithms_Basics/02-Basic-Sorting-Algorithms/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">C#算法与数据结构（二）：简单的排序算法</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Algorithms/">Algorithms</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Game-Development/">Game Development</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Game-Programming-Patterns/">Game Programming Patterns</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Unity/">Unity</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Unity-Tutorials/">Unity Tutorials</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/default/">default</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Algorithms/">Algorithms</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Basics/">Basics</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C#</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Data-Structure/">Data Structure</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Games/">Games</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Geometry/">Geometry</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linear-Algebra/">Linear Algebra</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Math/">Math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mathematics/">Mathematics</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Numerical-Analysis/">Numerical Analysis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Patterns/">Patterns</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scripting/">Scripting</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Unity/">Unity</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/default/">default</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Algorithms/" style="font-size: 17.5px;">Algorithms</a> <a href="/tags/Basics/" style="font-size: 12.5px;">Basics</a> <a href="/tags/C/" style="font-size: 12.5px;">C#</a> <a href="/tags/Data-Structure/" style="font-size: 16.25px;">Data Structure</a> <a href="/tags/Games/" style="font-size: 10px;">Games</a> <a href="/tags/Geometry/" style="font-size: 11.25px;">Geometry</a> <a href="/tags/Linear-Algebra/" style="font-size: 13.75px;">Linear Algebra</a> <a href="/tags/Math/" style="font-size: 12.5px;">Math</a> <a href="/tags/Mathematics/" style="font-size: 12.5px;">Mathematics</a> <a href="/tags/Numerical-Analysis/" style="font-size: 10px;">Numerical Analysis</a> <a href="/tags/Patterns/" style="font-size: 15px;">Patterns</a> <a href="/tags/Scripting/" style="font-size: 18.75px;">Scripting</a> <a href="/tags/Unity/" style="font-size: 20px;">Unity</a> <a href="/tags/default/" style="font-size: 11.25px;">default</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">May 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">April 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/03/">March 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/02/">February 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">January 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/12/">December 2012</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/02/23/Unity-Multiplayer-And-Networking/">Unity Multiplayer And Networking</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/23/Unity-Physics/">Unity Physics</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/10/Game-Development/">游戏开发</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/08/Unity/Scripting-Quick-Benchmark/">Unity 简单基准测试</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/07/Unity/Patterns-FSM/">游戏编程设计模式:有限状态机(FSM)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 To Span<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+</body>
+</html>

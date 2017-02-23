@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <title>C#算法与数据结构（九）：图(Graph)和相关算法 | 吐司片的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Scott Mitchell4GuysFromRolla.comUpdate January 2005Summary: A graph, like a tree, is a collection of nodes and edges, but has no rules dictating the connection among the nodes. In this fifth part of t">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C#算法与数据结构（九）：图(Graph)和相关算法">
+<meta property="og:url" content="http://tospan.me/2016/08/13/Algorithms_Basics/09-From-Trees-To-Graphs/index.html">
+<meta property="og:site_name" content="吐司片的博客">
+<meta property="og:description" content="Scott Mitchell4GuysFromRolla.comUpdate January 2005Summary: A graph, like a tree, is a collection of nodes and edges, but has no rules dictating the connection among the nodes. In this fifth part of t">
+<meta property="og:image" content="http://tospan.me/../_images/algorithms/IC90638.gif">
+<meta property="og:image" content="http://tospan.me/../_images/algorithms/IC23949.gif">
+<meta property="og:image" content="http://tospan.me/../_images/algorithms/IC76956.gif">
+<meta property="og:image" content="http://tospan.me/../_images/algorithms/IC110033.gif">
+<meta property="og:image" content="http://tospan.me/../_images/algorithms/IC25926.gif">
+<meta property="og:image" content="http://tospan.me/../_images/algorithms/IC22492.gif">
+<meta property="og:image" content="http://tospan.me/../_images/algorithms/IC67215.gif">
+<meta property="og:image" content="http://tospan.me/../_images/algorithms/IC145286.gif">
+<meta property="og:image" content="http://tospan.me/../_images/algorithms/IC31115.gif">
+<meta property="og:image" content="http://tospan.me/../_images/algorithms/IC8697.gif">
+<meta property="og:image" content="http://tospan.me/../_images/algorithms/IC108541.gif">
+<meta property="og:image" content="http://tospan.me/../_images/algorithms/IC107693.gif">
+<meta property="og:image" content="http://tospan.me/../_images/algorithms/IC41828.gif">
+<meta property="og:image" content="http://tospan.me/../_images/algorithms/IC117149.gif">
+<meta property="og:updated_time" content="2017-02-17T10:31:57.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C#算法与数据结构（九）：图(Graph)和相关算法">
+<meta name="twitter:description" content="Scott Mitchell4GuysFromRolla.comUpdate January 2005Summary: A graph, like a tree, is a collection of nodes and edges, but has no rules dictating the connection among the nodes. In this fifth part of t">
+<meta name="twitter:image" content="http://tospan.me/../_images/algorithms/IC90638.gif">
+  
+    <link rel="alternate" href="/atom.xml" title="吐司片的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+</head>
+
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">吐司片的博客</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Work hard, play hard.</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://tospan.me"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Algorithms_Basics/09-From-Trees-To-Graphs" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/08/13/Algorithms_Basics/09-From-Trees-To-Graphs/" class="article-date">
+  <time datetime="2016-08-13T10:31:57.000Z" itemprop="datePublished">2016-08-13</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Algorithms/">Algorithms</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      C#算法与数据结构（九）：图(Graph)和相关算法
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Scott Mitchell<br>4GuysFromRolla.com<br>Update January 2005<br>Summary: A graph, like a tree, is a collection of nodes and edges, but has no rules dictating the connection among the nodes. In this fifth part of the article series, we’ll learn all about graphs, one of the most versatile data structures.(22 printed pages)<br>Download the DataStructures20.msi sample file.<br>Editor’s note   This six-part article series originally appeared on MSDN Online starting in November 2003. In January 2005 it was updated to take advantage of the new data structures and features available with the .NET Framework version 2.0, and C# 2.0. The original articles are still available at <a href="http://msdn.microsoft.com/vcsharp/default.aspx?pull=/library/en-us/dv_vstechart/html/datastructures_guide.asp" target="_blank" rel="external">http://msdn.microsoft.com/vcsharp/default.aspx?pull=/library/en-us/dv_vstechart/html/datastructures_guide.asp</a>.<br>Note   This article assumes the reader is familiar with C#.<br><a id="more"></a><br><!-- TOC --></p>
+<ul>
+<li><a href="#contents">Contents</a></li>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#examining-the-different-classes-of-edges">Examining the Different Classes of Edges</a><ul>
+<li><a href="#directed-and-undirected-edges">Directed and Undirected Edges</a></li>
+<li><a href="#weighted-and-unweighted-edges">Weighted and Unweighted Edges</a></li>
+<li><a href="#sparse-graphs-and-dense-graphs">Sparse Graphs and Dense Graphs</a></li>
+</ul>
+</li>
+<li><a href="#creating-a-graph-class">Creating a Graph Class</a><ul>
+<li><a href="#representing-a-graph-using-an-adjacency-list">Representing a Graph Using an Adjacency List</a></li>
+<li><a href="#representing-a-graph-using-an-adjacency-matrix">Representing a Graph Using an Adjacency Matrix</a></li>
+<li><a href="#creating-the-graphnode-class">Creating the GraphNode Class</a></li>
+<li><a href="#building-the-graph-class">Building the Graph Class</a></li>
+<li><a href="#using-the-graph-class">Using the Graph Class</a></li>
+</ul>
+</li>
+<li><a href="#a-look-at-some-common-graph-algorithms">A Look at Some Common Graph Algorithms</a><ul>
+<li><a href="#the-minimum-spanning-tree-problem">The Minimum Spanning Tree Problem</a></li>
+<li><a href="#computing-the-shortest-path-from-a-single-source">Computing the Shortest Path from a Single Source</a></li>
+</ul>
+</li>
+<li><a href="#conclusion">Conclusion</a></li>
+<li><a href="#references">References</a></li>
+<li><a href="#参考文档">参考文档</a></li>
+</ul>
+<!-- /TOC -->
+<h2 id="Contents"><a href="#Contents" class="headerlink" title="Contents"></a>Contents</h2><ul>
+<li>Introduction</li>
+<li>Examining the Different Classes of Edges</li>
+<li>Creating a Graph Class</li>
+<li>A Look at Some Common Graph Algorithms</li>
+<li>Conclusion</li>
+</ul>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>Part 1 and Part 2 of this article series focused on linear data structures—the array, the List, the Queue, the Stack, the Hashtable, and the Dictionary. In Part 3 we began our investigation of trees. Recall that trees consist of a set of nodes, where all of the nodes share some connection to other nodes. These connections are referred to as edges. As we discussed, there are numerous rules spelling out how these connections can occur. For example, all nodes in a tree except for one—the root—must have precisely one parent node, while all nodes can have an arbitrary number of children. These simple rules ensure that, for any tree, the following three statements will hold:</p>
+<ol>
+<li>Starting from any node, any other node in the tree can be reached. That is, there exists no node that can’t be reached through some simple path.</li>
+<li>There are no <em>cycles</em>. A cycle exists when, starting from some node v, there is some path that travels through some set of nodes v1, v2, …, vk that then arrives back at v.</li>
+<li>The number of edges in a tree is precisely one less than the number of nodes.<br>In Part 3 we focused on binary trees, which are a special form of trees. Binary trees are trees whose nodes have at most two children.<br>In this fifth installment of the article series, we’re going to examine graphs. Graphs are composed of a set of nodes and edges, just like trees, but with graphs there are no rules for the connections between nodes. With graphs there is no concept of a root node, nor is there a concept of parents and children. Rather, a graph is just a collection of interconnected nodes.</li>
+</ol>
+<blockquote>
+<p>Note   Realize that all trees are graphs. A tree is a special case of a graph, one whose nodes are all reachable from some starting node and one that has no cycles.</p>
+</blockquote>
+<p>Figure 1 shows three examples of graphs. Notice that graphs, unlike trees, can have sets of nodes that are disconnected from other sets of nodes. For example, graph (a) has two distinct, unconnected set of nodes. Graphs can also contain cycles. Graph (b) has several cycles. One such is the path from v1 to v2 to v4 and back to v1. Another one is from v1 to v2 to v3 to v5 to v4 and back to v1. (There are also cycles in graph (a).) Graph (c) does not have any cycles, as one less edge than it does number of nodes, and all nodes are reachable. Therefore, it is a tree.</p>
+<p><img src="../_images/algorithms/IC90638.gif" alt="Figure 1. Three examples of graphs"></p>
+<p>Many real-world problems can be modeled using graphs. For example, search engines model the Internet as a graph, where Web pages are the nodes in the graph and the links among Web pages are the edges. Programs like Microsoft MapPoint that can generate driving directions from one city to another use graphs, modeling cities as nodes in a graph and the roads connecting the cities as edges.</p>
+<h2 id="Examining-the-Different-Classes-of-Edges"><a href="#Examining-the-Different-Classes-of-Edges" class="headerlink" title="Examining the Different Classes of Edges"></a>Examining the Different Classes of Edges</h2><p>Graphs, in their simplest terms, are a collection of nodes and edges, but there are different kinds of edges:</p>
+<ol>
+<li>Directed versus undirected edges</li>
+<li>Weighted versus unweighted edges</li>
+</ol>
+<p>When talking about using graphs to model a problem, it is usually important to indicate what class of graph you are working with. Is it a graph whose edges are directed and weighted, or one whose edges are undirected and weighted? In the next two sections we’ll discuss the differences between directed and undirected edges and weighted and unweighted edges.</p>
+<h3 id="Directed-and-Undirected-Edges"><a href="#Directed-and-Undirected-Edges" class="headerlink" title="Directed and Undirected Edges"></a>Directed and Undirected Edges</h3><p>The edges of a graph provide the connections between one node and another. By default, an edge is assumed to be bidirectional. That is, if there exists an edge between nodes v and u, it is assumed that one can travel from v to u and from u to v. Graphs with bidirectional edges are said to be undirected graphs, because there is no implicit direction in their edges.<br>For some problems, though, an edge might infer a one-way connection from one node to another. For example, when modeling the Internet as a graph, a hyperlink from Web page v linking to Web page u would imply that the edge between v to u would be unidirectional. That is, that one could navigate from v to u, but not from u to v. Graphs that use unidirectional edges are said to be directed graphs.<br>When drawing a graph, bidirectional edges are drawn as a straight line, as shown in Figure 1. Unidirectional edges are drawn as an arrow, showing the direction of the edge. Figure 2 shows a directed graph where the nodes are Web pages for a particular Web site and a directed edge from u to v indicates that there is a hyperlink from Web page u to Web page v. Notice that both u links to v and v links to u, two arrows are used—one from v to u and another from u to v.</p>
+<p><img src="../_images/algorithms/IC23949.gif" alt="Figure 2. Model of pages making up a website"></p>
+<h3 id="Weighted-and-Unweighted-Edges"><a href="#Weighted-and-Unweighted-Edges" class="headerlink" title="Weighted and Unweighted Edges"></a>Weighted and Unweighted Edges</h3><p>Typically graphs are used to model a collection of “things” and their relationship among these “things.” For example, the graph in Figure 2 modeled the pages in a Web site and their hyperlinks. Sometimes, though, it is important to associate some cost with the connection from one node to another.<br>A map can be easily modeled as a graph, with the cities as nodes and the roads connecting the cities as edges. If we wanted to determine the shortest distance and route from one city to another, we first need to assign a cost from traveling from one city to another. The logical solution would be to give each edge a weight, such as how many miles it is from one city to another.<br>Figure 3 shows a graph that represents several cities in southern California. The cost of any particular path from one city to another is the sum of the costs of the edges along the path. The shortest path, then, would be the path with the least cost. In Figure 3, for example, a trip from San Diego to Santa Barbara is 210 miles if driving through Riverside, then to Barstow, and then back to Santa Barbara. The shortest trip, however, is to drive 100 miles to Los Angeles, and then another 30 up to Santa Barabara.</p>
+<p><img src="../_images/algorithms/IC76956.gif" alt="Figure 3. Graph of California cities with edges valued as miles"></p>
+<p>Realize that directionality and weightedness of edges are orthogonal. That is, a graph can have one of four arrangements of edges:</p>
+<ul>
+<li>Directed, weighted edges</li>
+<li>Directed, unweighted edges</li>
+<li>Undirected, weighted edges</li>
+<li>Undirected, unweighted edges</li>
+</ul>
+<p>The graph’s in Figure 1 had undirected, unweighted edges. Figure 2 had directed, unweighted edges, and Figure 3 used undirected, weighted edges.</p>
+<h3 id="Sparse-Graphs-and-Dense-Graphs"><a href="#Sparse-Graphs-and-Dense-Graphs" class="headerlink" title="Sparse Graphs and Dense Graphs"></a>Sparse Graphs and Dense Graphs</h3><p>While a graph could have zero or a handful of edges, typically a graph will have more edges than it has nodes. What’s the maximum number of edges a graph could have, given n nodes? It depends on whether the graph is directed or undirected. If the graph is directed, then each node could have at an edge to every other node. That is, all n nodes could have n – 1 edges, giving a total of n * (n – 1) edges, which is nearly n2.</p>
+<blockquote>
+<p>Note   For this article, I am assuming nodes are not allowed to have edges to themselves. In general, though, graphs allow for an edge to exist from a node v back to node v. If self-edges are allowed, the total number of edges for a directed graph would be n2.</p>
+</blockquote>
+<p>If the graph is undirected, then one node, call it v1, could have an edge to each and every other node, or n – 1 edges. The next node, call it v2, could have at most n – 2 edges, because there already exists an edge from v2 to v1. The third node, v3, could have at most n – 3 edges, and so forth. Therefore, for n nodes, there would be at most (n – 1) + (n – 2) + … + 1 edges. Summed up this comes to [n * (n-1)] / 2, or, as you might have already guessed, exactly half as many edges as a directed graph.<br>If a graph has significantly less than n2 edges, the graph is said to be sparse. For example, a graph with n nodes and n edges, or even 2n edges would be said to be sparse. A graph with close to the maximum number of edges is said to be dense.<br>When using graphs in an algorithm it is important to know the ratio between nodes and edges. As we’ll see later on in this article, the asymptotic running time operations performed on a graph is typically expressed in terms of the number of nodes and edges in the graph.</p>
+<h2 id="Creating-a-Graph-Class"><a href="#Creating-a-Graph-Class" class="headerlink" title="Creating a Graph Class"></a>Creating a Graph Class</h2><p>While graphs are a very common data structure used in a wide array of different problems, there is no built-in graph data structure in the .NET Framework. Part of the reason is because an efficient implementation of a Graph class depends on a number of factors specific to the problem at hand. For example, graphs are typically modeled in either one of two ways:</p>
+<ul>
+<li>As an adjacency list</li>
+<li>As an adjacency matrix</li>
+</ul>
+<p>These two techniques differ in how the nodes and edges of the graph are maintained internally by the Graph class. Let’s examine both of these approaches and weigh the pros and cons of each approach.</p>
+<h3 id="Representing-a-Graph-Using-an-Adjacency-List"><a href="#Representing-a-Graph-Using-an-Adjacency-List" class="headerlink" title="Representing a Graph Using an Adjacency List"></a>Representing a Graph Using an Adjacency List</h3><p>In Part 3 we created a base class to represent nodes, the Node class. This base class was extended to provide specialized node classes for the BinaryTree, BST, and SkipList classes. Because a each node in a graph has an arbitrary number of neighbors, it might seem plausible that we can simply use the base Node class to represent a node in the graph, because the Node class consists of a value and an arbitrary number of neighboring Node instances. However, while this base class is a step in the right direction, it still lacks needed features, such as a way to associate a cost between neighbors. One option, then, is to create a GraphNode class that derives from the base Node class and extends it to include the required additional capabilities. Each GraphNode class, then, will keep track of its neighboring GraphNodes in the base class’s Neighbors property.<br>The Graph class contains a NodeList holding the set of GraphNodes that constitute the nodes in the graph. That is, a graph is represented by a set of nodes, and each node maintains a list of its neighbors. Such a representation is called an adjacency list, and is depicted graphically in Figure 4.</p>
+<p><img src="../_images/algorithms/IC110033.gif" alt="Figure 4. Adjacency list representation in graphical form"></p>
+<p>Notice that with an undirected graph, an adjacency list representation duplicated the edge information. For example, in adjacency list representation (b) in Figure 4, the node a has b in its adjacency list, and node b also has node a in its adjacency list.<br>Each node has precisely as many GraphNodes in its adjacency list as it has neighbors. Therefore, an adjacency list is a very space-efficient representation of a graph—you never store more data than needed. Specifically, for a graph with V nodes and E edges, a graph using an adjacency list representation will require V + E GraphNode instances for a directed graph and V + 2E Node instances for an undirected graph.<br>While Figure 4 does not show it, adjacency lists can also be used to represent weighted graphs. The only addition is that for each GraphNode n’s adjacency list, each GraphNode instance in the adjacency list needs to store the cost of the edge from n.<br>The one downside of an adjacency list is that determining if there is an edge from some node u to v requires that u’s adjacency list be searched. For dense graphs, u will likely have many GraphNodes in its adjacency list. Determining if there is an edge between two nodes, then, takes linear time for dense adjacency list graphs. Fortunately, when using graphs we’ll likely not need to determine if there exists an edge between two particular nodes. More often than not, we’ll want to simply enumerate all the edges of a particular node.</p>
+<h3 id="Representing-a-Graph-Using-an-Adjacency-Matrix"><a href="#Representing-a-Graph-Using-an-Adjacency-Matrix" class="headerlink" title="Representing a Graph Using an Adjacency Matrix"></a>Representing a Graph Using an Adjacency Matrix</h3><p>An alternative method for representing a graph is to use an adjacency matrix. For a graph with n nodes, an adjacency matrix is an n x n two-dimensional array. For weighted graphs the array element (u, v) would give the cost of the edge between u and v (or, perhaps -1 if no such edge existed between u and v. For an unweighted graph, the array could be an array of Booleans, where a True at array element (u, v) denotes an edge from u to v and a False denotes a lack of an edge.<br>Figure 5 depicts how an adjacency matrix representation in graphical form.</p>
+<p><img src="../_images/algorithms/IC25926.gif" alt="Figure 5. Adjacency matrix representation in graphical form"></p>
+<p>Note that undirected graphs display symmetry along the adjacency matrix’s diagonal. That is, if there is an edge from u to v in an undirected graph then there will be two corresponding array entries in the adjacency matrix, (u, v) and (v, u).<br>Because determining if an edge exists between two nodes is simply an array lookup, this can be determined in constant time. The downside of adjacency matrices is that they are space inefficient. An adjacency matrix requires an n2 element array, so for sparse graphs much of the adjacency matrix will be empty. Also, for undirected graphs half of the graph is just repeated information.<br>While either an adjacency matrix or adjacency list would suffice as an underlying representation of a graph for our Graph class, let’s move forward using the adjacency list model. I chose this approach primarily because it is a logical extension from the BinaryTreeNode and BinaryTree classes that we’ve already created together, and can be implemented by extending the Node class used as a base class for the data structures we’ve examined previously.</p>
+<h3 id="Creating-the-GraphNode-Class"><a href="#Creating-the-GraphNode-Class" class="headerlink" title="Creating the GraphNode Class"></a>Creating the GraphNode Class</h3><p>The GraphNode class represents a single node in the graph, and is derived from the base Node class we examined in Part 3 of this article series. The GraphNode class extends its base class by providing public access to the Neighbors property, as well as providing a Cost property. The Cost property is of type List<int>; for weighted graphs Cost[i] it can be used to specify the cost associated with traveling from the GraphNode to Neighbors[i].</int></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">public class GraphNode&lt;T&gt; : Node&lt;T&gt;</div><div class="line">&#123;</div><div class="line">    private List&lt;int&gt; costs;</div><div class="line"></div><div class="line">    public GraphNode() : base() &#123; &#125;</div><div class="line">    public GraphNode(T value) : base(value) &#123; &#125;</div><div class="line">    public GraphNode(T value, NodeList&lt;T&gt; neighbors) : base(value, neighbors) &#123; &#125;</div><div class="line"></div><div class="line">    new public NodeList&lt;T&gt; Neighbors</div><div class="line">    &#123;</div><div class="line">        get</div><div class="line">        &#123;</div><div class="line">            if (base.Neighbors == null)</div><div class="line">                base.Neighbors = new NodeList&lt;T&gt;();</div><div class="line"></div><div class="line">            return base.Neighbors;</div><div class="line">        &#125;            </div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public List&lt;int&gt; Costs</div><div class="line">    &#123;</div><div class="line">        get</div><div class="line">        &#123;</div><div class="line">            if (costs == null)</div><div class="line">                costs = new List&lt;int&gt;();</div><div class="line"></div><div class="line">            return costs;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>As the code for the GraphNode class shows, the class exposes two properties:<br>Neighbors: this just provides a public property to the protected base class’s Neighbors property. Recall that Neighbors is of type NodeList<t>.<br>Costs: a List<int> mapping a weight from the GraphNode to a specific neighbor.</int></t></p>
+<h3 id="Building-the-Graph-Class"><a href="#Building-the-Graph-Class" class="headerlink" title="Building the Graph Class"></a>Building the Graph Class</h3><p>Recall that with the adjacency list technique, the graph maintains a list of its nodes. Each node, then, maintains a list of adjacent nodes. So, in creating the Graph class we need to have a list of GraphNodes. This set of nodes is maintained using a NodeList instance. (We examined the NodeList class in Part 3; this class was used by the BinaryTree and BST classes, and was extended for the SkipList class.) The Graph class exposes its set of nodes through the public property Nodes.<br>Additionally, the Graph class has a number of methods for adding nodes and directed or undirected and weighted or unweighted edges between nodes. The AddNode() method adds a node to the graph, while AddDirectedEdge() and AddUndirectedEdge() allow a weighted or unweighted edge to be associated between two nodes.<br>In addition to its methods for adding edges, the Graph class has a Contains() method that returns a Boolean indicating if a particular value exists in the graph or not. There is also a Remove() method that deletes a GraphNode and all edges to and from it. The germane code for the Graph class is shown below (some of the overloaded methods for adding edges and nodes have been removed for brevity):</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div></pre></td><td class="code"><pre><div class="line">public class Graph&lt;T&gt; : IEnumerable&lt;T&gt;</div><div class="line">&#123;</div><div class="line">    private NodeList&lt;T&gt; nodeSet;</div><div class="line"></div><div class="line">    public Graph() : this(null) &#123;&#125;</div><div class="line">    public Graph(NodeList&lt;T&gt; nodeSet)</div><div class="line">    &#123;</div><div class="line">        if (nodeSet == null)</div><div class="line">            this.nodeSet = new NodeList&lt;T&gt;();</div><div class="line">        else</div><div class="line">            this.nodeSet = nodeSet;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void AddNode(GraphNode&lt;T&gt; node)</div><div class="line">    &#123;</div><div class="line">        // adds a node to the graph</div><div class="line">        nodeSet.Add(node);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void AddNode(T value)</div><div class="line">    &#123;</div><div class="line">        // adds a node to the graph</div><div class="line">        nodeSet.Add(new GraphNode&lt;T&gt;(value));</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void AddDirectedEdge(GraphNode&lt;T&gt; from, GraphNode&lt;T&gt; to, int cost)</div><div class="line">    &#123;</div><div class="line">        from.Neighbors.Add(to);</div><div class="line">        from.Costs.Add(cost);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void AddUndirectedEdge(GraphNode&lt;T&gt; from, GraphNode&lt;T&gt; to, int cost)</div><div class="line">    &#123;</div><div class="line">        from.Neighbors.Add(to);</div><div class="line">        from.Costs.Add(cost);</div><div class="line"></div><div class="line">        to.Neighbors.Add(from);</div><div class="line">        to.Costs.Add(cost);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public bool Contains(T value)</div><div class="line">    &#123;</div><div class="line">        return nodeSet.FindByValue(value) != null;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public bool Remove(T value)</div><div class="line">    &#123;</div><div class="line">        // first remove the node from the nodeset</div><div class="line">        GraphNode&lt;T&gt; nodeToRemove = (GraphNode&lt;T&gt;) nodeSet.FindByValue(value);</div><div class="line">        if (nodeToRemove == null)</div><div class="line">            // node wasn't found</div><div class="line">            return false;</div><div class="line"></div><div class="line">        // otherwise, the node was found</div><div class="line">        nodeSet.Remove(nodeToRemove);</div><div class="line"></div><div class="line">        // enumerate through each node in the nodeSet, removing edges to this node</div><div class="line">        foreach (GraphNode&lt;T&gt; gnode in nodeSet)</div><div class="line">        &#123;</div><div class="line">            int index = gnode.Neighbors.IndexOf(nodeToRemove);</div><div class="line">            if (index != -1)</div><div class="line">            &#123;</div><div class="line">                // remove the reference to the node and associated cost</div><div class="line">                gnode.Neighbors.RemoveAt(index);</div><div class="line">                gnode.Costs.RemoveAt(index);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        return true;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public NodeList&lt;T&gt; Nodes</div><div class="line">    &#123;</div><div class="line">        get</div><div class="line">        &#123;</div><div class="line">            return nodeSet;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public int Count</div><div class="line">    &#123;</div><div class="line">        get &#123; return nodeSet.Count; &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Using-the-Graph-Class"><a href="#Using-the-Graph-Class" class="headerlink" title="Using the Graph Class"></a>Using the Graph Class</h3><p>At this point, we have created all of the classes needed for our graph data structure. We’ll soon turn our attention to some of the more common graph algorithms, such as constructing a minimum spanning tree and finding the shortest path from a single node to all other nodes, but before we do let’s examine how to use the Graph class in a C# application.<br>Once we create an instance of the Graph class, the next task is to add the Nodes to the graph. This involves calling the Graph class’s AddNode() method for each node to add to the graph. Let’s recreate the graph from Figure 2. We’ll need to start by adding six nodes. For each of these nodes let’s have the Key be the Web page’s filename; we’ll leave the Data as null, although this might conceivably contain the contents of the file, or a collection of keywords describing the Web page content.</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">Graph&lt;<span class="keyword">string</span>&gt; web = <span class="keyword">new</span> Graph&lt;<span class="keyword">string</span>&gt;();</div><div class="line">web.AddNode(<span class="string">"Privacy.htm"</span>);</div><div class="line">web.AddNode(<span class="string">"People.aspx"</span>);</div><div class="line">web.AddNode(<span class="string">"About.htm"</span>);</div><div class="line">web.AddNode(<span class="string">"Index.htm"</span>);</div><div class="line">web.AddNode(<span class="string">"Products.aspx"</span>);</div><div class="line">web.AddNode(<span class="string">"Contact.aspx"</span>);</div></pre></td></tr></table></figure>
+<p>Next we need to add the edges. Because this is a directed, unweighted graph, we’ll use the Graph class’s AddDirectedEdge(u, v) method to add an edge from u to v.</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">web.AddDirectedEdge(<span class="string">"People.aspx"</span>, <span class="string">"Privacy.htm"</span>);  <span class="comment">// People -&gt; Privacy</span></div><div class="line"></div><div class="line">web.AddDirectedEdge(<span class="string">"Privacy.htm"</span>, <span class="string">"Index.htm"</span>);    <span class="comment">// Privacy -&gt; Index</span></div><div class="line">web.AddDirectedEdge(<span class="string">"Privacy.htm"</span>, <span class="string">"About.htm"</span>);    <span class="comment">// Privacy -&gt; About</span></div><div class="line"></div><div class="line">web.AddDirectedEdge(<span class="string">"About.htm"</span>, <span class="string">"Privacy.htm"</span>);    <span class="comment">// About -&gt; Privacy</span></div><div class="line">web.AddDirectedEdge(<span class="string">"About.htm"</span>, <span class="string">"People.aspx"</span>);    <span class="comment">// About -&gt; People</span></div><div class="line">web.AddDirectedEdge(<span class="string">"About.htm"</span>, <span class="string">"Contact.aspx"</span>);   <span class="comment">// About -&gt; Contact</span></div><div class="line"></div><div class="line">web.AddDirectedEdge(<span class="string">"Index.htm"</span>, <span class="string">"About.htm"</span>);      <span class="comment">// Index -&gt; About</span></div><div class="line">web.AddDirectedEdge(<span class="string">"Index.htm"</span>, <span class="string">"Contact.aspx"</span>);   <span class="comment">// Index -&gt; Contacts</span></div><div class="line">web.AddDirectedEdge(<span class="string">"Index.htm"</span>, <span class="string">"Products.aspx"</span>);  <span class="comment">// Index -&gt; Products</span></div><div class="line"></div><div class="line">web.AddDirectedEdge(<span class="string">"Products.aspx"</span>, <span class="string">"Index.htm"</span>);  <span class="comment">// Products -&gt; Index</span></div><div class="line">web.AddDirectedEdge(<span class="string">"Products.aspx"</span>, <span class="string">"People.aspx"</span>);<span class="comment">// Products -&gt; People</span></div></pre></td></tr></table></figure>
+<p>After these commands, web represents the graph shown in Figure 2. Once we have a constructed a graph we’ll typically want to answer some questions. For example, for the graph we just created we might want to answer, “What’s the least number of links a user must click to reach any Web page when starting from the homepage (Index.htm)?” To answer such questions we can usually fall back on using existing graph algorithms. In the next section we’ll examine two common algorithms for weighted graphs: constructing a minimum spanning tree and finding the shortest path from one node to all others.</p>
+<h2 id="A-Look-at-Some-Common-Graph-Algorithms"><a href="#A-Look-at-Some-Common-Graph-Algorithms" class="headerlink" title="A Look at Some Common Graph Algorithms"></a>A Look at Some Common Graph Algorithms</h2><p>Because graphs are a data structure that can be used to model a bevy of real-world problems, there are innumerous algorithms designed to find solutions for common problems. To further our understanding of graphs, let’s take a look at two of the most studied applications of graphs: finding a minimum spanning tree and computing the shortest path from a source node to all other nodes.</p>
+<h3 id="The-Minimum-Spanning-Tree-Problem"><a href="#The-Minimum-Spanning-Tree-Problem" class="headerlink" title="The Minimum Spanning Tree Problem"></a>The Minimum Spanning Tree Problem</h3><p>Imagine that you work for the phone company and your task is to provide phone lines to a village with 10 houses, each labeled H1 through H10. Specifically this involves running a single cable that connects each home. That is, the cable must run through houses H1, H2, and so forth, up through H10. Due to geographic obstacles—hills, trees, rivers, and so on—it is not feasible to necessarily run the cable from one house to another.<br>Figure 6 shows this problem depicted as a graph. Each node is a house, and the edges are the means by which one house can be wired up to another. The weights of the edges dictate the distance between the homes. Your task is to wire up all ten houses using the least amount of telephone wiring possible.</p>
+<p><img src="../_images/algorithms/IC22492.gif" alt="Figure 6. Graphical representation of hooking up a 10-home village with phone lines"></p>
+<p>For a connected, undirected graph, there exists some subset of the edges that connect all the nodes and does not introduce a cycle. Such a subset of edges would form a tree (because it would comprise one less edge than vertices and is acyclic), and is called a spanning tree. There are typically many spanning trees for a given graph. Figure 7 shows two valid spanning trees from the Figure 6 graph. (The edges forming the spanning tree are bolded.)</p>
+<p><img src="../_images/algorithms/IC67215.gif" alt="Figure 7.Spanning tree subsets based on Figure 6"></p>
+<p>For graphs with weighted edges, different spanning trees have different associated costs, where the cost is the sum of the weights of the edges that comprise the spanning tree. <em>A minimum spanning tree</em>, then, is the spanning tree with a minimum cost.<br>There are two basic approaches to solving the minimum spanning tree problem. One approach is build up a spanning tree by choosing the edges with the minimum weight, so long as adding that edge does not create a cycle among the edges chosen thus far. This approach is shown in Figure 8.</p>
+<p><img src="../_images/algorithms/IC145286.gif" alt="Figure 8. Minimum spanning tree that uses the edges with the minimum weight"></p>
+<p>The other approach builds up the spanning tree by dividing the nodes of the graph into two disjoint sets: the nodes currently in the spanning tree and those nodes not yet added. At each iteration, the least weighted edge that connects the spanning tree nodes to a node not in the spanning tree is added to the spanning tree. To start off the algorithm, some random start node must be selected. Figure 9 illustrates this approach in action, using H1 as the starting node. (In Figure 9 those nodes that are in the set of nodes in the spanning tree are shaded light yellow.)</p>
+<p><img src="../_images/algorithms/IC31115.gif" alt="Figure 9. Prim method of finding the minimum spanning tree"></p>
+<p>Notice that the techniques illustrated in both Figures 8 and 9 arrived at the same minimum spanning tree. If there is only one minimum spanning tree for the graph, then both of these approaches will reach the same conclusion. If, however, there are multiple minimum spanning trees, these two approaches might arrive with different results (both results will be correct, naturally).<br>Note   The first approach we examined was discovered by Joseph Kruskal in 1956 at Bell Labs. The second technique was discovered in 1957 by Robert Prim, also a researcher at Bell Labs. There is a plethora of information on these two algorithms on the Web, including Java applets showing the algorithms in progress graphically (Kruskal’s Algorithm | Prim’s Algorithm), as well as source code in a variety of languages.</p>
+<h3 id="Computing-the-Shortest-Path-from-a-Single-Source"><a href="#Computing-the-Shortest-Path-from-a-Single-Source" class="headerlink" title="Computing the Shortest Path from a Single Source"></a>Computing the Shortest Path from a Single Source</h3><p>When flying from one city to another, part of the headache is finding a route that requires the fewest number of connections—who likes their flight from New York to L.A. to first go from New York to Chicago, then Chicago to Denver, and finally Denver to L.A? Rather, most people would rather have a direct flight straight from New York to L.A.<br>Imagine, however, that you are not one of those people. Instead, you are someone who values his money much more than his time, and are most interested in finding the cheapest route, regardless of the number of connections. This might mean flying from New York to Miami, then Miami to Dallas, then Dallas to Phoenix, Phoenix to San Diego, and finally San Diego to L.A.<br>We can solve this problem by modeling the available flights and their costs as a directed, weighted graph. Figure 10 shows such a graph.</p>
+<p><img src="../_images/algorithms/IC8697.gif" alt="Figure 10. Modeling of available flights based on cost"></p>
+<p>What we are interested in knowing is what is the least expensive path from New York to L.A. By inspecting the graph, we can quickly determine that it’s from New York to Chicago to San Francisco and finally down to L.A., but in order to have a computer accomplish this task we need to formulate an algorithm to solve the problem at hand.<br>The late Edsger Dijkstra, one of the most noted computer scientists of all time, invented the most commonly used algorithm for finding the shortest path from a source node to all other nodes in a weighted, directed graph. This algorithm, dubbed Dijkstra’s Algorithm, works by maintaining two tables, each of which have a record for each node. These two tables are:<br>A distance table, which keeps an up-to-date “best distance” from the source node to every other node.<br>A route table, which, for each node n, indicates what node was used to reach n to get the best distance.<br>Initially, the distance table has each record set to some high value (like positive infinity) except for the start node, which has a distance to itself of 0. The route table’s rows are all set to null. Also, a collection of nodes, Q, that need to be examined is maintained; initially, this collection contains all of the nodes in the graph.<br>The algorithm proceeds by selecting (and removing) the node from Q that has the lowest value in the distance table. Let this selected node be called n and the value in the distance table for n be d. For each of the n’s edges, a check is made to see if d plus the cost to get from n to that particular neighbor is less than the value for that neighbor in the distance table. If it is, then we’ve found a better way to reach that neighbor, and the distance and route tables are updated accordingly.<br>To help clarify this algorithm, let’s begin applying it to the graph from Figure 10. Because we want to know the cheapest route from New York to L.A. we use New York as our source node. Our initial distance table, then, contains a value of infinity for each of the other cities, and a value of 0 for New York. The route table contains nulls for all entries, and Q contains all nodes (see Figure 11).</p>
+<p><img src="../_images/algorithms/IC108541.gif" alt="Figure 11. Distance table and route table for determining cheapest fare"></p>
+<p>We start by extracting the city from Q that has the lowest value in the distance table—New York. We then examine each of New York’s neighbors and check to see if the cost to fly from New York to that neighbor is less than the best cost we know of, namely the cost in the distance table. After this first check, we’d have removed New York from Q and updated the distance and route tables for Chicago, Denver, Miami, and Dallas.</p>
+<p><img src="../_images/algorithms/IC107693.gif" alt="Figure 12. Step 2 in the process of determining the cheapest fare"></p>
+<p>The next iteration gets the cheapest city out of Q, Chicago, and then checks its neighbors to see if there is a better cost. Specifically, we’ll check to see if there’s a better route for getting to San Francisco or Denver. Clearly the cost to get to San Francisco from Chicago—$75 + $25—is less than Infinity, so San Francisco’s records are updated. Also, note that it is cheaper to fly from Chicago to Denver than from New York to Denver ($75 + $20 &lt; $100), so Denver is updated as well. Figure 13 shows the values of the tables and Q after Chicago has been processed.</p>
+<p><img src="../_images/algorithms/IC41828.gif" alt="Figure 13. Table status after the third leg of the process is finished"></p>
+<p>This process continues until there are no more nodes in Q. Figure 14 shows the final values of the tables when Q has been exhausted.</p>
+<p><img src="../_images/algorithms/IC117149.gif" alt="Figure 14. Final results of determining the cheapest fare"></p>
+<p>At the point of exhausting Q, the distance table will contain the lowest cost from New York to each city. To determine the flight path to arrive at L.A., start by examining the L.A. entry in the route table and work back up to New York. That is, the route table entry for L.A. is San Francisco, meaning the last leg of the flight to L.A. leaves from San Francisco. The route table entry for San Francisco is Chicago, meaning you’ll get to San Francisco via Chicago. Finally, Chicago’s route table entry is New York. Putting this together we see that the cheapest flight path is from New York to Chicago to San Francisco to L.A, and costs $145.</p>
+<p>Note   To see a working implementation of Dijkstra’s Algorithm check out the download for this article, which includes a testing application for the Graph class that determines the shortest distance from one city to another using Dijkstra’s Algorithm.</p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>Graphs are a commonly used data structure because they can be used to model many real-world problems. A graph consists of a set of nodes with an arbitrary number of connections, or edges, between the nodes. These edges can be either directed or undirected and weighted or unweighted.<br>In this article we examined the basics of graphs and created a Graph class. This class was similar to the BinaryTree class created in Part 3, the difference being that instead of only have a reference for at most two edges, the Graph class’s GraphNodes could have an arbitrary number of references. This similarity is not surprising because trees are a special case of graphs.<br>In addition to creating a Graph class, we also looked at two common graph algorithms, the minimum spanning tree problem and computing the shortest path from some source node to all other nodes in a weighted, directed graph. While we did not examine source code to implement these algorithms, there are plenty source code examples available on the Internet. Too, the download included with this article contains a testing application for the Graph class that uses Dijkstra’s Algorithm to compute the shortest route between two cities.<br>In the next installment, Part 6, we’ll look at efficiently maintaining disjoint sets. Disjoint sets are a collection of two or more sets that do not share any elements in common. For example, with Prim’s Algorithm for finding the minimum spanning tree, the nodes of the graph can be divided into two disjoint sets: the set of nodes that currently constitute the spanning tree and the set of nodes that are not yet in the spanning tree.</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><p>Cormen, Thomas H., Charles E. Leiserson, and Ronald L. Rivest. “Introduction to Algorithms.” MIT Press. 1990.<br>Scott Mitchell, author of six books and founder of 4GuysFromRolla.com, has been working with Microsoft Web technologies because January 1998. Scott works as an independent consultant, trainer, and writer, and holds a Masters degree in Computer Science from the University of California – San Diego. He can be reached at mitchell@4guysfromrolla.com, or via his blog at <a href="http://ScottOnWriting.NET" target="_blank" rel="external">http://ScottOnWriting.NET</a>.</p>
+<h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><p><a href="http://www.cnblogs.com/biyeymyhjob/archive/2012/07/30/2615542.html" target="_blank" rel="external">最小生成树-Prim算法和Kruskal算法</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://tospan.me/2016/08/13/Algorithms_Basics/09-From-Trees-To-Graphs/" data-id="cizhoremt00261gvwpxlybjjq" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Algorithms/">Algorithms</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Data-Structure/">Data Structure</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/08/15/Algorithms_Basics/10-Effectively-Representing-Sets/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          C#算法与数据结构（十）：集合
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/08/12/Algorithms_Basics/08-Advanced-Searching-Algorithms/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">C#算法与数据结构（八）：高级搜索算法</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Algorithms/">Algorithms</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Game-Development/">Game Development</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Game-Programming-Patterns/">Game Programming Patterns</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Unity/">Unity</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Unity-Tutorials/">Unity Tutorials</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/default/">default</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Algorithms/">Algorithms</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Basics/">Basics</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C#</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Data-Structure/">Data Structure</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Games/">Games</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Geometry/">Geometry</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linear-Algebra/">Linear Algebra</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Math/">Math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mathematics/">Mathematics</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Numerical-Analysis/">Numerical Analysis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Patterns/">Patterns</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scripting/">Scripting</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Unity/">Unity</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/default/">default</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Algorithms/" style="font-size: 17.5px;">Algorithms</a> <a href="/tags/Basics/" style="font-size: 12.5px;">Basics</a> <a href="/tags/C/" style="font-size: 12.5px;">C#</a> <a href="/tags/Data-Structure/" style="font-size: 16.25px;">Data Structure</a> <a href="/tags/Games/" style="font-size: 10px;">Games</a> <a href="/tags/Geometry/" style="font-size: 11.25px;">Geometry</a> <a href="/tags/Linear-Algebra/" style="font-size: 13.75px;">Linear Algebra</a> <a href="/tags/Math/" style="font-size: 12.5px;">Math</a> <a href="/tags/Mathematics/" style="font-size: 12.5px;">Mathematics</a> <a href="/tags/Numerical-Analysis/" style="font-size: 10px;">Numerical Analysis</a> <a href="/tags/Patterns/" style="font-size: 15px;">Patterns</a> <a href="/tags/Scripting/" style="font-size: 18.75px;">Scripting</a> <a href="/tags/Unity/" style="font-size: 20px;">Unity</a> <a href="/tags/default/" style="font-size: 11.25px;">default</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">May 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">April 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/03/">March 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/02/">February 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">January 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/12/">December 2012</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/02/23/Unity-Multiplayer-And-Networking/">Unity Multiplayer And Networking</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/23/Unity-Physics/">Unity Physics</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/10/Game-Development/">游戏开发</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/08/Unity/Scripting-Quick-Benchmark/">Unity 简单基准测试</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/07/Unity/Patterns-FSM/">游戏编程设计模式:有限状态机(FSM)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 To Span<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+</body>
+</html>
